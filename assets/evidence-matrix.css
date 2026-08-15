@@ -1,0 +1,306 @@
+/* Agent architecture evidence matrix — additive to the v1 responsive baseline. */
+
+.evaluation-section .article-body {
+  max-width: 860px;
+}
+
+.outcome-contract,
+.architect-scorecard,
+.delivery-models,
+.repo-evidence-grid {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 44px;
+}
+
+.outcome-contract {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.outcome-contract article,
+.delivery-models article,
+.repo-evidence-grid article {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.028);
+}
+
+.outcome-contract span,
+.delivery-models .model-label,
+.repo-evidence-grid .evidence-source {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.outcome-contract h3,
+.delivery-models h3,
+.repo-evidence-grid h3 {
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+
+.outcome-contract p,
+.delivery-models p,
+.repo-evidence-grid p,
+.score-copy p,
+.score-gate,
+.score-note {
+  margin: 0;
+  color: #a9a9ad;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.architect-scorecard {
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.score-row {
+  display: grid;
+  grid-template-columns: 76px minmax(170px, 0.68fr) minmax(0, 1.32fr);
+  gap: 20px;
+  align-items: start;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.score-weight {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-copy h3 {
+  margin: 0 0 7px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 550;
+}
+
+.score-gate {
+  padding-left: 18px;
+  border-left: 1px solid var(--line);
+}
+
+.score-note {
+  margin: -20px 0 48px;
+  padding: 18px 20px;
+  border-left: 2px solid var(--accent);
+  background: rgba(216, 255, 104, 0.055);
+}
+
+.vibe-compare {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 1fr;
+  margin: 0 0 48px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.vibe-compare > div {
+  min-width: 0;
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.vibe-compare__head {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vibe-compare__dimension {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.vibe-compare__weak,
+.vibe-compare__strong {
+  color: #99999d;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.vibe-compare__strong {
+  color: #c8c8ca;
+}
+
+.delivery-models {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stack-flow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  overflow-x: auto;
+  margin-top: 18px;
+  padding: 2px 0 8px;
+  scrollbar-width: thin;
+}
+
+.stack-flow span {
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #101012;
+  color: #d9d9dc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+}
+
+.stack-flow i {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-style: normal;
+}
+
+.repo-evidence-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.repo-evidence-grid article {
+  display: flex;
+  flex-direction: column;
+}
+
+.repo-evidence-grid .repo-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.repo-evidence-grid a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: #d7d7da;
+  font-size: 11px;
+}
+
+.repo-evidence-grid .private-evidence {
+  color: #858589;
+  font-size: 11px;
+}
+
+.execution-rule {
+  margin: 0 0 48px;
+  padding: 28px;
+  border: 1px solid rgba(216, 255, 104, 0.28);
+  border-radius: 24px;
+  background: var(--accent-soft);
+}
+
+.execution-rule blockquote {
+  margin: 0 0 22px;
+  color: #f4f4f0;
+  font-size: clamp(19px, 2.1vw, 27px);
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+}
+
+.execution-rule ol {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.execution-rule li {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.18);
+  color: #cfcfd1;
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+@media (max-width: 820px) {
+  .outcome-contract,
+  .delivery-models,
+  .repo-evidence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .score-row {
+    grid-template-columns: 58px 1fr;
+  }
+
+  .score-gate {
+    grid-column: 2;
+    padding: 10px 0 0;
+    border-left: 0;
+  }
+
+  .execution-rule ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .vibe-compare {
+    grid-template-columns: 1fr;
+  }
+
+  .vibe-compare > div {
+    padding: 12px 0;
+  }
+
+  .vibe-compare__head {
+    display: none;
+  }
+
+  .vibe-compare__dimension {
+    padding-top: 22px !important;
+    border-bottom: 0 !important;
+    color: var(--accent);
+  }
+
+  .vibe-compare__weak::before,
+  .vibe-compare__strong::before {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  html[data-lang="en"] .vibe-compare__weak::before { content: "Vibe coding"; }
+  html[data-lang="en"] .vibe-compare__strong::before { content: "Agentic architect"; }
+  html[data-lang="zh-Hant"] .vibe-compare__weak::before { content: "Vibe Coding"; }
+  html[data-lang="zh-Hant"] .vibe-compare__strong::before { content: "Agentic Architect"; }
+
+  .execution-rule {
+    padding: 21px;
+  }
+
+  .execution-rule ol {
+    grid-template-columns: 1fr;
+  }
+}
