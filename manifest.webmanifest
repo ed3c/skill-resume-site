@@ -1,0 +1,16 @@
+{
+  "name": "Eeon — Agentic Engineering",
+  "short_name": "Eeon",
+  "description": "Evidence-backed portfolio for remote Agentic Engineering.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07110f",
+  "theme_color": "#07110f",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
