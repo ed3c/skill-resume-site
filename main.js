@@ -2,23 +2,32 @@
   "use strict";
 
   // Preserve the immutable v1 presentation and add post-v1 content as layers.
-  const responsiveStylesheet = document.createElement("link");
-  responsiveStylesheet.rel = "stylesheet";
-  responsiveStylesheet.href = "assets/responsive.css";
-  responsiveStylesheet.dataset.responsiveLayer = "v1";
-  document.head.append(responsiveStylesheet);
+  for (const [href, layer] of [
+    ["assets/responsive.css", "v1"],
+    ["assets/evidence-matrix.css", "agent-architect-matrix"],
+    ["assets/capability-evidence.css", "capability-evidence"],
+  ]) {
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = href;
+    stylesheet.dataset.portfolioLayer = layer;
+    document.head.append(stylesheet);
+  }
 
-  const evidenceStylesheet = document.createElement("link");
-  evidenceStylesheet.rel = "stylesheet";
-  evidenceStylesheet.href = "assets/evidence-matrix.css";
-  evidenceStylesheet.dataset.evidenceLayer = "agent-architect-matrix";
-  document.head.append(evidenceStylesheet);
+  const loadCapabilityEvidence = () => {
+    const enhancement = document.createElement("script");
+    enhancement.src = "assets/capability-evidence.js";
+    enhancement.async = false;
+    enhancement.dataset.evidenceLayer = "capability-evidence";
+    document.body.append(enhancement);
+  };
 
   const loadApplicationRuntime = () => {
     const applicationRuntime = document.createElement("script");
     applicationRuntime.src = "assets/main-base.js";
     applicationRuntime.async = false;
     applicationRuntime.dataset.runtime = "portfolio-v1";
+    applicationRuntime.addEventListener("load", loadCapabilityEvidence, { once: true });
     document.body.append(applicationRuntime);
   };
 
