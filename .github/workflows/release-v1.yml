@@ -1,0 +1,41 @@
+name: Create v1 tag
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/release-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  tag-v1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create immutable v1 tag
+        env:
+          TARGET_SHA: 7a62c543a8376bed1e82e3590e6dba4e00652630
+        run: |
+          set -euo pipefail
+          git fetch --tags --force
+
+          if git rev-parse -q --verify refs/tags/v1 >/dev/null; then
+            ACTUAL_SHA="$(git rev-list -n 1 v1)"
+            if [ "$ACTUAL_SHA" != "$TARGET_SHA" ]; then
+              echo "v1 already exists at $ACTUAL_SHA, expected $TARGET_SHA" >&2
+              exit 1
+            fi
+            echo "v1 already points to the intended responsive release commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a v1 "$TARGET_SHA" -m "v1 - first usable responsive portfolio"
+          git push origin refs/tags/v1
