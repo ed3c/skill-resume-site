@@ -1,20 +1,37 @@
 (() => {
   "use strict";
 
-  // v1 responsive bootstrap: load the narrow-viewport safety layer before the
-  // original application runtime. Both resources live in assets/, which the
-  // existing Pages workflow already publishes.
+  // Preserve the immutable v1 presentation and add post-v1 content as layers.
   const responsiveStylesheet = document.createElement("link");
   responsiveStylesheet.rel = "stylesheet";
   responsiveStylesheet.href = "assets/responsive.css";
   responsiveStylesheet.dataset.responsiveLayer = "v1";
   document.head.append(responsiveStylesheet);
 
-  const applicationRuntime = document.createElement("script");
-  applicationRuntime.src = "assets/main-base.js";
-  applicationRuntime.async = false;
-  applicationRuntime.dataset.runtime = "portfolio-v1";
-  document.body.append(applicationRuntime);
+  const evidenceStylesheet = document.createElement("link");
+  evidenceStylesheet.rel = "stylesheet";
+  evidenceStylesheet.href = "assets/evidence-matrix.css";
+  evidenceStylesheet.dataset.evidenceLayer = "agent-architect-matrix";
+  document.head.append(evidenceStylesheet);
+
+  const loadApplicationRuntime = () => {
+    const applicationRuntime = document.createElement("script");
+    applicationRuntime.src = "assets/main-base.js";
+    applicationRuntime.async = false;
+    applicationRuntime.dataset.runtime = "portfolio-v1";
+    document.body.append(applicationRuntime);
+  };
+
+  // Inject the additional in-page section before the original runtime captures
+  // index links and scrollspy sections. A content-layer failure must not make the
+  // v1 portfolio unusable, so the original runtime still loads on error.
+  const evidenceRuntime = document.createElement("script");
+  evidenceRuntime.src = "assets/evidence-matrix.js";
+  evidenceRuntime.async = false;
+  evidenceRuntime.dataset.evidenceLayer = "agent-architect-matrix";
+  evidenceRuntime.addEventListener("load", loadApplicationRuntime, { once: true });
+  evidenceRuntime.addEventListener("error", loadApplicationRuntime, { once: true });
+  document.body.append(evidenceRuntime);
 
   /*
    * Deterministic contract markers retained for the repository assertion gate.
