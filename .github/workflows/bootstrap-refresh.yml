@@ -35,9 +35,9 @@ jobs:
         run: |
           set -euo pipefail
           cat .bootstrap/part-* > /tmp/site-refresh.tar.gz.b64
-          echo "fd0936e2608567e6a1da0e357d93df4f68a477757a11a84164eeadb32ec730cf  /tmp/site-refresh.tar.gz.b64" | sha256sum -c -
+          echo "c55a5091fc3cc58d7e22741090c7edd6fc1151617500d7f3c80855da8c0dc9c1  /tmp/site-refresh.tar.gz.b64" | sha256sum -c -
           base64 --decode /tmp/site-refresh.tar.gz.b64 > /tmp/site-refresh.tar.gz
-          echo "63dcaac62e2156be5fd681bc94552402253c09ed82ae218cc9363d08953294db  /tmp/site-refresh.tar.gz" | sha256sum -c -
+          echo "7cc3149d90d0459badd344277bba890ae9fbc27b53c80ee360d0c3a968b3b720  /tmp/site-refresh.tar.gz" | sha256sum -c -
           tar -xzf /tmp/site-refresh.tar.gz -C .
 
       - name: Remove obsolete and bootstrap files
