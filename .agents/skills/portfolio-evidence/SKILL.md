@@ -1,77 +1,60 @@
 ---
 name: portfolio-evidence
-description: Build or update Eeon's evidence-backed public portfolio. Use for résumé claims, repository evidence, disclosure controls, GitHub Pages delivery, or portfolio verification.
-license: MIT
-compatibility: Claude Code, Codex CLI, and filesystem-based Agent Skills hosts
-allowed-tools: Bash Read Write
-metadata:
-  version: "1.0.0"
-  owner: "Eeon"
+description: Reviews and validates the public portfolio before release. Use it after copy, design, project data, navigation, animation, or disclosure changes.
 ---
 
-# Portfolio Evidence Workflow
+# Portfolio evidence skill
 
-Publish only claims that have an explicit evidence state. Keep private implementation details private.
+## Goal
 
-## Phase 1: Orient
+Keep the portfolio clear, tasteful, accessible, and true.
 
-1. Read `/AGENTS.md`.
-2. Read `/CONTEXT.md`.
-3. Read `/docs/disclosure-policy.md`.
-4. Read `references/evidence-contract.md`.
+A visual change is not complete until the page still works with a keyboard, private links remain hidden, public claims match repository evidence, and the automated check returns exit code `0`.
 
-## Phase 2: Specify
+## Small execution loop
 
-1. Define one public outcome.
-2. Name the target audience.
-3. List the source repositories.
-4. Assign one evidence state to each claim.
-5. Mark excluded employer, customer, product, credential, and adapter details.
+1. Name one visible or measurable result.
+2. Change the smallest useful set of files.
+3. Run the page locally.
+4. Run the assertion script.
+5. Repair the exact failed condition.
+6. Repeat until the script returns exit code `0`.
+7. Open a focused pull request with the result and proof.
 
-## Phase 3: Change
-
-1. Update `data/portfolio.json` first.
-2. Keep `index.html` structural.
-3. Render repeated evidence from `assets/app.js`.
-4. Use direct, controlled language.
-5. Keep each procedural step atomic.
-
-## Phase 4: Execute and Assert
-
-Run the complete verification command:
+## Run
 
 ```bash
-npm run check
+npm test
 ```
 
-The command must execute syntax checks and deterministic site assertions.
+Direct command:
 
-## Repair Loop
-
-1. Read the exact assertion failure.
-2. Change only the failed condition.
-3. Run `npm run check` again.
-4. Repeat until Exit Code is `0`.
-5. Stop after three identical failures.
-6. Record the blocker instead of bypassing the assertion.
-
-A skipped, missing, or cancelled check is not a pass.
-
-## Phase 5: Deliver
-
-Use this dependent branch order for substantial changes:
-
-```text
-portfolio/foundation
-  -> portfolio/evidence
-    -> portfolio/agentic-loop
+```bash
+node .agents/skills/portfolio-evidence/scripts/assert-site.mjs
 ```
 
-Each branch must contain one reviewable behavior and its proof. Ship the oldest branch first.
+## Required proof
 
-## Release Authority
+- `index.html` loads the approved video, fonts, CSS, and JavaScript.
+- `styles.css` keeps the single-viewport layout and reduced-motion behavior.
+- `main.js` passes `node --check`.
+- Mobile navigation supports Escape, overlay click, link click, and desktop resize.
+- Public project links stay under `https://github.com/ed3c/`.
+- Private projects use `url: null`.
+- Unverified enterprise, uptime, speed, revenue, and customer claims do not appear.
+- The local font binary is not committed; the display stack uses the CDN font and a local system fallback.
 
-- Repository evidence owns technical claims.
-- Deterministic assertions own machine-checkable site truth.
-- Human review owns disclosure and commercial acceptance.
-- GitHub Pages deployment owns only publication status.
+## Design review order
+
+1. Readability and truth.
+2. Keyboard and touch behavior.
+3. Clear hierarchy and spacing.
+4. Motion with a purpose.
+5. Decorative polish.
+
+Use strong ease-out curves for entry and feedback. Keep frequent controls fast. Add `scale(0.97)` press feedback. Do not animate from `scale(0)`. Respect reduced motion and data-saving preferences.
+
+## Exit meaning
+
+- `0`: all release checks passed.
+- non-zero: do not publish. Read the exact failure, repair it, and rerun.

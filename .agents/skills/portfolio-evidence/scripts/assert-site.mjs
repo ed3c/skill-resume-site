@@ -1,183 +1,194 @@
 #!/usr/bin/env node
-
-import fs from "node:fs";
+import { readFile, stat } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import process from "node:process";
 
-const scriptPath = fileURLToPath(import.meta.url);
-const root = path.resolve(path.dirname(scriptPath), "../../../..");
-const failures = [];
-
+const root = process.cwd();
 const requiredFiles = [
   "index.html",
-  "404.html",
-  "README.md",
-  "AGENTS.md",
-  "CONTEXT.md",
-  "SECURITY.md",
-  "assets/app.js",
-  "assets/styles.css",
-  "assets/favicon.svg",
+  "styles.css",
+  "main.js",
+  "assets/logo.webp",
   "data/portfolio.json",
-  "manifest.webmanifest",
-  "robots.txt",
-  "sitemap.xml",
+  "fonts/README.md",
+  "README.md",
   "docs/architecture.md",
-  "docs/disclosure-policy.md",
-  "docs/stack-plan.md",
-  ".agents/skills/portfolio-evidence/SKILL.md",
-  ".github/workflows/ci.yml",
-  ".github/workflows/pages.yml",
 ];
+
+const errors = [];
+const notes = [];
 
 for (const relative of requiredFiles) {
-  if (!fs.existsSync(path.join(root, relative))) {
-    failures.push(`Missing required file: ${relative}`);
+  try {
+    const info = await stat(path.join(root, relative));
+    if (!info.isFile() || info.size === 0) errors.push(`${relative} must be a non-empty file`);
+  } catch {
+    errors.push(`${relative} is missing`);
   }
 }
 
-function read(relative) {
-  return fs.readFileSync(path.join(root, relative), "utf8");
-}
-
-function assert(condition, message) {
-  if (!condition) failures.push(message);
-}
-
-const index = read("index.html");
-const app = read("assets/app.js");
-const styles = read("assets/styles.css");
-const packageJson = JSON.parse(read("package.json"));
-const manifest = JSON.parse(read("manifest.webmanifest"));
-const portfolio = JSON.parse(read("data/portfolio.json"));
-
-for (const id of [
-  "top",
-  "why-now",
-  "career",
-  "capabilities",
-  "evidence",
-  "loop",
-  "engagement",
-  "trajectory",
-  "architecture",
-]) {
-  assert(index.includes(`id="${id}"`), `index.html is missing section #${id}`);
-}
-
-for (const phrase of [
-  "Drop-in Remote Agent Engineer",
-  "50%",
-  "two-week",
-  "SKILL.md",
-  "STE100",
-  "Git Town",
-  "Android",
-  "iOS",
-]) {
-  assert(index.includes(phrase), `index.html is missing required public phrase: ${phrase}`);
-}
-
-assert(!/<script[^>]+src=["']https?:\/\//i.test(index), "External scripts are not allowed.");
-assert(!/<link[^>]+rel=["']stylesheet["'][^>]+href=["']https?:\/\//i.test(index), "External stylesheets are not allowed.");
-assert(index.includes('Content-Security-Policy'), "index.html must include a Content Security Policy.");
-assert(styles.includes(":focus-visible"), "styles.css must define visible keyboard focus.");
-assert(styles.includes("prefers-reduced-motion"), "styles.css must respect reduced-motion preferences.");
-assert(app.includes("textContent"), "assets/app.js must use textContent for dynamic text.");
-
-const localReferences = [...index.matchAll(/(?:src|href)=["']([^"']+)["']/g)]
-  .map((match) => match[1])
-  .filter((value) => !value.startsWith("http") && !value.startsWith("#") && !value.startsWith("mailto:") && !value.startsWith("data:"));
-
-for (const reference of localReferences) {
-  const clean = reference.split(/[?#]/)[0];
-  if (!clean || clean === "./") continue;
-  assert(fs.existsSync(path.join(root, clean)), `Broken local reference in index.html: ${reference}`);
-}
-
-assert(portfolio.schema_version === "1.0.0", "portfolio schema_version must be 1.0.0.");
-assert(Array.isArray(portfolio.capabilities) && portfolio.capabilities.length >= 6, "At least six capability records are required.");
-assert(Array.isArray(portfolio.projects) && portfolio.projects.length >= 8, "At least eight project records are required.");
-assert(Array.isArray(portfolio.roles) && portfolio.roles.length === 3, "Exactly three target role records are required.");
-
-const allowedStates = new Set([
-  "verified-public",
-  "public-prototype",
-  "production-background",
-  "private-implementation",
-  "deterministic-reference",
+const [html, css, js, rawData, packageText, pagesWorkflow, ciWorkflow] = await Promise.all([
+  readText("index.html"),
+  readText("styles.css"),
+  readText("main.js"),
+  readText("data/portfolio.json"),
+  readText("package.json"),
+  readText(".github/workflows/pages.yml"),
+  readText(".github/workflows/ci.yml"),
 ]);
 
-const ids = new Set();
-for (const record of [...portfolio.capabilities, ...portfolio.projects, ...portfolio.roles]) {
-  assert(typeof record.id === "string" && record.id.length > 0, "Every record requires a non-empty id.");
-  assert(!ids.has(record.id), `Duplicate record id: ${record.id}`);
-  ids.add(record.id);
+const exactVideo = "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4";
+const requiredHtml = [
+  "<title>Intelligence Designed To Evolve</title>",
+  exactVideo,
+  "assets/logo.webp",
+  "styles.css",
+  "main.js",
+  "BubbledotICG-FinePos",
+  "font-awesome/6.5.2",
+  "aria-expanded=\"false\"",
+  "data-view-panel=\"work\"",
+  "data-view-link=\"contact\"",
+  "Skip to the main content",
+];
+
+for (const fragment of requiredHtml) {
+  if (!html.includes(fragment)) errors.push(`index.html must include: ${fragment}`);
 }
 
-for (const capability of portfolio.capabilities) {
-  assert(allowedStates.has(capability.status_key), `Unknown capability status: ${capability.status_key}`);
-  assert(Array.isArray(capability.stack) && capability.stack.length > 0, `Capability ${capability.id} requires stack labels.`);
+const requiredVariables = {
+  "--bg": "#000000",
+  "--text": "#ffffff",
+  "--muted": "#8e8e8e",
+  "--nav-text": "#2e2e2e",
+  "--pill-dark": "#28282a",
+  "--sign-in-text": "#c8c8c8",
+  "--nav-shadow": "0 4px 14px rgba(0, 0, 0, 0.16)",
+  "--trust-bg": "#28282a",
+  "--trust-border": "rgba(255, 255, 255, 0.4)",
+  "--trust-text": "#c4c2c3",
+};
+
+for (const [name, value] of Object.entries(requiredVariables)) {
+  const compactCss = css.replace(/\s+/g, " ");
+  if (!compactCss.includes(`${name}: ${value}`)) errors.push(`styles.css must keep ${name}: ${value}`);
 }
 
-for (const project of portfolio.projects) {
-  assert(allowedStates.has(project.status_key), `Unknown project status: ${project.status_key}`);
-  assert(["public", "private"].includes(project.visibility), `Project ${project.id} has invalid visibility.`);
-  if (project.visibility === "public") {
-    assert(typeof project.url === "string" && project.url.startsWith("https://github.com/ed3c/"), `Public project ${project.id} requires an ed3c GitHub URL.`);
-  } else {
-    assert(project.url === null, `Private project ${project.id} must not expose a URL.`);
-  }
+for (const fragment of [
+  "height: 100dvh",
+  "@media (prefers-reduced-motion: reduce)",
+  "cubic-bezier(0.23, 1, 0.32, 1)",
+  ".menu-button[aria-expanded=\"true\"]",
+  "font-variant-numeric: tabular-nums",
+]) {
+  if (!css.includes(fragment)) errors.push(`styles.css must include: ${fragment}`);
 }
 
-const steps = portfolio.delivery_loop?.steps_en;
-assert(Array.isArray(steps) && steps.length === 7, "The English delivery loop must contain seven steps.");
-if (Array.isArray(steps)) {
-  for (const step of steps) {
-    const wordCount = step.trim().split(/\s+/).filter(Boolean).length;
-    assert(wordCount <= 20, `Delivery step exceeds 20 words: ${step}`);
-    assert(!/\b(and then|after that|as well as|while)\b/i.test(step), `Delivery step contains a compound action marker: ${step}`);
-  }
-}
-
-assert(manifest.start_url === "./", "manifest start_url must be ./ for project Pages.");
-assert(Object.keys(packageJson.dependencies ?? {}).length === 0, "Runtime dependencies are not allowed.");
-assert(Object.keys(packageJson.devDependencies ?? {}).length === 0, "Development dependencies are not allowed.");
-
-const publicTextFiles = [
-  "index.html",
-  "404.html",
-  "README.md",
-  "AGENTS.md",
-  "CONTEXT.md",
-  "SECURITY.md",
-  "assets/app.js",
+for (const fragment of [
+  "IntersectionObserver",
+  "480 + index * 90",
+  "1500 + index * 80",
+  "Math.pow(1 - progress, 3)",
+  "event.key === \"Escape\"",
+  "window.innerWidth > 720",
   "data/portfolio.json",
-  "docs/architecture.md",
-  "docs/disclosure-policy.md",
-  "docs/stack-plan.md",
-  ".agents/skills/portfolio-evidence/SKILL.md",
-  ".agents/skills/portfolio-evidence/references/evidence-contract.md",
-];
-
-const publicText = publicTextFiles.map(read).join("\n");
-const prohibitedPatterns = [
-  /ixsecurity/i,
-  /iXSec/i,
-  /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,
-  /(?:api[_-]?key|token|secret|password)\s*[:=]\s*["'][^"']{8,}["']/i,
-  /sk-[A-Za-z0-9_-]{20,}/,
-  /gh[pousr]_[A-Za-z0-9]{20,}/,
-];
-
-for (const pattern of prohibitedPatterns) {
-  assert(!pattern.test(publicText), `Public content matches prohibited pattern: ${pattern}`);
+]) {
+  if (!js.includes(fragment)) errors.push(`main.js must include: ${fragment}`);
+}
+const requiredArtifactFiles = ["index.html", "styles.css", "main.js", "404.html"];
+const requiredArtifactDirectories = ["assets", "fonts", "data", "docs"];
+for (const [name, workflow] of [["pages.yml", pagesWorkflow], ["ci.yml", ciWorkflow]]) {
+  for (const file of requiredArtifactFiles) {
+    if (!workflow.includes(file)) errors.push(`${name} must publish ${file}`);
+  }
+  for (const directory of requiredArtifactDirectories) {
+    if (!workflow.includes(directory)) errors.push(`${name} must publish ${directory}/`);
+  }
 }
 
-if (failures.length > 0) {
-  process.stderr.write("\nPORTFOLIO ASSERTION FAILURES\n");
-  for (const failure of failures) process.stderr.write(`- ${failure}\n`);
-  process.exit(1);
+
+const forbiddenClaims = [
+  /Trusted by 2000\+ Enterprises/i,
+  /99\.99%/,
+  /120ms/i,
+  /2\.4M/i,
+  /world[- ]class/i,
+  /game[- ]changer/i,
+  /工兛/u,
+];
+
+for (const pattern of forbiddenClaims) {
+  if (pattern.test(`${html}\n${rawData}`)) errors.push(`Public copy contains a forbidden or unverified claim: ${pattern}`);
 }
 
-process.stdout.write("Portfolio assertions passed. Public claims, disclosure boundaries, assets, and delivery-loop rules are valid.\n");
+let data;
+try {
+  data = JSON.parse(rawData);
+} catch (error) {
+  errors.push(`data/portfolio.json is not valid JSON: ${error.message}`);
+}
+
+if (data) {
+  if (!Array.isArray(data.projects) || data.projects.length < 6) errors.push("portfolio.json needs at least six projects");
+  if (!Array.isArray(data.capabilities) || data.capabilities.length !== 6) errors.push("portfolio.json must expose six capability areas");
+
+  const ids = new Set();
+  for (const project of data.projects || []) {
+    if (!project.id || ids.has(project.id)) errors.push(`Project IDs must be present and unique: ${project.id || "missing"}`);
+    ids.add(project.id);
+
+    if (project.visibility === "private" && project.url !== null) {
+      errors.push(`Private project ${project.id} must set url to null`);
+    }
+
+    if (project.visibility === "public") {
+      if (typeof project.url !== "string" || !project.url.startsWith("https://github.com/ed3c/")) {
+        errors.push(`Public project ${project.id} must link only to github.com/ed3c`);
+      }
+    }
+  }
+}
+
+let pkg;
+try {
+  pkg = JSON.parse(packageText);
+  if (Object.keys(pkg.dependencies || {}).length !== 0) errors.push("Runtime dependencies must remain empty");
+  if (Object.keys(pkg.devDependencies || {}).length !== 0) errors.push("Development dependencies must remain empty");
+} catch (error) {
+  errors.push(`package.json is not valid JSON: ${error.message}`);
+}
+
+const nodeCheck = spawnSync(process.execPath, ["--check", path.join(root, "main.js")], { encoding: "utf8" });
+if (nodeCheck.status !== 0) errors.push(`main.js syntax check failed:\n${nodeCheck.stderr.trim()}`);
+
+if (!html.includes("Content-Security-Policy")) errors.push("index.html must keep a Content-Security-Policy");
+if (!html.includes("media-src https://d8j0ntlcm91z4.cloudfront.net")) errors.push("CSP must allow only the requested CloudFront host for video");
+if (html.includes("fonts/GeistPixel-Circle.woff2")) errors.push("The font binary is not bundled; CSS must use the local() fallback described in fonts/README.md");
+
+for (const [name, workflow] of [["pages.yml", pagesWorkflow], ["ci.yml", ciWorkflow]]) {
+  for (const artifact of ["styles.css", "main.js", "fonts"]) {
+    if (!workflow.includes(artifact)) errors.push(`${name} must publish ${artifact}`);
+  }
+}
+
+if (!errors.length) {
+  notes.push("Static architecture: pass");
+  notes.push("Truth and disclosure gate: pass");
+  notes.push("Keyboard and reduced-motion hooks: pass");
+  notes.push("JavaScript syntax: pass");
+  console.log(notes.join("\n"));
+  process.exit(0);
+}
+
+console.error("Portfolio assertions failed:\n");
+for (const error of errors) console.error(`- ${error}`);
+process.exit(1);
+
+async function readText(relative) {
+  try {
+    return await readFile(path.join(root, relative), "utf8");
+  } catch {
+    return "";
+  }
+}

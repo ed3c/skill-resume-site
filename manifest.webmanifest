@@ -1,16 +1,18 @@
 {
-  "name": "Eeon — Agentic Engineering",
+  "name": "Intelligence Designed To Evolve",
   "short_name": "Eeon",
-  "description": "Evidence-backed portfolio for remote Agentic Engineering.",
-  "start_url": "./",
+  "description": "Remote Agent engineering across mobile, full-stack systems, and verified AI workflows.",
+  "start_url": "./#home",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#07110f",
-  "theme_color": "#07110f",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
     {
-      "src": "assets/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "assets/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
     }
   ]
 }

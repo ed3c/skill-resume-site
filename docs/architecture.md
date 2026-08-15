@@ -1,93 +1,68 @@
-# Portfolio Architecture
+# Portfolio architecture
 
-## Purpose
-
-The site converts repository evidence into a public, controlled, and reviewable résumé. It separates technical truth, disclosure decisions, presentation, and publication.
-
-## Evidence data flow
-
-```mermaid
-flowchart TD
-    A[Public and private repository evidence] --> B{Disclosure boundary}
-    B -->|Public| C[Public repository claim]
-    B -->|Private| D[Sanitized capability claim]
-    C --> E[Evidence-state classification]
-    D --> E
-    E --> F[Controlled public statement]
-    F --> G[data/portfolio.json]
-    G --> H[assets/app.js]
-    H --> I[index.html]
-    I --> J[Deterministic assertions]
-    J -->|PASS| K[GitHub Actions]
-    J -->|FAIL| L[Bounded repair loop]
-    L --> J
-    K --> M[GitHub Pages]
-```
-
-## Content state machine
-
-```mermaid
-stateDiagram-v2
-    [*] --> DISCOVERED
-    DISCOVERED --> CLASSIFIED: evidence state assigned
-    CLASSIFIED --> SANITIZED: disclosure reviewed
-    SANITIZED --> STRUCTURED: JSON record created
-    STRUCTURED --> RENDERED: site generated
-    RENDERED --> VERIFIED: deterministic checks pass
-    RENDERED --> REPAIR_REQUIRED: checks fail
-    REPAIR_REQUIRED --> RENDERED: exact failure repaired
-    VERIFIED --> PUBLISHED: Pages deployment succeeds
-    PUBLISHED --> CLASSIFIED: evidence changes
-```
-
-## Engagement state machine
-
-```mermaid
-stateDiagram-v2
-    [*] --> FIT_CHECK
-    FIT_CHECK --> SCOPE: mutual fit confirmed
-    SCOPE --> DEPOSIT: written acceptance criteria agreed
-    DEPOSIT --> DELIVERY: 50% kickoff payment received
-    DELIVERY --> REVIEW: two-week evidence package delivered
-    REVIEW --> SETTLED: accepted result and balance settled
-    REVIEW --> REPAIR: acceptance condition failed
-    REPAIR --> REVIEW: bounded correction completed
-    SETTLED --> NEXT_CYCLE: new scope approved
-    NEXT_CYCLE --> SCOPE
-```
-
-## Component responsibility
-
-| Path | Responsibility | Must not own |
-|---|---|---|
-| `data/portfolio.json` | Claims, statuses, summaries, stack labels | Rendering logic |
-| `assets/app.js` | Filtering, language selection, safe rendering | Technical claim authority |
-| `index.html` | Page structure and one-time narrative | Repeated project records |
-| `assets/styles.css` | Visual system and responsive behavior | Content truth |
-| `assert-site.mjs` | Deterministic publication rules | Human disclosure approval |
-| `docs/disclosure-policy.md` | Public/private boundary | Runtime secrets |
-| GitHub Actions | Execute checks and deploy | Semantic proof by itself |
-
-## Loop boundary
-
-The portfolio uses a small engineering loop:
+## Runtime
 
 ```text
-specify
--> change
--> execute
--> assert
--> repair exact failure
--> rerun
--> publish evidence
+Browser
+  ├── index.html
+  ├── styles.css
+  ├── main.js
+  ├── assets/logo.webp
+  └── data/portfolio.json
 ```
 
-The loop differs from a general evaluator-optimizer pattern. It uses deterministic commands and explicit exit codes for machine-checkable conditions. Human review remains the authority for disclosure and commercial fit.
+No framework and no build step are required.
 
-## Failure policy
+## View flow
 
-- Do not convert `ABSENT` into `PASS`.
-- Do not claim private implementation as public code.
-- Do not add quantitative impact without a source, method, scope, and date.
-- Do not bypass a failing assertion to publish the site.
-- Stop after three identical repair failures and report the blocker.
+```text
+Header navigation / URL hash
+            │
+            ▼
+      main.js router
+   ┌────────┼─────────┬─────────┐
+   ▼        ▼         ▼         ▼
+ Home    Services    Work     Contact
+   │                   │
+   │                   └── fetch data/portfolio.json
+   │                              │
+   └── stats count-up             ▼
+                         public project rows
+```
+
+All views share one viewport. The background video, header, and stats remain in one composition. The center stage swaps between the home hero and an accessible panel.
+
+## Evidence flow
+
+```text
+Public and private repository knowledge
+                    │
+                    ▼
+          Disclosure allowlist
+                    │
+                    ▼
+          data/portfolio.json
+                    │
+          ┌─────────┴─────────┐
+          ▼                   ▼
+    Browser renderer    Assertion script
+          │                   │
+          ▼                   ▼
+      GitHub Pages      exit 0 / non-zero
+```
+
+The browser never receives a private repository URL. Private project records must use `url: null`.
+
+## Interaction rules
+
+- Hash routing supports browser history.
+- Navigation updates `aria-current`.
+- Panels update `aria-hidden` and `inert` when supported.
+- The mobile menu traps focus while open.
+- Escape closes the menu or returns to Home.
+- Reduced motion pauses the video and removes movement-heavy transitions.
+- Data-saving mode pauses the video.
+
+## Security boundary
+
+The meta Content Security Policy allows only the site itself plus the explicitly approved font, icon, and video hosts. Public project links must use `https://github.com/ed3c/`.

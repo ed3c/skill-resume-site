@@ -1,1 +1,306 @@
-{"schema_version":"1.0.0","last_reviewed":"2026-08-15","profile":{"name":"Eeon","github":"https://github.com/ed3c","headline_en":"Drop-in Remote Agent Engineer","headline_zh":"可直接加入團隊的全遠端 Agent 工程師"},"capabilities":[{"id":"mobile-systems","area_en":"Mobile Systems Engineering","area_zh":"行動系統工程","status_en":"Production background","status_zh":"具生產經驗","status_key":"production-background","summary_en":"Android lifecycle, networking, debugging, WebRTC, release discipline, and device-level diagnosis.","summary_zh":"涵蓋 Android 生命週期、網路、除錯、WebRTC、發佈紀律與裝置層診斷。","stack":["Kotlin","Java","Android SDK","Gradle","WebRTC","ADB"]},{"id":"full-stack","area_en":"Full-Stack Product Delivery","area_zh":"全端產品交付","status_en":"Public prototypes","status_zh":"公開原型","status_key":"public-prototype","summary_en":"Typed APIs, web interfaces, data stores, CI, access boundaries, and deployable demonstrations.","summary_zh":"具備型別化 API、Web 介面、資料儲存、CI、存取邊界與可部署 Demo。","stack":["TypeScript","React","Next.js","Node.js","Python","FastAPI","PostgreSQL","Docker"]},{"id":"agent-systems","area_en":"Agent Skills & Harness Engineering","area_zh":"Agent Skills 與 Harness Engineering","status_en":"Public and tested","status_zh":"已公開並測試","status_key":"verified-public","summary_en":"Portable SKILL.md procedures, tool contracts, state machines, context routing, and delivery loops.","summary_zh":"建立可攜式 SKILL.md 程序、工具契約、狀態機、上下文路由與交付迴圈。","stack":["SKILL.md","MCP","State Machines","Typed Contracts","AGENTS.md","GitHub Actions"]},{"id":"verification","area_en":"Evals, Assertions & Truth Verification","area_zh":"Evals、斷言與真相驗證","status_en":"Public and tested","status_zh":"已公開並測試","status_key":"verified-public","summary_en":"Deterministic verdicts, evidence receipts, mutation controls, fail-closed gates, and regression checks.","summary_zh":"使用確定性判定、證據收據、變異控制、Fail-closed 閘門與回歸檢查。","stack":["Deterministic Tests","AST Lint","Type Checks","Eval Datasets","Evidence Receipts","CI"]},{"id":"device-automation","area_en":"Android & iOS Device Automation","area_zh":"Android 與 iOS 裝置自動化","status_en":"Private implementation","status_zh":"私有實作","status_key":"private-implementation","summary_en":"Local-first control planes for simulator and real-device operation, diagnosis, bounded repair, and evidence.","summary_zh":"建立 Local-first 控制平面，支援模擬器與真機操作、診斷、受限修復與證據留存。","stack":["ADB","simctl","xcodebuild","WebDriverAgent","Accessibility","Logcat","JSON-RPC MCP"]},{"id":"post-training","area_en":"Post-Training & Model/Harness Co-Evolution","area_zh":"後訓練與 Model/Harness 共演化","status_en":"Deterministic reference","status_zh":"確定性參考實作","status_key":"deterministic-reference","summary_en":"Typed control records, data admission, immutable lineage, human approval, rollback, and audit paths.","summary_zh":"涵蓋型別化控制紀錄、資料准入、不可變血緣、人工核准、回滾與稽核路徑。","stack":["Python 3","Typed Records","HITL","Lineage","Rollback","Audit"]}],"projects":[{"id":"skill-md-native","title":"Skill.md-native","visibility":"public","status_key":"verified-public","status_en":"Verified public","status_zh":"公開且已驗證","summary_en":"Wrapperless Skill invocation, AST lint, assertion-driven repair, and evidence-first reports.","summary_zh":"實作無包裝 Skill 呼叫、AST Lint、斷言驅動修復與 Evidence-first 報告。","proof_en":"Executable checks and documented pass evidence are present in the repository.","proof_zh":"Repository 內含可執行檢查與已記錄的通過證據。","tags":["SKILL.md","AST","Assertions","Evidence"],"url":"https://github.com/ed3c/Skill.md-native"},{"id":"agent-skills-repo","title":"Agent Skills Registry","visibility":"public","status_key":"verified-public","status_en":"Public implementation","status_zh":"公開實作","summary_en":"Vendor-neutral Agent Skills registry with provenance, deterministic scripts, typed CI, and MCP integration.","summary_zh":"Vendor-neutral Agent Skills Registry，包含來源追蹤、確定性腳本、型別化 CI 與 MCP 整合。","proof_en":"Portable Skill packages and validation workflows are published.","proof_zh":"已公開可攜式 Skill 套件與驗證工作流。","tags":["Agent Skills","Registry","MCP","CI"],"url":"https://github.com/ed3c/agent-skills-repo"},{"id":"openwiki-source-anchoring","title":"OpenWiki Source Anchoring","visibility":"public","status_key":"public-prototype","status_en":"Public prototype","status_zh":"公開原型","summary_en":"Full-stack knowledge system with source anchoring, access controls, offline behavior, and browser-level validation.","summary_zh":"具備來源錨定、存取控制、離線行為與瀏覽器層驗證的全端知識系統。","proof_en":"Architecture, application stack, and CI paths are public.","proof_zh":"架構、應用技術棧與 CI 路徑已公開。","tags":["Next.js","PostgreSQL","RAG","Playwright"],"url":"https://github.com/ed3c/openwiki-source-anchoring"},{"id":"truth-verify-loop","title":"Truth Verify Loop","visibility":"public","status_key":"verified-public","status_en":"Public and tested","status_zh":"公開且已測試","summary_en":"Eval-first claim verification with retrieval checks, deterministic gates, and CI regression evidence.","summary_zh":"Eval-first 宣稱驗證，整合檢索檢查、確定性閘門與 CI 回歸證據。","proof_en":"The repository publishes the verification flow, CLI, and evaluation contracts.","proof_zh":"Repository 已公開驗證流程、CLI 與評測契約。","tags":["Verification","Evals","RAG","CI"],"url":"https://github.com/ed3c/truth-verify-loop"},{"id":"blackbox-auto-research","title":"Blackbox Auto Research","visibility":"public","status_key":"public-prototype","status_en":"Research runtime","status_zh":"研究型 Runtime","summary_en":"Multi-agent black-box research orchestration with contradiction analysis and confidence-aware validation.","summary_zh":"多 Agent 黑箱研究編排，包含矛盾分析與信心感知驗證。","proof_en":"The orchestration and validation design is publicly inspectable.","proof_zh":"編排與驗證設計可公開檢視。","tags":["Multi-Agent","Research","Validation","LangGraph"],"url":"https://github.com/ed3c/blackbox-auto-research"},{"id":"xt-aegis","title":"XT-Aegis","visibility":"public","status_key":"public-prototype","status_en":"Public prototype","status_zh":"公開原型","summary_en":"Agent-assisted mobile application security analysis with typed services, trace evidence, and deployment infrastructure.","summary_zh":"Agent 輔助的行動應用安全分析，包含型別化服務、Trace 證據與部署基礎設施。","proof_en":"The public repository exposes architecture, services, and deployment paths.","proof_zh":"公開 Repository 呈現架構、服務與部署路徑。","tags":["Mobile","FastAPI","Next.js","Threat Modeling"],"url":"https://github.com/ed3c/XT-Aegis"},{"id":"post-training-rsi","title":"Post-Training RSI Pipeline","visibility":"public","status_key":"deterministic-reference","status_en":"Deterministic reference","status_zh":"確定性參考實作","summary_en":"Evidence-first post-training pipeline with resumable state, immutable lineage, approvals, rollback, and audit.","summary_zh":"Evidence-first 後訓練 Pipeline，支援可恢復狀態、不可變血緣、核准、回滾與稽核。","proof_en":"Local deterministic behavior is implemented. Live cloud or GPU performance is not claimed.","proof_zh":"已實作本機確定性行為；不宣稱已具備 Live Cloud 或 GPU 效能證據。","tags":["Python","Post-Training","Lineage","HITL"],"url":"https://github.com/ed3c/post-training-rsi-pipeline"},{"id":"mobile-autopilot","title":"Android & iOS Device Autopilot","visibility":"private","status_key":"private-implementation","status_en":"Private implementation","status_zh":"私有實作","summary_en":"Local-first automation for simulators and real devices, with bounded actions, repair loops, and redacted evidence.","summary_zh":"Local-first 模擬器與真機自動化，具備受限動作、修復迴圈與去識別化證據。","proof_en":"Detailed implementation remains private. A sanitized architecture and live demonstration can be provided for qualified work.","proof_zh":"詳細實作維持私有；合適合作可提供去敏架構與 Live Demo。","tags":["Android","iOS","Real Devices","Automation"],"url":null},{"id":"ix-agy-private","title":"ix-agy-private — Integration Lab","visibility":"private","status_key":"private-implementation","status_en":"Sanitized private evidence","status_zh":"去敏私有證據","summary_en":"The career bridge from Android engineering to full-stack delivery, mobile E2E automation, and agentic control systems.","summary_zh":"呈現從 Android 工程走向全端交付、行動 E2E 自動化與 Agentic 控制系統的職涯橋接。","proof_en":"Employer, customer, product, credential, and proprietary adapter details are intentionally excluded.","proof_zh":"刻意排除雇主、客戶、產品、憑證與專有 Adapter 細節。","tags":["Android","Full-Stack","E2E","Harness"],"url":null},{"id":"skills-shared","title":"Skills Shared Control Plane","visibility":"private","status_key":"private-implementation","status_en":"Private control plane","status_zh":"私有控制平面","summary_en":"Canonical cross-repository Skills, verifier calibration, mutation controls, evidence bundles, and release admission.","summary_zh":"跨 Repository 的 Canonical Skills、Verifier 校準、變異控制、證據 Bundle 與 Release Admission。","proof_en":"Public résumé exposes the transferable method, not the private registry or runtime bindings.","proof_zh":"公開履歷只呈現可轉移方法，不公開私有 Registry 或 Runtime Bindings。","tags":["Skills","Evals","Mutation","Release Gates"],"url":null}],"roles":[{"id":"agentic-architect","title_en":"Agentic Architect","title_zh":"Agentic Architect","priority_en":"Primary direction","priority_zh":"主要發展方向","current_en":"Strong evidence in Skills, state machines, tool boundaries, evals, evidence, and multi-repository delivery.","current_zh":"已具備 Skills、狀態機、工具邊界、Evals、證據與多 Repository 交付的強證據。","next_en":"Add one public, end-to-end operator deployment with live SLOs, telemetry, and external usage evidence.","next_zh":"補上一個公開端到端 Operator 部署，具備 Live SLO、Telemetry 與外部使用證據。"},{"id":"remote-fde","title_en":"Remote FDE","title_zh":"全遠端 FDE","priority_en":"Commercial entry path","priority_zh":"商業切入路徑","current_en":"Strong fit for decomposition, mobile and legacy integration, device automation, documentation, and bounded delivery.","current_zh":"適合需求拆解、行動與 Legacy 整合、裝置自動化、文檔與受限交付。","next_en":"Publish more client-shaped case studies with before/after metrics and acceptance receipts.","next_zh":"公開更多 Client-shaped Case Study，加入前後指標與驗收收據。"},{"id":"ai-engineer","title_en":"AI Engineer","title_zh":"AI Engineer","priority_en":"Applied systems path","priority_zh":"應用系統路徑","current_en":"Evidence covers RAG, agent orchestration, evals, typed Python systems, and a post-training reference pipeline.","current_zh":"現有證據涵蓋 RAG、Agent 編排、Evals、型別化 Python 系統與後訓練參考 Pipeline。","next_en":"Add live GPU inference, model-serving benchmarks, and cost or latency measurements.","next_zh":"補上 Live GPU Inference、Model Serving Benchmark 與成本或延遲量測。"}],"delivery_loop":{"steps_en":["Define one measurable outcome.","Name exact inputs and outputs.","Split one action into each task.","Execute the smallest reviewable change.","Run deterministic assertions.","Repair the exact failed condition.","Publish the result and evidence."],"steps_zh":["定義一個可量測成果。","明確命名輸入與輸出。","每個任務只放一個動作。","執行最小可審查變更。","執行確定性斷言。","只修正明確失敗條件。","發布成果與證據。"]}}
+{
+  "version": "2.0",
+  "updated": "2026-08-15",
+  "identity": {
+    "name": "Eeon",
+    "role": {
+      "en": "Remote Agent Engineer",
+      "zh-Hant": "遠端 Agent 工程師"
+    },
+    "positioning": {
+      "en": "Android systems depth, full-stack delivery, and software agents with proof.",
+      "zh-Hant": "結合 Android 系統經驗、全端交付與可驗證的軟體 Agent。"
+    }
+  },
+  "workModel": {
+    "remoteFirst": true,
+    "partTimePreferred": true,
+    "kickoffPercent": 50,
+    "reviewDays": 14,
+    "settlement": {
+      "en": "The remaining balance is due after the agreed checks pass.",
+      "zh-Hant": "約定檢查通過後結清尾款。"
+    }
+  },
+  "capabilities": [
+    {
+      "id": "mobile-systems",
+      "name": {
+        "en": "Mobile systems",
+        "zh-Hant": "行動系統"
+      },
+      "evidence": "production-background",
+      "summary": {
+        "en": "Android lifecycle, networking, WebRTC, release work, and production debugging.",
+        "zh-Hant": "Android 生命週期、網路、WebRTC、發佈流程與正式環境除錯。"
+      }
+    },
+    {
+      "id": "full-stack",
+      "name": {
+        "en": "Full-stack delivery",
+        "zh-Hant": "全端交付"
+      },
+      "evidence": "public-builds",
+      "summary": {
+        "en": "Typed APIs, web interfaces, data stores, CI, and small reviewable pull requests.",
+        "zh-Hant": "型別化 API、網頁介面、資料儲存、CI 與小型可審查 Pull Request。"
+      }
+    },
+    {
+      "id": "device-automation",
+      "name": {
+        "en": "Device automation",
+        "zh-Hant": "裝置自動化"
+      },
+      "evidence": "private-implementation",
+      "summary": {
+        "en": "Repeatable Android and iOS actions and checks on simulators or real devices.",
+        "zh-Hant": "在 Android 與 iOS 模擬器或真機上執行可重複操作與檢查。"
+      }
+    },
+    {
+      "id": "agent-systems",
+      "name": {
+        "en": "Agent systems",
+        "zh-Hant": "Agent 系統"
+      },
+      "evidence": "public-builds",
+      "summary": {
+        "en": "State, tools, retries, human approval, limits, and failure recovery.",
+        "zh-Hant": "狀態、工具、重試、人工確認、限制與失敗恢復。"
+      }
+    },
+    {
+      "id": "skills-prompts",
+      "name": {
+        "en": "System prompts and Skills",
+        "zh-Hant": "系統提示詞與 Skills"
+      },
+      "evidence": "public-builds",
+      "summary": {
+        "en": "Reusable SKILL.md packages with code execution and assertions.",
+        "zh-Hant": "可重用的 SKILL.md 套件，包含程式執行與斷言檢查。"
+      }
+    },
+    {
+      "id": "verification",
+      "name": {
+        "en": "Verification",
+        "zh-Hant": "結果驗證"
+      },
+      "evidence": "public-builds",
+      "summary": {
+        "en": "Tests, schemas, evidence records, and fail-closed delivery gates.",
+        "zh-Hant": "測試、Schema、證據紀錄與失敗即停止的交付檢查。"
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "skill-md-native",
+      "name": "Skill.md-native",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/Skill.md-native",
+      "evidence": {
+        "en": "Public build",
+        "zh-Hant": "公開實作"
+      },
+      "area": {
+        "en": "Agent Skills",
+        "zh-Hant": "Agent Skills"
+      },
+      "summary": {
+        "en": "Checks whether a SKILL.md package can run, validate, and report results across agent tools.",
+        "zh-Hant": "檢查 SKILL.md 套件能否在不同 Agent 工具中執行、驗證並回報結果。"
+      }
+    },
+    {
+      "id": "agent-skills-repo",
+      "name": "agent-skills-repo",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/agent-skills-repo",
+      "evidence": {
+        "en": "Public prototype",
+        "zh-Hant": "公開原型"
+      },
+      "area": {
+        "en": "Skill evaluation",
+        "zh-Hant": "Skill 評估"
+      },
+      "summary": {
+        "en": "Evaluates reusable agent skills with explicit tasks, expected outcomes, and checks.",
+        "zh-Hant": "用明確任務、預期結果與檢查方式評估可重用 Agent Skills。"
+      }
+    },
+    {
+      "id": "openwiki-source-anchoring",
+      "name": "openwiki-source-anchoring",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/openwiki-source-anchoring",
+      "evidence": {
+        "en": "Public experiment",
+        "zh-Hant": "公開實驗"
+      },
+      "area": {
+        "en": "Code documentation",
+        "zh-Hant": "程式文件"
+      },
+      "summary": {
+        "en": "Tests whether generated project documents stay tied to source code and traceable evidence.",
+        "zh-Hant": "測試自動產生的專案文件是否能連回原始碼與可追溯證據。"
+      }
+    },
+    {
+      "id": "truth-verify-loop",
+      "name": "truth-verify-loop",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/truth-verify-loop",
+      "evidence": {
+        "en": "Public prototype",
+        "zh-Hant": "公開原型"
+      },
+      "area": {
+        "en": "Research verification",
+        "zh-Hant": "研究驗證"
+      },
+      "summary": {
+        "en": "Turns research claims into a repeatable search, check, and evidence flow.",
+        "zh-Hant": "把研究主張轉成可重複的搜尋、檢查與證據流程。"
+      }
+    },
+    {
+      "id": "blackbox-auto-research",
+      "name": "blackbox-auto-research",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/blackbox-auto-research",
+      "evidence": {
+        "en": "Public research build",
+        "zh-Hant": "公開研究實作"
+      },
+      "area": {
+        "en": "System experiments",
+        "zh-Hant": "系統實驗"
+      },
+      "summary": {
+        "en": "Builds repeatable experiments for systems that can only be observed from the outside.",
+        "zh-Hant": "為只能從外部觀察的系統建立可重複實驗。"
+      }
+    },
+    {
+      "id": "xt-aegis",
+      "name": "XT-Aegis",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/XT-Aegis",
+      "evidence": {
+        "en": "Public build",
+        "zh-Hant": "公開實作"
+      },
+      "area": {
+        "en": "Agent safety",
+        "zh-Hant": "Agent 安全"
+      },
+      "summary": {
+        "en": "Defines practical limits for tools, prompts, permissions, and agent actions.",
+        "zh-Hant": "為工具、提示詞、權限與 Agent 行為定義實際限制。"
+      }
+    },
+    {
+      "id": "post-training-rsi-pipeline",
+      "name": "post-training-rsi-pipeline",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/post-training-rsi-pipeline",
+      "evidence": {
+        "en": "Deterministic reference",
+        "zh-Hant": "可重複參考實作"
+      },
+      "area": {
+        "en": "Post-training data",
+        "zh-Hant": "後訓練資料"
+      },
+      "summary": {
+        "en": "Reference pipeline for admitting, tracing, reviewing, and rolling back post-training data.",
+        "zh-Hant": "後訓練資料的准入、追蹤、審查與回滾參考流程。"
+      }
+    },
+    {
+      "id": "llm-arbitrage-system",
+      "name": "llm_arbitrage_system",
+      "visibility": "public",
+      "featured": true,
+      "url": "https://github.com/ed3c/llm_arbitrage_system",
+      "evidence": {
+        "en": "Public prototype",
+        "zh-Hant": "公開原型"
+      },
+      "area": {
+        "en": "Model routing",
+        "zh-Hant": "模型路由"
+      },
+      "summary": {
+        "en": "Routes model work by task needs, cost, and quality limits.",
+        "zh-Hant": "依任務需求、成本與品質限制分配模型工作。"
+      }
+    },
+    {
+      "id": "mobile-integration-lab",
+      "name": "Mobile integration lab",
+      "visibility": "private",
+      "featured": false,
+      "url": null,
+      "evidence": {
+        "en": "Private implementation",
+        "zh-Hant": "私有實作"
+      },
+      "area": {
+        "en": "Android and iOS automation",
+        "zh-Hant": "Android 與 iOS 自動化"
+      },
+      "summary": {
+        "en": "A private integration lab for device control, full-stack delivery, and agent-assisted testing.",
+        "zh-Hant": "用於裝置控制、全端交付與 Agent 輔助測試的私有整合實驗。"
+      }
+    },
+    {
+      "id": "delivery-control-plane",
+      "name": "Delivery control plane",
+      "visibility": "private",
+      "featured": false,
+      "url": null,
+      "evidence": {
+        "en": "Private implementation",
+        "zh-Hant": "私有實作"
+      },
+      "area": {
+        "en": "Cross-repository delivery",
+        "zh-Hant": "跨 Repo 交付"
+      },
+      "summary": {
+        "en": "A private system for bounded tasks, stacked pull requests, checks, and evidence handoff.",
+        "zh-Hant": "用於範圍控制、Stacked PR、檢查與證據交接的私有系統。"
+      }
+    }
+  ],
+  "disclosure": {
+    "public": [
+      "Capability summaries",
+      "Public repository links",
+      "Evidence status",
+      "Delivery terms"
+    ],
+    "private": [
+      "Client and company names",
+      "Credentials and device identifiers",
+      "Private repository links",
+      "Vendor bindings and paid library inventory",
+      "Unverified performance or revenue claims"
+    ]
+  }
+}

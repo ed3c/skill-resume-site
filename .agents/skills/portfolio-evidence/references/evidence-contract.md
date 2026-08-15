@@ -1,61 +1,30 @@
-# Public Portfolio Evidence Contract
+# Public evidence contract
 
-## Evidence states
+## Publish
 
-| State | Public meaning | Allowed wording |
-|---|---|---|
-| `verified-public` | Public code and repeatable checks exist. | Implemented, public, tested. |
-| `public-prototype` | Public architecture or prototype exists. | Prototype, reference, demonstration. |
-| `production-background` | The capability comes from prior professional work. | Production background, without employer details. |
-| `private-implementation` | Implementation exists but remains private. | Private implementation, sanitized evidence. |
-| `deterministic-reference` | Local deterministic behavior exists. Live infrastructure is not proven. | Deterministic reference implementation. |
+- Public repository names and links.
+- Plain-language capability summaries.
+- Evidence status such as public build, public prototype, or private implementation.
+- The remote engagement model and acceptance steps.
 
-## Claim record
+## Do not publish
 
-Every material claim must answer:
+- Client or employer names that are not already approved for public use.
+- Private repository URLs.
+- Credentials, signing material, device identifiers, or environment values.
+- Vendor bindings and paid library inventory.
+- Performance, revenue, customer, uptime, or adoption numbers without a public source.
 
-```text
-claim
--> source
--> evidence state
--> public disclosure decision
--> missing proof
+## Visual truth rule
+
+Do not use well-known company logos in a way that implies they are customers, employers, or sponsors. Platform icons may describe technology experience only when the nearby copy makes that meaning clear.
+
+## Acceptance
+
+The portfolio is publishable only when:
+
+```bash
+npm test
 ```
 
-## Evidence precedence
-
-```text
-current executable proof
-> current repository contract
-> current documentation
-> historical statement
-> aspiration
-```
-
-A diagram, dependency, package name, old commit, or planned architecture cannot create current capability truth.
-
-## Public allowlist
-
-The site can disclose:
-
-- transferable engineering methods;
-- public repository names and public URLs;
-- sanitized private capability summaries;
-- explicit limitations and missing evidence;
-- engagement terms;
-- role direction and next proof targets.
-
-## Public denylist
-
-The site must exclude:
-
-- current or former employer identity unless separately approved;
-- customer identity or operational data;
-- private product names and private repository URLs;
-- credentials, device identifiers, signing material, or secrets;
-- proprietary adapter inventories and runtime bindings;
-- unverified performance, reliability, revenue, or usage metrics.
-
-## Verification rule
-
-A check has evidence value only when the check executes against the relevant content and exits with an interpretable verdict. Missing execution is `ABSENT`, not `PASS`.
+returns exit code `0`.
