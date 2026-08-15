@@ -1,0 +1,59 @@
+name: Project inquiry
+about: Propose a remote Agent, AI, mobile automation, or delivery engagement.
+title: "[Project inquiry] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form only for information that can be public. Do not include credentials, customer data, proprietary source code, or confidential company details.
+
+  - type: dropdown
+    id: service
+    attributes:
+      label: Service area
+      options:
+        - Drop-in Remote Agent Engineering
+        - SKILL.md and System Prompt Engineering
+        - Agent Evals and Assertion Loops
+        - Android or iOS Device Automation
+        - Full-Stack Agent Prototype
+        - Architecture Review
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Measurable outcome
+      description: Describe one result that can be reviewed after a two-week cycle.
+      placeholder: A working demonstration, verified workflow, test result, or deployment outcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-system
+    attributes:
+      label: Current system and constraints
+      description: Share only public or non-confidential context.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: engagement
+    attributes:
+      label: Preferred engagement
+      options:
+        - Two-week paid pilot
+        - Part-time recurring delivery
+        - Architecture and implementation review
+        - Full-time remote discussion
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confidentiality
+    attributes:
+      label: Public-content confirmation
+      options:
+        - label: I confirm that this issue contains no confidential information or secrets.
+          required: true
