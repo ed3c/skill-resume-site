@@ -1,117 +1,46 @@
 # CONTEXT.md
 
-## Project purpose
+## Product statement
 
-`skill-resume-site` is Eeon's public online résumé and remote-delivery landing page.
+This repository is Eeon's public remote-work portfolio. It explains the path from Android development to full-stack delivery, mobile automation, and software Agent systems.
 
-The site serves three audiences:
+## Public promise
 
-1. hiring teams evaluating Agentic Architect, FDE, and AI Engineer fit;
-2. founders and engineering leaders seeking a drop-in remote Agent Engineer;
-3. reviewers inspecting the user's public and sanitized private technical evidence.
-
-## Positioning
-
-Primary positioning:
-
-```text
-Drop-in Remote Agent Engineer
-Android systems depth
-Full-stack delivery
-Agentic verification
-```
-
-Preferred work mode:
-
-```text
-fully remote
-part-time or embedded studio first
-50% kickoff payment
-biweekly review and settlement
-selective full-time roles
-```
-
-## Career narrative
-
-```text
-Android Developer
-→ Full-Stack Systems
-→ Android and iOS Device Automation
-→ Agentic Architect / Remote FDE / AI Engineer
-```
-
-The private repository `ix-agy-private` is presented only as a sanitized integration lab. Do not publish current-company or internal product information.
-
-## Evidence model
-
-Use these states:
-
-- `verified-public`
-- `public-prototype`
-- `production-background`
-- `private-implementation`
-- `deterministic-reference`
-- `next-evidence`
-
-A public claim must identify the evidence boundary.
-
-Examples:
-
-- “Public and tested” is allowed when the public repository contains executable checks or recorded test evidence.
-- “Private implementation” is allowed for sanitized capability summaries.
-- “Production-ready” is not allowed without exact production evidence.
-- “Real-device capable” must not imply a specific physical run unless evidence exists.
-
-## Technology disclosure
-
-The site may list:
-
-- transferable methods;
-- standard platform tools;
-- open-source technologies already visible in public work;
-- generic private capabilities.
-
-The site must not list:
-
-- confidential commercial adapters;
-- provider credentials or account details;
-- customer-specific systems;
-- private source structure beyond the approved summary;
-- current employer information.
+The site must show what can be proved, keep private work private, and make the next step easy for a remote client or hiring team.
 
 ## Architecture invariants
 
-- Static HTML, CSS, JavaScript, and JSON only.
-- No third-party client-side runtime dependency.
-- GitHub Pages is the deployment target.
-- English is the default public language.
-- Traditional Chinese is available through a local toggle.
-- Essential content remains semantic and keyboard accessible.
-- `prefers-reduced-motion` is respected.
-- Print output remains readable.
+1. Static HTML, CSS, and vanilla JavaScript only.
+2. One viewport with four routed center views.
+3. `data/portfolio.json` is the project-evidence source.
+4. Public links point only to repositories owned by `ed3c`.
+5. Private records use `url: null`.
+6. The release check is executable and fail-closed.
+7. Keyboard, mobile, reduced-motion, and data-saving behavior remain supported.
+8. No font binary is stored in the repository.
 
-## Small loop definition
+## Copy rules
 
-The local delivery specialization is:
+- Use plain words before specialist terms.
+- Explain what the work does, not only what tools it uses.
+- Keep sentences short.
+- Avoid inflated titles and unverified metrics.
+- Use Traditional Chinese terms that a software client can understand.
 
-```text
-spec
-→ bounded change
-→ execute
-→ deterministic assertion
-→ exact repair
-→ rerun
-→ evidence receipt
-```
+## Work model
 
-Anthropic's Evaluator–Optimizer remains the upstream workflow reference. The local loop narrows the unit of work to a repository change and gives mechanical checks release authority.
+- Fully remote preferred.
+- Part-time engagements first.
+- 50% at kickoff.
+- First result review after two weeks.
+- Remaining balance after agreed checks pass.
 
-## Definition of done
+## Completion rule
 
-Run:
+A change is complete only when:
 
 ```bash
-npm run check
+npm test
 ```
 
-Then verify the GitHub Pages workflow or state the remaining manual Pages-source action.
+returns exit code `0` and the page has been checked at desktop and mobile widths.

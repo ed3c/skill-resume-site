@@ -35,7 +35,8 @@ jobs:
       - name: Build static Pages artifact
         run: |
           mkdir -p _site
-          cp -R index.html 404.html assets data docs manifest.webmanifest robots.txt sitemap.xml _site/
+          cp index.html styles.css main.js 404.html manifest.webmanifest robots.txt sitemap.xml _site/
+          cp -R assets fonts data docs _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4

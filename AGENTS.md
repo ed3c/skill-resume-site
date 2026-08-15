@@ -1,70 +1,43 @@
 # AGENTS.md
 
-## Mission
+## Purpose
 
-Maintain an evidence-backed public résumé for Eeon.
+Maintain a clear, truthful, single-viewport portfolio without breaking the evidence and disclosure gates.
 
-The repository must remain:
-
-- truthful;
-- public-safe;
-- accessible;
-- dependency-light;
-- deployable on GitHub Pages;
-- verifiable without a paid service.
-
-## Required reading order
-
-Before any change, read:
+## Read first
 
 1. `CONTEXT.md`
-2. `docs/disclosure-policy.md`
-3. `.agents/skills/portfolio-evidence/references/evidence-contract.md`
-4. the nearest relevant source file
+2. `.agents/skills/portfolio-evidence/SKILL.md`
+3. `docs/architecture.md`
+4. `docs/disclosure-policy.md`
 
-Use `.agents/skills/portfolio-evidence/SKILL.md` for all portfolio content or site changes.
+## Presentation files
 
-## Non-negotiable invariants
+- `index.html`: semantic content, views, external resource allowlist.
+- `styles.css`: layout, visual system, responsive behavior, motion.
+- `main.js`: hash routing, mobile menu, language switch, stats, project rendering.
+- `assets/logo.webp`: brand mark.
 
-1. Do not publish employer, customer, current-company, credential, secret, device-identity, signing, or private-data information.
-2. Do not publish proprietary source details or a commercial adapter inventory.
-3. Do not convert private implementation into a public production claim.
-4. Do not invent percentages, revenue, users, latency, reliability, hardware, GPU, or customer metrics.
-5. Use an explicit evidence status for every material capability.
-6. Keep private project links absent.
-7. Keep public project links on `https://github.com/ed3c/`.
-8. Preserve the ASD-STE100 disclaimer. The site is inspired by controlled-language principles; it does not claim official conformance.
-9. Preserve the Anthropic comparison accurately. The small loop is a delivery specialization, not an Anthropic-defined name.
-10. Run `npm run check` before completion.
+## Evidence files
 
-## Editing protocol
+- `data/portfolio.json`: public/private project and capability data.
+- `.agents/skills/portfolio-evidence/scripts/assert-site.mjs`: release gate.
+- `.agents/skills/portfolio-evidence/references/evidence-contract.md`: public boundary.
 
-1. Define one measurable outcome.
-2. Identify the exact claim or behavior to change.
-3. Edit the smallest set of files.
-4. Run deterministic checks.
-5. Read the exact failure.
-6. Repair the exact failure.
-7. Rerun the checks.
-8. Report changed files, evidence, and open risks.
+## Hard rules
 
-## Content authority
+- Do not add fake customer, revenue, uptime, speed, or adoption numbers.
+- Do not link private repositories.
+- Do not expose client, employer, credential, device, or vendor details.
+- Keep the exact approved background-video URL unless the owner changes it.
+- Keep keyboard focus, Escape handling, reduced motion, and touch states.
+- Do not add a frontend framework or package dependency without explicit approval.
+- Do not commit font binaries.
 
-- `data/portfolio.json` owns project, capability, role, and delivery-loop content.
-- `index.html` owns semantic page structure and stable explanatory text.
-- `assets/app.js` renders structured evidence and controls language and filters.
-- `docs/disclosure-policy.md` owns public/private boundaries.
-- `docs/architecture.md` owns data flow and state-machine diagrams.
-- `docs/stack-plan.md` owns molecular PR decomposition.
-- CI exit status owns mechanical pass/fail truth.
+## Required command
 
-## Completion contract
+```bash
+npm test
+```
 
-A task is complete only when:
-
-- `npm run check` exits `0`;
-- no prohibited disclosure appears;
-- public and private evidence states remain accurate;
-- the page works without third-party runtime code;
-- the change is small enough to review;
-- the final report names any unverified claim or remaining manual action.
+A non-zero exit means the change is not ready.

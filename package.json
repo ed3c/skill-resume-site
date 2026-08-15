@@ -1,16 +1,16 @@
 {
   "name": "skill-resume-site",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Evidence-backed static portfolio for Eeon's remote Agentic Engineering work.",
+  "description": "A dependency-free, evidence-backed remote Agent portfolio for GitHub Pages.",
   "scripts": {
-    "check:js": "node --check assets/app.js",
-    "test": "node .agents/skills/portfolio-evidence/scripts/assert-site.mjs",
-    "check": "npm run check:js && npm run test",
+    "check": "node .agents/skills/portfolio-evidence/scripts/assert-site.mjs",
+    "test": "npm run check",
     "serve": "python3 -m http.server 4173"
   },
   "engines": {
     "node": ">=20"
   },
-  "license": "MIT"
+  "dependencies": {},
+  "devDependencies": {}
 }
