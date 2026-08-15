@@ -1,0 +1,835 @@
+name: Generate measured Agent portfolio update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update-agent-portfolio-v2.yml
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: measured-agent-portfolio-update
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate bounded portfolio update
+        env:
+          BRANCH: content/agent-shield-measurement
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+
+          python3 - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import pathlib
+          import re
+          import textwrap
+
+          root = pathlib.Path('.')
+          text_suffixes = {'.html', '.css', '.js', '.mjs', '.json', '.md', '.yml', '.yaml', '.txt', '.xml'}
+          forbidden_old = re.compile(r'ix[-_ ]agy(?:[-_ ]private)?', re.IGNORECASE)
+
+          def read(path: str) -> str:
+              return (root / path).read_text(encoding='utf-8')
+
+          def write(path: str, content: str) -> None:
+              target = root / path
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_text(content, encoding='utf-8')
+
+          # Remove the retired private-repository name from every published text asset.
+          for path in root.rglob('*'):
+              if not path.is_file() or '.git' in path.parts or path.suffix.lower() not in text_suffixes:
+                  continue
+              try:
+                  original = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              updated = forbidden_old.sub('agent-shield-monorepo', original)
+              if updated != original:
+                  path.write_text(updated, encoding='utf-8')
+
+          html = read('index.html')
+
+          # Ensure the core positioning remains explicit in both languages.
+          old_lead_en = 'My work connects mobile systems, full-stack delivery, and software agents. I enter an existing codebase, define one bounded result, ship a reviewable pull request, and leave executable knowledge behind.'
+          new_lead_en = 'My work connects mobile systems, full-stack delivery, and software agents. I enter an existing codebase, define one clear outcome, ship a reviewable pull request, and leave executable team knowledge behind.'
+          html = html.replace(old_lead_en, new_lead_en)
+
+          # Replace the retired laboratory block with the selected evidence repository.
+          html = html.replace(
+              '<h3><code>agent-shield-monorepo</code> · Integration Lab</h3>',
+              '<h3><a href="https://github.com/ed3c/agent-shield-monorepo" rel="noopener noreferrer"><code>agent-shield-monorepo</code></a> · Agent Security &amp; Delivery Lab</h3>',
+          )
+          html = html.replace(
+              '<span lang="en">Private evidence</span><span lang="zh-Hant">私有證據</span>',
+              '<span lang="en">Implementation evidence</span><span lang="zh-Hant">實作證據</span>',
+          )
+          old_lab = '<p><span lang="en">This private repository preserves the deepest continuity across Android, full-stack work, mobile E2E automation, and agent control. Public material excludes employer, customer, product, credential, and proprietary adapter information.</span><span lang="zh-Hant">這個私有 Repository 保存 Android、全端、行動 E2E 自動化與 Agent 控制的完整延續。公開內容不包含雇主、客戶、產品、憑證與專有 Adapter 資訊。</span></p>'
+          new_lab = '<p><span lang="en">This repository provides implementation evidence for agent security boundaries, tool control, integration hardening, and delivery checks. The portfolio presents only claims that trace to code, runtime evidence, or an explicit next-proof gap.</span><span lang="zh-Hant">這個 Repository 提供 Agent 安全邊界、工具控制、整合強化與交付檢查的實作證據。履歷只呈現能追溯到程式碼、Runtime 證據，或明確標示仍需補足之下一個證明的主張。</span></p>'
+          html = html.replace(old_lab, new_lab)
+
+          measurement_anchor = '        <a href="#measurement" data-index-link data-section-name-en="Measurement" data-section-name-zh="量測"><span>06B</span><b lang="en">Measurement contract</b><b lang="zh-Hant">成果量測</b></a>\n'
+          architecture_anchor = '        <a href="#architecture" data-index-link data-section-name-en="Architecture" data-section-name-zh="架構"><span>07</span><b lang="en">Architecture</b><b lang="zh-Hant">架構</b></a>'
+          if 'href="#measurement"' not in html:
+              if architecture_anchor not in html:
+                  raise SystemExit('Architecture index anchor was not found')
+              html = html.replace(architecture_anchor, measurement_anchor + architecture_anchor)
+
+          measurement_section = r'''
+      <section class="article-section measurement-section" id="measurement" data-index-section data-section-name-en="Measurement" data-section-name-zh="量測" aria-labelledby="measurement-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">06B</span>
+            <p class="section-kicker"><span lang="en">Delivery measurement</span><span lang="zh-Hant">成果量測</span></p>
+            <h2 id="measurement-title" tabindex="-1">
+              <span lang="en">Define the result before the Agent changes code.</span>
+              <span lang="zh-Hant">先定義成果，再讓 Agent 修改程式碼。</span>
+            </h2>
+          </header>
+
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead">
+              <span lang="en">A clear outcome is an acceptance contract: baseline, candidate change, evidence source, weighted evaluation, and hard release gates.</span>
+              <span lang="zh-Hant">清楚成果是一份驗收契約：Baseline、Candidate 變更、證據來源、加權量測，以及不可放寬的發布門檻。</span>
+            </p>
+
+            <div class="measurement-definition-grid">
+              <article>
+                <span>01</span>
+                <h3>Drop-in Remote Agent</h3>
+                <p><span lang="en">A remote delivery mode that enters an existing codebase for one bounded result. It reads the relevant context, changes the smallest file set, runs checks, publishes evidence, and leaves an async handoff. It is not permanent client-site placement and not an unsupervised chatbot.</span><span lang="zh-Hant">一種遠端交付模式：進入既有 Codebase，只處理一個有邊界的成果。它讀取相關 Context、修改最小檔案集合、執行檢查、發布證據，並留下非同步交接。它不是長期駐點，也不是無監督聊天機器人。</span></p>
+              </article>
+              <article>
+                <span>02</span>
+                <h3><span lang="en">One clear outcome</span><span lang="zh-Hant">一個清楚成果</span></h3>
+                <p><span lang="en">Name the user-visible result, exact inputs and outputs, the baseline to beat, allowed files and tools, failure behavior, evidence to collect, and the checks that decide pass or repair.</span><span lang="zh-Hant">先寫出使用者看得到的結果、精確輸入與輸出、要超越的 Baseline、允許修改的檔案與工具、失敗行為、需收集的證據，以及決定通過或修正的檢查。</span></p>
+              </article>
+              <article>
+                <span>03</span>
+                <h3>Git Town Stack PRs</h3>
+                <p><span lang="en">Split one large result into dependent, reviewable branches. Each pull request owns one atomic responsibility, passes its own checks, and points to the next dependent slice. Independent work stays as sibling branches; only real dependencies form a stack.</span><span lang="zh-Hant">把一個大型成果切成相依、可審查的 Branch。每個 Pull Request 只負責一個原子責任、通過自己的檢查，並指向下一個相依切片。彼此獨立的工作維持同層 Branch；只有真正相依的工作才形成 Stack。</span></p>
+              </article>
+            </div>
+
+            <div class="measurement-heading">
+              <span><span lang="en">Weighted delivery rubric</span><span lang="zh-Hant">加權交付量測</span></span>
+              <h3><span lang="en">The percentages are evaluation weights, not invented completion percentages.</span><span lang="zh-Hant">這些百分比是評估權重，不是虛構的能力完成度。</span></h3>
+              <p><span lang="en">Score each dimension from 0 to 100 using tests, traces, review evidence, and accepted behavior. Multiply each score by its weight, then add the five weighted values. A hard gate can still fail the release even when the weighted total is high.</span><span lang="zh-Hant">每個維度依測試、Trace、Review 證據與已驗收行為評為 0 到 100 分，再乘上權重並加總。即使加權總分很高，只要硬性門檻失敗，仍不得發布。</span></p>
+            </div>
+
+            <div class="score-matrix" aria-label="Agent delivery evaluation matrix">
+              <article><strong>25%</strong><div><h4><span lang="en">Control flow &amp; state governance</span><span lang="zh-Hant">控制流與狀態治理</span></h4><p><span lang="en">DAG or state machine, Plan–Execute–Verify separation, explicit stop conditions, maximum steps, compensation, and rollback.</span><span lang="zh-Hant">DAG 或狀態機、Plan–Execute–Verify 分離、明確終止條件、最大步數、補償與回滾。</span></p></div></article>
+              <article><strong>20%</strong><div><h4><span lang="en">Tool boundaries &amp; idempotency</span><span lang="zh-Hant">工具邊界與冪等性</span></h4><p><span lang="en">Single-purpose tools, typed schemas, failure modes, bounded outputs, and idempotency keys for write operations.</span><span lang="zh-Hant">單一職責工具、型別 Schema、Failure Modes、受限輸出，以及寫入操作的 Idempotency Key。</span></p></div></article>
+              <article><strong>20%</strong><div><h4><span lang="en">Context budget &amp; memory</span><span lang="zh-Hant">上下文預算與記憶</span></h4><p><span lang="en">Short-lived working state, durable decisions, active pruning, structured extraction, and an explicit overflow fallback.</span><span lang="zh-Hant">短期工作狀態、持久決策、主動修剪、結構化提取，以及明確的超額降級方案。</span></p></div></article>
+              <article><strong>20%</strong><div><h4><span lang="en">Fault tolerance, self-repair &amp; HITL</span><span lang="zh-Hant">容錯、自癒與 HITL</span></h4><p><span lang="en">Timeouts, bounded retries, circuit breakers, exact schema repair, deterministic guards, and human approval for high-risk actions.</span><span lang="zh-Hant">Timeout、有限重試、Circuit Breaker、精確 Schema 修復、確定性 Guard，以及高風險操作的人工作業。</span></p></div></article>
+              <article><strong>15%</strong><div><h4><span lang="en">Evals &amp; observability</span><span lang="zh-Hant">Evals 與可觀測性</span></h4><p><span lang="en">Deterministic assertions, Golden Dataset, LLM-as-a-judge where semantics matter, and end-to-end traces for tools, tokens, latency, and decisions.</span><span lang="zh-Hant">確定性斷言、Golden Dataset、語意需要時的 LLM-as-a-judge，以及工具、Token、延遲與決策的端到端 Trace。</span></p></div></article>
+            </div>
+
+            <aside class="measurement-formula">
+              <strong><span lang="en">Weighted score</span><span lang="zh-Hant">加權分數</span></strong>
+              <code>Σ(dimension score × weight)</code>
+              <p><span lang="en">This score measures one delivery candidate against its contract. It does not claim that a person or capability is “85% complete.” Capability cards continue to state evidence source: production background, public implementation, private implementation, or next proof required.</span><span lang="zh-Hant">這個分數用來衡量一次 Candidate 交付是否符合契約，不代表某個人或能力「完成 85%」。能力卡仍只標示證據來源：正式工作背景、公開實作、私有實作，或仍需補足的下一個證明。</span></p>
+            </aside>
+
+            <div class="quality-gates">
+              <header><span><span lang="en">Hard release gates</span><span lang="zh-Hant">硬性發布門檻</span></span><h3><span lang="en">A weighted average cannot hide a safety or regression failure.</span><span lang="zh-Hant">加權平均不能掩蓋安全或 Regression 失敗。</span></h3></header>
+              <ul>
+                <li><b>Safety / Guardrail</b><strong>= 100%</strong><small><span lang="en">Any bypass blocks merge.</span><span lang="zh-Hant">任何繞過都阻斷合併。</span></small></li>
+                <li><b>Accuracy delta</b><strong>≥ 0.0%</strong><small><span lang="en">Candidate must not regress from baseline.</span><span lang="zh-Hant">Candidate 不得低於 Baseline。</span></small></li>
+                <li><b>LLM Judge delta</b><strong>≥ −0.02</strong><small><span lang="en">Semantic quality may not fall beyond tolerance.</span><span lang="zh-Hant">語意品質不得超出容許退化。</span></small></li>
+                <li><b>Token increase</b><strong>≤ +15%</strong><small><span lang="en">Cost growth beyond the budget fails.</span><span lang="zh-Hant">成本增幅超過預算即失敗。</span></small></li>
+                <li><b>Latency increase</b><strong>≤ +20%</strong><small><span lang="en">Slower candidates require repair or explicit review.</span><span lang="zh-Hant">延遲超標需修正或明確覆核。</span></small></li>
+              </ul>
+            </div>
+
+            <div class="delivery-rule">
+              <span class="note-mark" aria-hidden="true">0/1</span>
+              <div>
+                <strong><span lang="en">LLMs can propose strong answers. Software delivery needs stronger rules.</span><span lang="zh-Hant">LLM 可以提出好答案，但軟體交付需要更強的規則。</span></strong>
+                <p><span lang="en">Execute the result. Read the deterministic failure. Repair the exact condition. Re-run until the agreed checks pass.</span><span lang="zh-Hant">執行結果、讀取確定性失敗、修正精確條件，再重跑到約定檢查通過。</span></p>
+                <code>PROPOSE → EXECUTE → READ FAILURE → REPAIR EXACT CONDITION → RERUN → PASS + EVIDENCE</code>
+              </div>
+            </div>
+
+            <div class="measurement-heading measurement-heading--comparison">
+              <span>Vibe Coding vs. Agentic Architect</span>
+              <h3><span lang="en">The difference is control, not how impressive the first answer looks.</span><span lang="zh-Hant">差別在控制能力，不在第一次回答看起來多厲害。</span></h3>
+            </div>
+
+            <div class="vibe-comparison" role="table" aria-label="Vibe Coding and Agentic Architect comparison">
+              <article role="row"><b role="cell"><span lang="en">Control flow</span><span lang="zh-Hant">控制流</span></b><p role="cell"><span lang="en">One large prompt and an open-ended ReAct loop.</span><span lang="zh-Hant">一個巨大 Prompt，加上沒有明確終點的 ReAct Loop。</span></p><p role="cell"><span lang="en">DAG or state machine with Plan, Execute, Verify, stop conditions, retry limits, and rollback.</span><span lang="zh-Hant">DAG 或狀態機，具有 Plan、Execute、Verify、終止條件、重試上限與回滾。</span></p></article>
+              <article role="row"><b role="cell"><span lang="en">Tools</span><span lang="zh-Hant">工具</span></b><p role="cell"><span lang="en">Broad tool names, weak parameters, and raw payload dumps.</span><span lang="zh-Hant">工具名稱過廣、參數鬆散，並把原始 Payload 全部灌入 Context。</span></p><p role="cell"><span lang="en">Single-purpose tools, strict schemas, idempotency, compact returns, and documented failures.</span><span lang="zh-Hant">單一職責工具、嚴格 Schema、冪等性、精簡回傳與已定義失敗模式。</span></p></article>
+              <article role="row"><b role="cell"><span lang="en">Context</span><span lang="zh-Hant">Context</span></b><p role="cell"><span lang="en">Keep every message and depend on a larger context window.</span><span lang="zh-Hant">保留全部訊息，期待更大的 Context Window 解決問題。</span></p><p role="cell"><span lang="en">Budget, prune, extract typed state, and separate working memory from durable decisions.</span><span lang="zh-Hant">設定預算、主動修剪、提取型別化狀態，並分離工作記憶與持久決策。</span></p></article>
+              <article role="row"><b role="cell"><span lang="en">Failure</span><span lang="zh-Hant">失敗處理</span></b><p role="cell"><span lang="en">Retry the whole task or ask the model to try again.</span><span lang="zh-Hant">整個任務重跑，或只叫模型再試一次。</span></p><p role="cell"><span lang="en">Timeout, classify the exact failure, repair within a bound, fall back, and route high-risk work to HITL.</span><span lang="zh-Hant">Timeout、分類精確失敗、有限修復、降級，並把高風險工作送入 HITL。</span></p></article>
+              <article role="row"><b role="cell"><span lang="en">Proof</span><span lang="zh-Hant">證明</span></b><p role="cell"><span lang="en">“I tried three cases and it looked fine.”</span><span lang="zh-Hant">「我試了三個 Case，看起來正常。」</span></p><p role="cell"><span lang="en">Assertions, Golden Dataset, baseline/candidate deltas, traces, and merge-blocking quality gates.</span><span lang="zh-Hant">斷言、Golden Dataset、Baseline/Candidate 差值、Trace 與阻斷合併的 Quality Gates。</span></p></article>
+            </div>
+
+            <div class="evidence-map">
+              <header><span><span lang="en">Evidence map</span><span lang="zh-Hant">證據對照</span></span><h3><span lang="en">Claims point to repositories or to a named next-proof gap.</span><span lang="zh-Hant">每個主張都指向 Repository，或明確指出下一個證明缺口。</span></h3></header>
+              <div>
+                <article><b><span lang="en">Production background</span><span lang="zh-Hant">正式工作背景</span></b><p><span lang="en">Android lifecycle, networking, WebRTC, release reliability, device diagnosis, and production debugging.</span><span lang="zh-Hant">Android Lifecycle、Networking、WebRTC、發佈可靠度、裝置診斷與正式環境除錯。</span></p></article>
+                <article><b><span lang="en">Public implementation</span><span lang="zh-Hant">公開實作</span></b><p><code>Skill.md-native</code>, <code>agent-skills-repo</code>, <code>truth-verify-loop</code>, <code>openwiki-source-anchoring</code>, <code>blackbox-auto-research</code>, <code>XT-Aegis</code>, <code>post-training-rsi-pipeline</code>, and <code>llm_arbitrage_system</code> provide inspectable evidence for Skills, verification, source anchoring, research automation, safety, data pipelines, and orchestration.</p></article>
+                <article><b><span lang="en">Repository implementation evidence</span><span lang="zh-Hant">Repository 實作證據</span></b><p><a href="https://github.com/ed3c/agent-shield-monorepo" rel="noopener noreferrer"><code>agent-shield-monorepo</code></a> is the named evidence repository for agent security boundaries, tool control, integration hardening, and delivery checks.</p></article>
+                <article><b><span lang="en">Next proof required</span><span lang="zh-Hant">下一個仍需補足的證明</span></b><p><span lang="en">A public end-to-end operator with live telemetry, client-shaped before/after acceptance records, and a measured inference service.</span><span lang="zh-Hant">具有 Live Telemetry 的公開端到端 Operator、貼近客戶情境的前後驗收紀錄，以及具實測資料的 Inference Service。</span></p></article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+'''
+
+          if 'id="measurement"' not in html:
+              marker = '      <section class="article-section" id="architecture"'
+              if marker not in html:
+                  raise SystemExit('Architecture section marker was not found')
+              html = html.replace(marker, measurement_section + '\n' + marker)
+
+          write('index.html', html)
+
+          # Publish machine-readable measurement and evidence metadata without inventing completion percentages.
+          data_path = root / 'data/portfolio.json'
+          data = json.loads(data_path.read_text(encoding='utf-8'))
+          projects = data.setdefault('projects', [])
+          target = None
+          for project in projects:
+              candidate = f"{project.get('id', '')} {project.get('name', '')}".lower()
+              if 'agent-shield-monorepo' in candidate:
+                  target = project
+                  break
+          if target is None:
+              target = {}
+              projects.append(target)
+          target.update({
+              'id': 'agent-shield-monorepo',
+              'name': 'agent-shield-monorepo',
+              'visibility': 'private',
+              'url': None,
+              'referenceUrl': 'https://github.com/ed3c/agent-shield-monorepo',
+              'evidence': {'en': 'Private implementation', 'zh-Hant': '私有實作'},
+              'area': {'en': 'Agent security and delivery controls', 'zh-Hant': 'Agent 安全與交付控制'},
+              'summary': {
+                  'en': 'Implementation evidence for agent security boundaries, tool control, integration hardening, and delivery checks.',
+                  'zh-Hant': 'Agent 安全邊界、工具控制、整合強化與交付檢查的實作證據。',
+              },
+          })
+          data['measurementContract'] = {
+              'purpose': 'Delivery evaluation weights; not capability completion percentages.',
+              'scoreRangePerDimension': [0, 100],
+              'formula': 'sum(dimension_score * weight)',
+              'weights': {
+                  'controlFlowAndStateGovernance': 25,
+                  'toolBoundariesAndIdempotency': 20,
+                  'contextBudgetAndMemory': 20,
+                  'faultToleranceSelfRepairAndHITL': 20,
+                  'evalsAndObservability': 15,
+              },
+              'hardGates': {
+                  'safetyGuardrailPassRate': '100%',
+                  'accuracyDelta': '>= 0.0%',
+                  'llmJudgeDelta': '>= -0.02',
+                  'tokenIncrease': '<= 15%',
+                  'latencyIncrease': '<= 20%',
+              },
+              'evidenceRule': 'Each capability names production background, public implementation, private implementation, or next proof required.',
+          }
+          data_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          css = read('styles.css')
+          css_addition = r'''
+
+/* Measured Agent delivery contract */
+.measurement-section {
+  overflow: hidden;
+}
+
+.measurement-section :where(h3, h4, p, code, b, strong, small, a) {
+  overflow-wrap: anywhere;
+}
+
+.measurement-definition-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 64px;
+}
+
+.measurement-definition-grid article {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.026);
+}
+
+.measurement-definition-grid article > span,
+.evidence-map > header > span,
+.quality-gates > header > span,
+.measurement-heading > span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.measurement-definition-grid h3,
+.measurement-heading h3,
+.quality-gates h3,
+.evidence-map h3 {
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.measurement-definition-grid p,
+.measurement-heading p,
+.measurement-formula p,
+.delivery-rule p,
+.vibe-comparison p,
+.evidence-map p {
+  margin-bottom: 0;
+  color: #a9a9ac;
+  font-size: 13.5px;
+  line-height: 1.72;
+}
+
+.measurement-heading {
+  margin-bottom: 28px;
+  padding-top: 8px;
+}
+
+.score-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.score-matrix article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #0d0d0f;
+}
+
+.score-matrix article:last-child {
+  grid-column: 1 / -1;
+}
+
+.score-matrix strong {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-matrix h4 {
+  margin: 0 0 7px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: -0.02em;
+}
+
+.score-matrix p {
+  margin: 0;
+  color: #929297;
+  font-size: 12.5px;
+  line-height: 1.62;
+}
+
+.measurement-formula {
+  margin-bottom: 52px;
+  padding: 24px;
+  border: 1px solid rgba(216, 255, 104, 0.32);
+  border-radius: 22px;
+  background: var(--accent-soft);
+}
+
+.measurement-formula strong,
+.measurement-formula code {
+  display: block;
+}
+
+.measurement-formula strong {
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.measurement-formula code,
+.delivery-rule code {
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  white-space: normal;
+}
+
+.quality-gates {
+  margin-bottom: 50px;
+}
+
+.quality-gates ul {
+  margin: 26px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line-strong);
+  list-style: none;
+}
+
+.quality-gates li {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.75fr) 100px minmax(0, 1.25fr);
+  gap: 18px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.quality-gates b {
+  color: #fff;
+  font-size: 13px;
+}
+
+.quality-gates strong {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.quality-gates small {
+  color: #88888d;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.delivery-rule {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 62px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.delivery-rule strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.delivery-rule code {
+  margin: 14px 0 0;
+  display: block;
+}
+
+.measurement-heading--comparison {
+  padding-top: 0;
+}
+
+.vibe-comparison {
+  margin-bottom: 62px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.vibe-comparison article {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(120px, 0.55fr) repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.vibe-comparison b {
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.vibe-comparison p:last-child {
+  color: #e2e2df;
+}
+
+.evidence-map > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.evidence-map article {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.024);
+}
+
+.evidence-map b {
+  display: block;
+  margin-bottom: 9px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.evidence-map code,
+.private-lab a code {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .measurement-definition-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .score-matrix {
+    grid-template-columns: 1fr;
+  }
+
+  .score-matrix article:last-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .measurement-definition-grid,
+  .score-matrix,
+  .evidence-map > div {
+    grid-template-columns: 1fr;
+  }
+
+  .quality-gates li,
+  .vibe-comparison article {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .quality-gates strong {
+    font-size: 20px;
+  }
+
+  .delivery-rule {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .measurement-definition-grid article,
+  .score-matrix article,
+  .measurement-formula,
+  .delivery-rule,
+  .evidence-map article {
+    padding: 18px;
+  }
+
+  .score-matrix article {
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .score-matrix strong {
+    font-size: 21px;
+  }
+}
+'''
+          if '/* Measured Agent delivery contract */' not in css:
+              css += css_addition
+          write('styles.css', css)
+
+          assertion = r'''#!/usr/bin/env node
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
+import process from "node:process";
+
+const root = process.cwd();
+const errors = [];
+const html = await readFile(path.join(root, "index.html"), "utf8");
+const css = await readFile(path.join(root, "styles.css"), "utf8");
+const data = JSON.parse(await readFile(path.join(root, "data/portfolio.json"), "utf8"));
+
+const requiredHtml = [
+  "agent-shield-monorepo",
+  "https://github.com/ed3c/agent-shield-monorepo",
+  "Drop-in Remote Agent",
+  "Git Town Stack PRs",
+  "id=\"measurement\"",
+  "Control flow &amp; state governance",
+  "Tool boundaries &amp; idempotency",
+  "Context budget &amp; memory",
+  "Fault tolerance, self-repair &amp; HITL",
+  "Evals &amp; observability",
+  "Execute the result. Read the deterministic failure. Repair the exact condition. Re-run until the agreed checks pass.",
+  "執行結果、讀取確定性失敗、修正精確條件，再重跑到約定檢查通過。",
+  "Vibe Coding vs. Agentic Architect",
+];
+for (const fragment of requiredHtml) {
+  if (!html.includes(fragment)) errors.push(`index.html must include: ${fragment}`);
+}
+
+const forbidden = new RegExp(["ix", "agy"].join("[-_ ]+"), "i");
+for (const file of await collectTextFiles(root)) {
+  const text = await readFile(file, "utf8");
+  if (forbidden.test(text)) errors.push(`retired repository information remains in ${path.relative(root, file)}`);
+}
+
+const weights = data.measurementContract?.weights || {};
+const expectedWeights = {
+  controlFlowAndStateGovernance: 25,
+  toolBoundariesAndIdempotency: 20,
+  contextBudgetAndMemory: 20,
+  faultToleranceSelfRepairAndHITL: 20,
+  evalsAndObservability: 15,
+};
+for (const [key, value] of Object.entries(expectedWeights)) {
+  if (weights[key] !== value) errors.push(`measurement weight ${key} must equal ${value}`);
+}
+if (Object.values(weights).reduce((sum, value) => sum + Number(value || 0), 0) !== 100) {
+  errors.push("measurement weights must total 100");
+}
+
+const gates = data.measurementContract?.hardGates || {};
+for (const [key, value] of Object.entries({
+  safetyGuardrailPassRate: "100%",
+  accuracyDelta: ">= 0.0%",
+  llmJudgeDelta: ">= -0.02",
+  tokenIncrease: "<= 15%",
+  latencyIncrease: "<= 20%",
+})) {
+  if (gates[key] !== value) errors.push(`hard gate ${key} must equal ${value}`);
+}
+
+const shield = (data.projects || []).find((project) => project.id === "agent-shield-monorepo");
+if (!shield) errors.push("portfolio data must include agent-shield-monorepo");
+if (shield?.url !== null) errors.push("private project url must remain null in the rendered project list");
+if (shield?.referenceUrl !== "https://github.com/ed3c/agent-shield-monorepo") errors.push("agent-shield reference URL is missing");
+
+function inspectForInventedCompletion(value, trail = []) {
+  if (!value || typeof value !== "object") return;
+  for (const [key, child] of Object.entries(value)) {
+    const next = [...trail, key];
+    if (/completion|percentComplete|progressPercent/i.test(key) && typeof child === "number") {
+      errors.push(`invented capability completion percentage at ${next.join(".")}`);
+    }
+    inspectForInventedCompletion(child, next);
+  }
+}
+inspectForInventedCompletion(data);
+
+for (const fragment of [
+  ".measurement-definition-grid",
+  ".score-matrix",
+  ".vibe-comparison",
+  ".evidence-map",
+  "overflow-wrap: anywhere",
+  "@media (max-width: 420px)",
+]) {
+  if (!css.includes(fragment)) errors.push(`responsive measurement CSS must include: ${fragment}`);
+}
+
+if (errors.length) {
+  console.error("Measured Agent portfolio assertions failed:\n");
+  for (const error of errors) console.error(`- ${error}`);
+  process.exit(1);
+}
+
+console.log("Retired repository disclosure: clean");
+console.log("Agent Shield evidence mapping: pass");
+console.log("PDF-weighted measurement contract: pass");
+console.log("Vibe Coding versus Agentic Architect explanation: pass");
+console.log("Responsive measurement presentation: pass");
+
+async function collectTextFiles(directory) {
+  const output = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    if (entry.name === ".git" || entry.name === "node_modules" || entry.name === "_site") continue;
+    const location = path.join(directory, entry.name);
+    if (entry.isDirectory()) output.push(...await collectTextFiles(location));
+    else if (/\.(?:html|css|js|mjs|json|md|ya?ml|txt|xml)$/i.test(entry.name)) output.push(location);
+  }
+  return output;
+}
+'''
+          write('.agents/skills/portfolio-evidence/scripts/assert-agent-portfolio.mjs', assertion)
+
+          package = json.loads(read('package.json'))
+          base_check = package.setdefault('scripts', {}).get('check', 'node .agents/skills/portfolio-evidence/scripts/assert-site.mjs')
+          extra_check = 'node .agents/skills/portfolio-evidence/scripts/assert-agent-portfolio.mjs'
+          if extra_check not in base_check:
+              package['scripts']['check'] = f'{base_check} && {extra_check}'
+          write('package.json', json.dumps(package, ensure_ascii=False, indent=2) + '\n')
+
+          readme = read('README.md')
+          readme_addition = r'''
+
+## Delivery measurement contract
+
+The portfolio does not publish invented capability-completion percentages. Capability evidence remains categorical: production background, public implementation, private implementation, or next proof required.
+
+The only percentages are delivery-evaluation weights adapted from the uploaded Agent application and Vibe Coding assessment matrix:
+
+| Dimension | Weight | Evidence used for scoring |
+|---|---:|---|
+| Control flow and state governance | 25% | DAG/state machine, explicit stop rules, retry bounds, rollback |
+| Tool boundaries and idempotency | 20% | Typed single-purpose tools, failure modes, compact returns, idempotency |
+| Context budget and memory | 20% | Working-state separation, pruning, structured extraction, overflow fallback |
+| Fault tolerance, self-repair, and HITL | 20% | Timeouts, bounded repair, circuit breaker, deterministic guards, human approval |
+| Evals and observability | 15% | Assertions, Golden Dataset, semantic judge, traces, token and latency evidence |
+
+Each dimension receives a 0–100 evidence-backed score. The weighted score is `sum(dimension score × weight)`. Hard gates override the average: Safety must equal 100%; Accuracy delta must be non-negative; LLM Judge delta must be at least -0.02; Token growth must not exceed 15%; Latency growth must not exceed 20%.
+
+The delivery rule is: propose, execute, read the deterministic failure, repair the exact condition, and rerun until the agreed checks pass.
+
+### Drop-in Remote Agent and Git Town Stack PRs
+
+A Drop-in Remote Agent enters an existing repository for one bounded outcome, reads only relevant context, changes the smallest file set, produces tests and evidence, and leaves an asynchronous handoff. Git Town Stack PRs split a dependent outcome into atomic reviewable branches; independent work remains sibling branches rather than being forced into a stack.
+'''
+          if '## Delivery measurement contract' not in readme:
+              readme += readme_addition
+          write('README.md', readme)
+
+          architecture = read('docs/architecture.md')
+          architecture_addition = r'''
+
+## Measured delivery data flow
+
+```text
+One clear outcome
+    -> Baseline and candidate
+    -> Bounded Stack PR slice
+    -> Execute
+    -> Deterministic assertions and semantic evals
+    -> Weighted 25/20/20/20/15 score
+    -> Hard safety, accuracy, quality, token, and latency gates
+    -> Accepted evidence or exact repair
+    -> Async handoff
+```
+
+The weighted score assesses a delivery candidate. It is not a capability-completion percentage. Safety and regression gates can reject a candidate regardless of its aggregate score.
+'''
+          if '## Measured delivery data flow' not in architecture:
+              architecture += architecture_addition
+          write('docs/architecture.md', architecture)
+
+          context = read('CONTEXT.md')
+          context_addition = r'''
+
+## Measurement invariants
+
+- Do not publish invented completion percentages for people, roles, projects, or capabilities.
+- Use evidence states: production background, public implementation, private implementation, or next proof required.
+- Use 25/20/20/20/15 only as delivery-evaluation weights.
+- Treat Safety = 100%, Accuracy delta >= 0, LLM Judge delta >= -0.02, Token increase <= 15%, and Latency increase <= 20% as release gates.
+- Do not disclose the retired private-repository name or any information associated with it.
+'''
+          if '## Measurement invariants' not in context:
+              context += context_addition
+          write('CONTEXT.md', context)
+
+          agents = read('AGENTS.md')
+          agents_addition = r'''
+
+## Measured delivery rule
+
+Before a portfolio change is complete:
+
+1. Define one user-visible outcome.
+2. Record the baseline, candidate, and evidence sources.
+3. Split dependent work into reviewable Stack PR slices.
+4. Execute the result.
+5. Read the deterministic failure.
+6. Repair the exact failed condition.
+7. Rerun until all agreed checks pass.
+8. Preserve the immutable `v1` tag.
+'''
+          if '## Measured delivery rule' not in agents:
+              agents += agents_addition
+          write('AGENTS.md', agents)
+
+          # Final disclosure gate before the workflow commits anything.
+          remaining = []
+          for path in root.rglob('*'):
+              if not path.is_file() or '.git' in path.parts or path.suffix.lower() not in text_suffixes:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              if forbidden_old.search(text):
+                  remaining.append(str(path))
+          if remaining:
+              raise SystemExit(f'Retired repository information remains in: {remaining}')
+          PY
+
+          git rm --ignore-unmatch .github/workflows/update-agent-portfolio-v2.yml
+          npm test
+          git add -A
+          git commit -m "feat: explain measured Drop-in Agent delivery"
+          git push --force origin "$BRANCH"
+
+      - name: Open content pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: content/agent-shield-measurement
+        run: |
+          set -euo pipefail
+          existing="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --state open --json url --jq '.[0].url // empty')"
+          if [ -n "$existing" ]; then
+            echo "$existing"
+            exit 0
+          fi
+          gh pr create \
+            --repo "$GITHUB_REPOSITORY" \
+            --base main \
+            --head "$BRANCH" \
+            --title "feat: explain measured Drop-in Agent delivery" \
+            --body "## Result
+
+Replace all retired repository references with agent-shield-monorepo and explain a measurable Drop-in Remote Agent delivery contract.
+
+## Content
+
+- define Drop-in Remote Agent and Git Town Stack PRs
+- define one clear outcome as baseline, candidate, evidence, weighted rubric, and hard gates
+- use the PDF matrix weights: 25/20/20/20/15
+- state that weights are delivery evaluation, not capability completion percentages
+- compare Vibe Coding with Agentic Architect across control flow, tools, context, failure handling, and proof
+- map claims to production background, public implementation, private implementation, or next proof required
+- document the deterministic execute/read-failure/exact-repair/rerun loop
+- preserve responsive behavior and the immutable v1 tag
+
+## Verification
+
+`npm test` passed before push."
