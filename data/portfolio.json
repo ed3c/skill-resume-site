@@ -1,6 +1,6 @@
 {
-  "version": "3.0",
-  "updated": "2026-08-15",
+  "version": "3.1",
+  "updated": "2026-08-16",
   "identity": {
     "name": "Eeon",
     "role": {
@@ -8,8 +8,8 @@
       "zh-Hant": "遠端 Agent 工程師"
     },
     "positioning": {
-      "en": "Android systems depth, full-stack delivery, and software agents with proof.",
-      "zh-Hant": "結合 Android 系統經驗、全端交付與可驗證的軟體 Agent。"
+      "en": "I connect mobile systems, full-stack delivery, and software Agents with reviewable code and executable evidence.",
+      "zh-Hant": "我把行動系統、全端交付與軟體 Agent 連在一起，用可審查 Code 與可執行證據交付。"
     }
   },
   "workModel": {
@@ -22,6 +22,27 @@
       "zh-Hant": "約定檢查通過後結清尾款。"
     }
   },
+  "evaluationFramework": {
+    "source": "評估 Agent 應用與 Vibe Coding.pdf",
+    "note": {
+      "en": "Weights score a measured Agent task or delivery slice. They are not personal completion percentages.",
+      "zh-Hant": "權重用來評估一個具體 Agent 任務或交付切片，不是個人能力完成百分比。"
+    },
+    "dimensions": [
+      { "id": "control-flow", "weight": 25, "name": { "en": "Control flow & state governance", "zh-Hant": "控制流與狀態治理" } },
+      { "id": "tool-boundaries", "weight": 20, "name": { "en": "Tool boundaries & idempotency", "zh-Hant": "工具邊界與冪等性" } },
+      { "id": "context", "weight": 20, "name": { "en": "Context budget & memory", "zh-Hant": "上下文預算與記憶" } },
+      { "id": "fault-tolerance", "weight": 20, "name": { "en": "Fault tolerance, repair & HITL", "zh-Hant": "容錯、自癒與 HITL" } },
+      { "id": "evals", "weight": 15, "name": { "en": "Evals & observability", "zh-Hant": "Evals 與可觀測性" } }
+    ],
+    "exampleGates": {
+      "safetyPassRate": "100%",
+      "accuracyDelta": ">= 0.0%",
+      "judgeScoreDelta": ">= -0.02",
+      "tokenGrowth": "<= +15%",
+      "p95LatencyGrowth": "<= +20%"
+    }
+  },
   "capabilities": [
     {
       "id": "mobile-systems",
@@ -30,6 +51,10 @@
       "summary": {
         "en": "Android lifecycle, networking, WebRTC, release work, and production debugging.",
         "zh-Hant": "Android 生命週期、網路、WebRTC、發佈流程與正式環境除錯。"
+      },
+      "nextProof": {
+        "en": "Keep public case studies separate from confidential production history.",
+        "zh-Hant": "持續增加公開 Case Study，同時與機密正式工作經歷保持邊界。"
       }
     },
     {
@@ -39,6 +64,10 @@
       "summary": {
         "en": "Typed APIs, web interfaces, data stores, CI, and small reviewable pull requests.",
         "zh-Hant": "型別化 API、網頁介面、資料儲存、CI 與小型可審查 Pull Request。"
+      },
+      "nextProof": {
+        "en": "More end-to-end public cases with before/after acceptance evidence.",
+        "zh-Hant": "增加具備前後比較與驗收證據的公開端到端案例。"
       }
     },
     {
@@ -48,6 +77,10 @@
       "summary": {
         "en": "Repeatable Android and iOS actions and checks on simulators or real devices.",
         "zh-Hant": "在 Android 與 iOS 模擬器或真機上執行可重複操作與檢查。"
+      },
+      "nextProof": {
+        "en": "A sanitized public device-automation demo with repeatable runtime receipts.",
+        "zh-Hant": "一個去敏後可公開、具有可重播 Runtime Receipt 的裝置自動化 Demo。"
       }
     },
     {
@@ -57,6 +90,10 @@
       "summary": {
         "en": "State, tools, retries, human approval, limits, and failure recovery.",
         "zh-Hant": "狀態、工具、重試、人工確認、限制與失敗恢復。"
+      },
+      "nextProof": {
+        "en": "A public end-to-end operator with live telemetry and external usage.",
+        "zh-Hant": "公開端到端 Operator，具備 Live Telemetry 與外部使用證據。"
       }
     },
     {
@@ -66,6 +103,10 @@
       "summary": {
         "en": "Reusable SKILL.md packages with code execution and assertions.",
         "zh-Hant": "可重用的 SKILL.md 套件，包含程式執行與斷言檢查。"
+      },
+      "nextProof": {
+        "en": "Broader cross-agent runtime qualification on externally reproduced tasks.",
+        "zh-Hant": "在外部可重現任務上增加跨 Agent Runtime Qualification。"
       }
     },
     {
@@ -75,6 +116,10 @@
       "summary": {
         "en": "Tests, schemas, evidence records, and fail-closed delivery gates.",
         "zh-Hant": "測試、Schema、證據紀錄與失敗即停止的交付檢查。"
+      },
+      "nextProof": {
+        "en": "More production-derived edge cases and independently reproduced evidence.",
+        "zh-Hant": "增加由真實環境異常回流的 Edge Cases 與獨立重現證據。"
       }
     }
   ],
@@ -85,11 +130,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/Skill.md-native",
-      "evidence": { "en": "Public build", "zh-Hant": "公開實作" },
+      "evidence": { "en": "Public implementation", "zh-Hant": "公開實作" },
       "area": { "en": "Agent Skills", "zh-Hant": "Agent Skills" },
       "summary": {
-        "en": "Checks whether a SKILL.md package can run, validate, and report results across agent tools.",
-        "zh-Hant": "檢查 SKILL.md 套件能否在不同 Agent 工具中執行、驗證並回報結果。"
+        "en": "Executable capability audits, SKILL.md code/assertion loops, runtime evidence, and explicit non-claims for gaps that are not yet proven.",
+        "zh-Hant": "可執行能力審計、SKILL.md Code／Assertion Loop、Runtime 證據，以及對尚未證明缺口的明確不宣稱。"
       }
     },
     {
@@ -98,11 +143,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/agent-skills-repo",
-      "evidence": { "en": "Public prototype", "zh-Hant": "公開原型" },
+      "evidence": { "en": "Public implementation", "zh-Hant": "公開實作" },
       "area": { "en": "Skill evaluation", "zh-Hant": "Skill 評估" },
       "summary": {
-        "en": "Evaluates reusable agent skills with explicit tasks, expected outcomes, and checks.",
-        "zh-Hant": "用明確任務、預期結果與檢查方式評估可重用 Agent Skills。"
+        "en": "Portable Skill contracts, deterministic repository gates, qualification state separation, and preregistered evaluation work.",
+        "zh-Hant": "Portable Skill Contract、確定性 Repository Gate、Qualification 狀態分離與 Preregistered Evaluation。"
       }
     },
     {
@@ -111,11 +156,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/openwiki-source-anchoring",
-      "evidence": { "en": "Public experiment", "zh-Hant": "公開實驗" },
+      "evidence": { "en": "Public implementation", "zh-Hant": "公開實作" },
       "area": { "en": "Code documentation", "zh-Hant": "程式文件" },
       "summary": {
-        "en": "Tests whether generated project documents stay tied to source code and traceable evidence.",
-        "zh-Hant": "測試自動產生的專案文件是否能連回原始碼與可追溯證據。"
+        "en": "Executable evaluation contracts, deterministic reproduction, negative controls, and evidence boundaries for generated repository documentation.",
+        "zh-Hant": "針對自動產生 Repository 文件的可執行 Evaluation Contract、Deterministic Reproduction、Negative Controls 與證據邊界。"
       }
     },
     {
@@ -124,11 +169,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/truth-verify-loop",
-      "evidence": { "en": "Public prototype", "zh-Hant": "公開原型" },
+      "evidence": { "en": "Public implementation", "zh-Hant": "公開實作" },
       "area": { "en": "Research verification", "zh-Hant": "研究驗證" },
       "summary": {
-        "en": "Turns research claims into a repeatable search, check, and evidence flow.",
-        "zh-Hant": "把研究主張轉成可重複的搜尋、檢查與證據流程。"
+        "en": "Independent semantic admission, deterministic contracts, provider timeout ownership, and replayable evidence receipts.",
+        "zh-Hant": "Independent Semantic Admission、確定性 Contract、Provider Timeout Ownership 與可重播 Evidence Receipt。"
       }
     },
     {
@@ -137,11 +182,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/blackbox-auto-research",
-      "evidence": { "en": "Public research build", "zh-Hant": "公開研究實作" },
+      "evidence": { "en": "Public implementation", "zh-Hant": "公開實作" },
       "area": { "en": "System experiments", "zh-Hant": "系統實驗" },
       "summary": {
-        "en": "Builds repeatable experiments for systems that can only be observed from the outside.",
-        "zh-Hant": "為只能從外部觀察的系統建立可重複實驗。"
+        "en": "Replayable black-box system experiments that preserve failures, quarantine states, and explicit production non-claims.",
+        "zh-Hant": "可重播黑盒系統實驗，保留失敗、Quarantine 狀態與明確 Production Non-claims。"
       }
     },
     {
@@ -150,11 +195,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/XT-Aegis",
-      "evidence": { "en": "Public build", "zh-Hant": "公開實作" },
+      "evidence": { "en": "Public implementation + next proof", "zh-Hant": "公開實作＋下一個證明" },
       "area": { "en": "Agent safety", "zh-Hant": "Agent 安全" },
       "summary": {
-        "en": "Defines practical limits for tools, prompts, permissions, and agent actions.",
-        "zh-Hant": "為工具、提示詞、權限與 Agent 行為定義實際限制。"
+        "en": "Fail-closed tool and sandbox checks, Git Town delivery evals, and evidence that keeps failed or unrun gates visible.",
+        "zh-Hant": "Fail-closed Tool／Sandbox 檢查、Git Town Delivery Evals，以及不隱藏 Failed／Not-run Gate 的證據。"
       }
     },
     {
@@ -163,11 +208,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/post-training-rsi-pipeline",
-      "evidence": { "en": "Deterministic reference", "zh-Hant": "可重複參考實作" },
+      "evidence": { "en": "Public implementation + next proof", "zh-Hant": "公開實作＋下一個證明" },
       "area": { "en": "Post-training data", "zh-Hant": "後訓練資料" },
       "summary": {
-        "en": "Reference pipeline for admitting, tracing, reviewing, and rolling back post-training data.",
-        "zh-Hant": "後訓練資料的准入、追蹤、審查與回滾參考流程。"
+        "en": "Fail-closed provider preflight, evidence-bound recovery planning, and deterministic local reference flows without pretending they are live provider proof.",
+        "zh-Hant": "Fail-closed Provider Preflight、Evidence-bound Recovery Planning 與 Deterministic Local Reference Flow，不把它們冒充 Live Provider 證據。"
       }
     },
     {
@@ -176,11 +221,11 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/llm_arbitrage_system",
-      "evidence": { "en": "Public prototype", "zh-Hant": "公開原型" },
-      "area": { "en": "Model routing", "zh-Hant": "模型路由" },
+      "evidence": { "en": "Public implementation + next proof", "zh-Hant": "公開實作＋下一個證明" },
+      "area": { "en": "Offline model research", "zh-Hant": "離線模型研究" },
       "summary": {
-        "en": "Routes model work by task needs, cost, and quality limits.",
-        "zh-Hant": "依任務需求、成本與品質限制分配模型工作。"
+        "en": "Content-addressed offline evaluation, signed evidence plans, strict state separation, and no claim of live trading or production authority.",
+        "zh-Hant": "Content-addressed Offline Evaluation、Signed Evidence Plan、嚴格狀態分離，且不宣稱 Live Trading 或 Production Authority。"
       }
     },
     {
@@ -192,32 +237,32 @@
       "evidence": { "en": "Private implementation", "zh-Hant": "私有實作" },
       "area": { "en": "Android and iOS automation", "zh-Hant": "Android 與 iOS 自動化" },
       "summary": {
-        "en": "A private integration lab for device control, full-stack delivery, and agent-assisted testing.",
-        "zh-Hant": "用於裝置控制、全端交付與 Agent 輔助測試的私有整合實驗。"
+        "en": "Private implementation evidence for repeatable device control, integration, and Agent-assisted testing. Employer, client, and internal product details are not published.",
+        "zh-Hant": "私有實作證據涵蓋可重複裝置控制、整合與 Agent 輔助測試；不公開雇主、客戶與內部產品資訊。"
       }
     },
     {
-      "id": "delivery-control-plane",
-      "name": "Delivery control plane",
+      "id": "agent-shield-monorepo",
+      "name": "agent-shield-monorepo",
       "visibility": "private",
       "featured": false,
       "url": null,
       "evidence": { "en": "Private implementation", "zh-Hant": "私有實作" },
-      "area": { "en": "Cross-repository delivery", "zh-Hant": "跨 Repo 交付" },
+      "area": { "en": "Agent delivery control plane", "zh-Hant": "Agent 交付控制平面" },
       "summary": {
-        "en": "A private system for bounded tasks, stacked pull requests, checks, and evidence handoff.",
-        "zh-Hant": "用於範圍控制、Stacked PR、檢查與證據交接的私有系統。"
+        "en": "Private evidence for state-machine control, receipt-derived status, stacked delivery checks, origin verification, and bounded Agent consumer canaries. Private adapters and bindings stay undisclosed.",
+        "zh-Hant": "私有證據包含狀態機控制、Receipt-derived Status、Stacked Delivery 檢查、Origin Verification 與有邊界的 Agent Consumer Canary；私有 Adapter 與 Binding 不公開。"
       }
     }
   ],
   "disclosure": {
-    "public": ["Capability summaries", "Public repository links", "Evidence status", "Delivery terms"],
+    "public": ["Capability summaries", "Public repository links", "Evidence source", "Measured delivery terms"],
     "private": [
       "Client and company names",
       "Credentials and device identifiers",
       "Private repository links",
       "Vendor bindings and paid library inventory",
-      "Unverified performance or revenue claims"
+      "Unverified performance, completion, or revenue claims"
     ]
   }
 }
