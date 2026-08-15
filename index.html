@@ -39,11 +39,13 @@
   <link rel="stylesheet" href="styles.css">
   <title>Intelligence Designed To Evolve</title>
 </head>
-<body data-view="home">
-  <a class="skip-link" href="#stage">
+<body id="top">
+  <a class="skip-link" href="#overview">
     <span lang="en">Skip to the main content</span>
     <span lang="zh-Hant">跳到主要內容</span>
   </a>
+
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
 
   <div class="bg" aria-hidden="true">
     <video class="bg-video" autoplay muted loop playsinline preload="metadata" tabindex="-1">
@@ -56,248 +58,570 @@
     <div class="bg-grain"></div>
   </div>
 
-  <div class="page" id="top">
-    <header class="header">
-      <div class="header-inner">
-        <a class="logo-button" href="#home" data-view-link="home" aria-label="Eeon home">
-          <img src="assets/logo.webp" alt="" width="52" height="52">
-        </a>
+  <header class="site-header" id="site-header">
+    <a class="logo-button" href="#top" data-index-link aria-label="Eeon home">
+      <img src="assets/logo.webp" alt="" width="52" height="52">
+    </a>
 
-        <nav class="desktop-nav" aria-label="Primary navigation">
-          <a class="nav-link is-active" href="#home" data-view-link="home" aria-current="page">
-            <span lang="en">Home</span><span lang="zh-Hant">首頁</span>
-          </a>
-          <a class="nav-link" href="#services" data-view-link="services">
-            <span lang="en">Services</span><span lang="zh-Hant">服務</span>
-          </a>
-          <a class="nav-link" href="#work" data-view-link="work">
-            <span lang="en">Work</span><span lang="zh-Hant">作品</span>
-          </a>
-          <a class="nav-link" href="#contact" data-view-link="contact">
-            <span lang="en">Contact</span><span lang="zh-Hant">聯絡</span>
-          </a>
-        </nav>
+    <div class="header-index">
+      <span class="current-section" id="current-section" aria-live="polite">Overview</span>
+      <button class="index-button" id="index-button" type="button" aria-label="Open page index" aria-expanded="false" aria-controls="site-index">
+        <span class="index-button__label"><span lang="en">Index</span><span lang="zh-Hant">索引</span></span>
+        <span class="index-button__icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+    </div>
+  </header>
 
-        <div class="desktop-actions" aria-label="Page actions">
-          <button class="language-button" id="language-toggle" type="button" aria-label="切換為繁體中文" aria-pressed="false">
-            <span class="language-button__en">繁中</span>
-            <span class="language-button__zh">EN</span>
-          </button>
-          <a class="github-button" href="https://github.com/ed3c" rel="me noopener noreferrer" aria-label="Open Eeon's GitHub profile">
-            <span>GitHub</span><i class="fa-brands fa-github" aria-hidden="true"></i>
-          </a>
+  <div class="index-overlay" id="index-overlay" hidden>
+    <button class="index-dismiss" type="button" aria-label="Close page index"></button>
+    <aside class="index-panel" id="site-index" aria-label="Page index">
+      <header class="index-panel__header">
+        <div>
+          <span class="index-eyebrow"><span lang="en">Page index</span><span lang="zh-Hant">頁面索引</span></span>
+          <strong><span lang="en">Jump to a section</span><span lang="zh-Hant">跳到指定內容</span></strong>
         </div>
+        <button class="index-close" id="index-close" type="button" aria-label="Close page index"><span aria-hidden="true">×</span></button>
+      </header>
 
-        <button class="menu-button" id="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-          <span></span><span></span><span></span>
+      <nav class="index-list" aria-label="Portfolio sections">
+        <a href="#overview" data-index-link data-section-name-en="Overview" data-section-name-zh="總覽"><span>01</span><b lang="en">Overview</b><b lang="zh-Hant">總覽</b></a>
+        <a href="#why-now" data-index-link data-section-name-en="Why now" data-section-name-zh="為何是現在"><span>02</span><b lang="en">Why now</b><b lang="zh-Hant">為何是現在</b></a>
+        <a href="#career" data-index-link data-section-name-en="Journey" data-section-name-zh="經歷"><span>03</span><b lang="en">Journey</b><b lang="zh-Hant">經歷</b></a>
+        <a href="#capabilities" data-index-link data-section-name-en="Capabilities" data-section-name-zh="能力"><span>04</span><b lang="en">Capabilities</b><b lang="zh-Hant">能力</b></a>
+        <a href="#projects" data-index-link data-section-name-en="Work" data-section-name-zh="作品"><span>05</span><b lang="en">Selected work</b><b lang="zh-Hant">精選作品</b></a>
+        <a href="#method" data-index-link data-section-name-en="Method" data-section-name-zh="方法"><span>06</span><b lang="en">Execution method</b><b lang="zh-Hant">執行方法</b></a>
+        <a href="#architecture" data-index-link data-section-name-en="Architecture" data-section-name-zh="架構"><span>07</span><b lang="en">Architecture</b><b lang="zh-Hant">架構</b></a>
+        <a href="#services" data-index-link data-section-name-en="Services" data-section-name-zh="服務"><span>08</span><b lang="en">Services</b><b lang="zh-Hant">服務</b></a>
+        <a href="#engagement" data-index-link data-section-name-en="Engagement" data-section-name-zh="合作"><span>09</span><b lang="en">Engagement</b><b lang="zh-Hant">合作</b></a>
+        <a href="#trajectory" data-index-link data-section-name-en="Direction" data-section-name-zh="方向"><span>10</span><b lang="en">Career direction</b><b lang="zh-Hant">職涯方向</b></a>
+        <a href="#contact" data-index-link data-section-name-en="Contact" data-section-name-zh="聯絡"><span>11</span><b lang="en">Contact</b><b lang="zh-Hant">聯絡</b></a>
+      </nav>
+
+      <footer class="index-panel__footer">
+        <button class="language-button" id="language-toggle" type="button" aria-label="切換為繁體中文" aria-pressed="false">
+          <span class="language-button__en">繁體中文</span>
+          <span class="language-button__zh">English</span>
         </button>
-      </div>
-    </header>
+        <a class="index-github" href="https://github.com/ed3c" rel="me noopener noreferrer">
+          <span>GitHub</span><i class="fa-brands fa-github" aria-hidden="true"></i>
+        </a>
+      </footer>
+    </aside>
+  </div>
 
-    <main class="stage" id="stage" tabindex="-1">
-      <section class="hero" id="home-view" aria-labelledby="hero-title">
-        <div class="hero-inner">
-          <div class="trust-row anim delay-05" aria-label="Experience across Android, iOS, web and AI systems">
-            <div class="trust-avatars" aria-hidden="true">
-              <span class="trust-avatar trust-avatar--one"><span><i class="fa-brands fa-android"></i></span></span>
-              <span class="trust-avatar trust-avatar--two"><span><i class="fa-brands fa-apple"></i></span></span>
-              <span class="trust-avatar trust-avatar--three"><span><i class="fa-brands fa-github"></i></span></span>
-            </div>
-            <span class="trust-pill">
-              <span lang="en">Android · iOS · Web · AI systems</span>
-              <span lang="zh-Hant">Android · iOS · 網頁 · AI 系統</span>
-            </span>
+  <main>
+    <section class="hero-section" id="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <div class="trust-row anim delay-05" aria-label="Experience across Android, iOS, web and AI systems">
+          <div class="trust-avatars" aria-hidden="true">
+            <span class="trust-avatar trust-avatar--one"><span><i class="fa-brands fa-android"></i></span></span>
+            <span class="trust-avatar trust-avatar--two"><span><i class="fa-brands fa-apple"></i></span></span>
+            <span class="trust-avatar trust-avatar--three"><span><i class="fa-brands fa-github"></i></span></span>
           </div>
-
-          <h1 class="headline" id="hero-title" tabindex="-1" aria-label="Intelligence Designed To Evolve">
-            <span class="headline-line headline-line--one">Intelligence</span>
-            <span class="headline-line headline-line--two">Designed To Evolve</span>
-          </h1>
-
-          <p class="subhead anim delay-28">
-            <span lang="en">I build software agents that work across devices, web apps and backend systems—and prove each result with tests.</span>
-            <span lang="zh-Hant">我打造能操作裝置、網頁與後端系統的軟體 Agent，並用測試證明工作已完成。</span>
-          </p>
-
-          <div class="hero-cta anim delay-40">
-            <a class="primary-cta" href="#work" data-view-link="work">
-              <span lang="en">View selected work</span>
-              <span lang="zh-Hant">查看精選作品</span>
-              <span class="cta-arrow" aria-hidden="true">↗</span>
-            </a>
-          </div>
+          <span class="trust-pill">
+            <span lang="en">Android · iOS · Web · AI systems</span>
+            <span lang="zh-Hant">Android · iOS · 網頁 · AI 系統</span>
+          </span>
         </div>
-      </section>
 
-      <section class="view-panel" id="services-view" data-view-panel="services" aria-labelledby="services-title" aria-hidden="true">
-        <div class="panel-shell">
-          <header class="panel-heading">
-            <p class="panel-kicker"><span lang="en">Services</span><span lang="zh-Hant">服務</span></p>
-            <h2 id="services-title" tabindex="-1">
-              <span lang="en">Bring me into the hard part.</span>
-              <span lang="zh-Hant">把最難的一段交給我。</span>
+        <h1 class="headline" id="hero-title" tabindex="-1" aria-label="Intelligence Designed To Evolve">
+          <span class="headline-line headline-line--one">Intelligence</span>
+          <span class="headline-line headline-line--two">Designed To Evolve</span>
+        </h1>
+
+        <p class="subhead anim delay-28">
+          <span lang="en">I build software agents that work across devices, web apps, and backend systems—and prove each result with tests.</span>
+          <span lang="zh-Hant">我打造能操作裝置、網頁與後端系統的軟體 Agent，並用測試證明工作已完成。</span>
+        </p>
+
+        <div class="hero-actions anim delay-40">
+          <a class="primary-cta" href="#overview" data-index-link>
+            <span lang="en">Explore the work</span>
+            <span lang="zh-Hant">了解我的工作</span>
+            <span class="cta-arrow" aria-hidden="true">↓</span>
+          </a>
+          <a class="text-cta" href="#contact" data-index-link>
+            <span lang="en">Start with one outcome</span>
+            <span lang="zh-Hant">先從一個成果開始</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-stats" aria-label="Working model">
+        <article class="hero-stat anim delay-50">
+          <span class="stat-symbol" aria-hidden="true">&lt;</span>
+          <strong class="stat-value" data-target="14" data-decimals="0" data-suffix="d">14d</strong>
+          <span lang="en">First review cycle</span><span lang="zh-Hant">第一輪成果驗收</span>
+        </article>
+        <article class="hero-stat anim delay-58">
+          <span class="stat-symbol" aria-hidden="true">%</span>
+          <strong class="stat-value" data-target="50" data-decimals="0" data-suffix="%">50%</strong>
+          <span lang="en">Kickoff payment</span><span lang="zh-Hant">專案啟動款</span>
+        </article>
+        <article class="hero-stat anim delay-66">
+          <span class="stat-symbol" aria-hidden="true">*</span>
+          <strong class="stat-value" data-target="1" data-decimals="0" data-prefix="0/">0/1</strong>
+          <span lang="en">Pass or repair</span><span lang="zh-Hant">通過或精準修正</span>
+        </article>
+        <article class="hero-stat anim delay-74">
+          <span class="stat-symbol" aria-hidden="true">#</span>
+          <strong class="stat-value" data-target="6" data-decimals="0">6</strong>
+          <span lang="en">Capability areas</span><span lang="zh-Hant">六個能力領域</span>
+        </article>
+      </div>
+    </section>
+
+    <div class="content-canvas">
+      <section class="article-section article-section--intro" id="overview" data-index-section data-section-name-en="Overview" data-section-name-zh="總覽" aria-labelledby="overview-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">01</span>
+            <p class="section-kicker"><span lang="en">Overview</span><span lang="zh-Hant">總覽</span></p>
+            <h2 id="overview-title" tabindex="-1">
+              <span lang="en">Drop-in remote engineering for the difficult part.</span>
+              <span lang="zh-Hant">加入既有團隊，處理最困難的一段。</span>
             </h2>
-            <p>
-              <span lang="en">I join an existing team, define one clear result, and deliver a small change that can be reviewed and tested.</span>
-              <span lang="zh-Hant">我加入既有團隊，先定義一個清楚成果，再交付可審查、可測試的小型變更。</span>
-            </p>
           </header>
 
-          <div class="service-layout">
-            <div class="service-list" role="list">
-              <article class="service-row" role="listitem">
-                <span class="service-index">01</span>
-                <div>
-                  <h3><span lang="en">Agent workflows that finish real tasks</span><span lang="zh-Hant">能完成真實工作的 Agent 流程</span></h3>
-                  <p><span lang="en">Tools, state, retries, approval steps, and tests in one controlled flow.</span><span lang="zh-Hant">把工具、狀態、重試、人工確認與測試放進同一條受控流程。</span></p>
-                </div>
-              </article>
-              <article class="service-row" role="listitem">
-                <span class="service-index">02</span>
-                <div>
-                  <h3><span lang="en">Android and iOS device automation</span><span lang="zh-Hant">Android 與 iOS 裝置自動化</span></h3>
-                  <p><span lang="en">Repeatable actions and checks on simulators or real devices.</span><span lang="zh-Hant">在模擬器或真機上執行可重複的操作與檢查。</span></p>
-                </div>
-              </article>
-              <article class="service-row" role="listitem">
-                <span class="service-index">03</span>
-                <div>
-                  <h3><span lang="en">System prompts and SKILL.md</span><span lang="zh-Hant">系統提示詞與 SKILL.md</span></h3>
-                  <p><span lang="en">Turn team knowledge into reusable instructions that can run code and check results.</span><span lang="zh-Hant">把團隊知識整理成可重用指令，並讓流程能執行程式與檢查結果。</span></p>
-                </div>
-              </article>
-              <article class="service-row" role="listitem">
-                <span class="service-index">04</span>
-                <div>
-                  <h3><span lang="en">Full-stack repair and delivery</span><span lang="zh-Hant">全端問題修復與交付</span></h3>
-                  <p><span lang="en">Find the root cause, limit the change, and ship a reviewable pull request.</span><span lang="zh-Hant">找出根因、縮小改動範圍，再交付可審查的 Pull Request。</span></p>
-                </div>
-              </article>
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead">
+              <span lang="en">My work connects mobile systems, full-stack delivery, and software agents. I enter an existing codebase, define one bounded result, ship a reviewable pull request, and leave executable knowledge behind.</span>
+              <span lang="zh-Hant">我的工作把行動系統、全端交付與軟體 Agent 連在一起。我加入既有 Codebase，先定義一個清楚成果，再交付可審查的 Pull Request，並留下可執行的團隊知識。</span>
+            </p>
+
+            <div class="article-prose">
+              <p>
+                <span lang="en">The portfolio is designed for two kinds of work. The first is a remote role in an Agent, AI, or platform team. The second is a part-time studio engagement where a company needs a senior engineer for a specific integration, automation, or reliability problem.</span>
+                <span lang="zh-Hant">這份履歷對應兩種合作。第一種是 Agent、AI 或平台團隊的全遠端職位。第二種是個人工作室模式：公司針對一個整合、自動化或可靠度問題，短期加入一位資深工程師。</span>
+              </p>
+              <p>
+                <span lang="en">The work is not limited to producing prompts or demos. A result includes code, tests, a working demonstration, an architecture note, known risks, and a clear next decision.</span>
+                <span lang="zh-Hant">工作不只產生提示詞或 Demo。完整成果包含程式碼、測試、可操作展示、架構說明、已知風險，以及下一個決策。</span>
+              </p>
             </div>
 
-            <aside class="delivery-note" aria-label="Delivery process">
-              <p class="note-label"><span lang="en">How the work moves</span><span lang="zh-Hant">合作流程</span></p>
-              <ol>
-                <li><span>01</span><span lang="en">Name one measurable result.</span><span lang="zh-Hant">定義一個可衡量成果。</span></li>
-                <li><span>02</span><span lang="en">Cut the smallest useful slice.</span><span lang="zh-Hant">切出最小且有用的工作範圍。</span></li>
-                <li><span>03</span><span lang="en">Run tests and record the result.</span><span lang="zh-Hant">執行測試並記錄結果。</span></li>
-                <li><span>04</span><span lang="en">Review, accept, or repair.</span><span lang="zh-Hant">審查、驗收，或精準修正。</span></li>
-              </ol>
-              <div class="career-line" aria-label="Career progression">
-                <span>Android</span><i aria-hidden="true"></i><span>Full-stack</span><i aria-hidden="true"></i><span>Device automation</span><i aria-hidden="true"></i><span>AI systems</span>
+            <aside class="editorial-note">
+              <span class="note-mark" aria-hidden="true">E</span>
+              <div>
+                <strong><span lang="en">Positioning</span><span lang="zh-Hant">目前定位</span></strong>
+                <p><span lang="en">Senior software engineer moving toward Agentic Architect, Remote FDE, and AI Engineer work—without discarding Android, systems debugging, or product delivery depth.</span><span lang="zh-Hant">以資深軟體工程經驗為底，發展 Agentic Architect、Remote FDE 與 AI Engineer 能力，同時保留 Android、系統除錯與產品交付深度。</span></p>
               </div>
             </aside>
           </div>
         </div>
       </section>
 
-      <section class="view-panel" id="work-view" data-view-panel="work" aria-labelledby="work-title" aria-hidden="true">
-        <div class="panel-shell panel-shell--work">
-          <header class="panel-heading panel-heading--compact">
-            <p class="panel-kicker"><span lang="en">Selected work</span><span lang="zh-Hant">精選作品</span></p>
-            <h2 id="work-title" tabindex="-1">
-              <span lang="en">Public proof. Private boundaries.</span>
-              <span lang="zh-Hant">公開成果，保留私有邊界。</span>
+      <section class="article-section" id="why-now" data-index-section data-section-name-en="Why now" data-section-name-zh="為何是現在" aria-labelledby="why-now-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">02</span>
+            <p class="section-kicker">Why now</p>
+            <h2 id="why-now-title" tabindex="-1">
+              <span lang="en">Code generation is abundant. Reliable execution is not.</span>
+              <span lang="zh-Hant">程式碼生成已普及，可靠執行仍然稀缺。</span>
             </h2>
-            <p>
-              <span lang="en">Public projects link to code. Private work is described only by capability, without client, company, or vendor details.</span>
-              <span lang="zh-Hant">公開專案直接連到程式碼；私有工作只說明能力，不公開客戶、公司或供應商資訊。</span>
-            </p>
           </header>
 
-          <div class="project-list" id="project-list" aria-live="polite">
-            <div class="project-loading">
-              <span lang="en">Loading project evidence…</span>
-              <span lang="zh-Hant">正在載入專案資料…</span>
-            </div>
-          </div>
-
-          <div class="private-boundary">
-            <i class="fa-solid fa-lock" aria-hidden="true"></i>
-            <p>
-              <strong><span lang="en">Private capability</span><span lang="zh-Hant">私有能力</span></strong>
-              <span lang="en">Mobile integration labs, real-device control, and cross-repository delivery systems are shown without private repository links.</span>
-              <span lang="zh-Hant">行動整合實驗、真機控制與跨 Repo 交付系統，只展示能力，不提供私有 Repo 連結。</span>
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead">
+              <span lang="en">The useful layer now sits around the model: clear task boundaries, reusable Skills, controlled tool access, durable state, automated checks, and proof that the work actually finished.</span>
+              <span lang="zh-Hant">現在真正有價值的部分位於模型周圍：清楚的任務邊界、可重用 Skills、受控工具權限、可恢復狀態、自動檢查，以及工作確實完成的證明。</span>
             </p>
+
+            <div class="thesis-list">
+              <article>
+                <span>01</span>
+                <div><h3><span lang="en">First-hand finding</span><span lang="zh-Hant">第一手發現</span></h3><p><span lang="en">Many agent failures are not caused by a weak model. They come from missing contracts, unclear stop conditions, fragile tool calls, and work that was never verified.</span><span lang="zh-Hant">許多 Agent 失敗不是模型不夠強，而是缺少契約、停止條件不清楚、工具呼叫脆弱，或工作從未真正驗證。</span></p></div>
+              </article>
+              <article>
+                <span>02</span>
+                <div><h3><span lang="en">What becomes hard to copy</span><span lang="zh-Hant">什麼會逐漸難以複製</span></h3><p><span lang="en">The lasting asset is a growing library of executable procedures, test oracles, evidence contracts, domain adapters, failure cases, and recovery rules.</span><span lang="zh-Hant">長期資產是持續累積的可執行程序、測試判定器、證據契約、領域 Adapter、失敗案例與恢復規則。</span></p></div>
+              </article>
+              <article>
+                <span>03</span>
+                <div><h3><span lang="en">Proof over presentation</span><span lang="zh-Hant">證據優先於包裝</span></h3><p><span lang="en">A working demo matters, but the stronger signal is the path behind it: scoped change, test output, reviewable diff, accepted result, and a record another engineer can replay.</span><span lang="zh-Hant">可運作 Demo 很重要，但更強的訊號是背後的路徑：受控改動、測試輸出、可審查 Diff、已驗收結果，以及其他工程師可以重跑的紀錄。</span></p></div>
+              </article>
+            </div>
+
+            <blockquote class="article-quote">
+              <p><span lang="en">The career thesis is simple: model capability will keep improving, so the durable advantage is the system that turns capability into safe, repeatable delivery.</span><span lang="zh-Hant">職涯命題很直接：模型能力會持續進步，因此更耐久的優勢，是把模型能力轉成安全、可重複交付的系統。</span></p>
+            </blockquote>
           </div>
         </div>
       </section>
 
-      <section class="view-panel" id="contact-view" data-view-panel="contact" aria-labelledby="contact-title" aria-hidden="true">
-        <div class="panel-shell panel-shell--contact">
-          <div class="contact-copy">
-            <p class="panel-kicker"><span lang="en">Remote engagement</span><span lang="zh-Hant">遠端合作</span></p>
-            <h2 id="contact-title" tabindex="-1">
-              <span lang="en">Remote, bounded, reviewable.</span>
-              <span lang="zh-Hant">全遠端、範圍清楚、成果可驗收。</span>
+      <section class="article-section" id="career" data-index-section data-section-name-en="Journey" data-section-name-zh="經歷" aria-labelledby="career-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">03</span>
+            <p class="section-kicker"><span lang="en">Career arc</span><span lang="zh-Hant">職涯路線</span></p>
+            <h2 id="career-title" tabindex="-1">
+              <span lang="en">From device reality to agent systems.</span>
+              <span lang="zh-Hant">從裝置真實世界走向 Agent 系統。</span>
             </h2>
-            <p>
-              <span lang="en">Part-time projects come first. A project starts with one two-week slice, a clear test, and a shared definition of done.</span>
-              <span lang="zh-Hant">優先承接兼職專案。每次先做一個兩週工作範圍，並在開始前確認測試方式與完成標準。</span>
-            </p>
-            <div class="contact-actions">
-              <a class="primary-cta" href="https://github.com/ed3c/skill-resume-site/issues/new?template=project-inquiry.yml" rel="noopener noreferrer">
-                <span lang="en">Start a project</span><span lang="zh-Hant">提出合作需求</span><span class="cta-arrow" aria-hidden="true">↗</span>
-              </a>
-              <a class="text-link" href="https://github.com/ed3c" rel="me noopener noreferrer">
-                <span lang="en">View GitHub</span><span lang="zh-Hant">查看 GitHub</span><span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </div>
+          </header>
 
-          <div class="terms-list" role="list" aria-label="Project terms">
-            <div role="listitem"><span>01</span><strong>50%</strong><p><span lang="en">to start the agreed work</span><span lang="zh-Hant">啟動已確認的工作</span></p></div>
-            <div role="listitem"><span>02</span><strong>14 days</strong><p><span lang="en">for the first result review</span><span lang="zh-Hant">進行第一輪成果驗收</span></p></div>
-            <div role="listitem"><span>03</span><strong>Code + tests</strong><p><span lang="en">with a demo and result note</span><span lang="zh-Hant">附 Demo 與成果說明</span></p></div>
-            <div role="listitem"><span>04</span><strong>50%</strong><p><span lang="en">after the agreed checks pass</span><span lang="zh-Hant">在約定檢查通過後結清</span></p></div>
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead">
+              <span lang="en">The progression is cumulative. Each stage adds a new control surface without discarding the previous one.</span>
+              <span lang="zh-Hant">這條路線是累積式發展。每個階段新增一個控制面，同時保留前一階段的工程能力。</span>
+            </p>
+
+            <ol class="career-timeline">
+              <li>
+                <span class="timeline-index">01</span>
+                <div><h3>Android Developer</h3><p><span lang="en">Lifecycle, networking, WebRTC, release reliability, device diagnosis, and production debugging established a strong base in systems that fail under real constraints.</span><span lang="zh-Hant">從 Lifecycle、Networking、WebRTC、發佈可靠度、裝置診斷與正式環境除錯，建立面對真實限制與失敗情境的系統基礎。</span></p></div>
+              </li>
+              <li>
+                <span class="timeline-index">02</span>
+                <div><h3>Full-Stack Systems</h3><p><span lang="en">Typed APIs, web interfaces, storage, access control, CI, and end-to-end product slices extended the work beyond one client platform.</span><span lang="zh-Hant">型別化 API、網頁介面、資料儲存、權限、CI 與端到端產品切片，把能力延伸到完整系統。</span></p></div>
+              </li>
+              <li>
+                <span class="timeline-index">03</span>
+                <div><h3>Android &amp; iOS Device Automation</h3><p><span lang="en">Simulator and real-device control, bounded journeys, logs, recovery, and immutable evidence connect software agents to physical device behavior.</span><span lang="zh-Hant">模擬器與真機控制、受限操作流程、Log、恢復機制與不可變證據，讓軟體 Agent 能連接實際裝置行為。</span></p></div>
+              </li>
+              <li>
+                <span class="timeline-index">04</span>
+                <div><h3>Agentic Architect · Remote FDE · AI Engineer</h3><p><span lang="en">Skills, state machines, tool contracts, evals, durable execution, and remote delivery systems form the next stage.</span><span lang="zh-Hant">Skills、狀態機、工具契約、Evals、可恢復執行與遠端交付系統，構成下一階段。</span></p></div>
+              </li>
+            </ol>
+
+            <aside class="private-lab">
+              <div>
+                <span class="private-lab__label"><i class="fa-solid fa-lock" aria-hidden="true"></i><span lang="en">Private evidence</span><span lang="zh-Hant">私有證據</span></span>
+                <h3><code>ix-agy-private</code> · Integration Lab</h3>
+              </div>
+              <p><span lang="en">This private repository preserves the deepest continuity across Android, full-stack work, mobile E2E automation, and agent control. Public material excludes employer, customer, product, credential, and proprietary adapter information.</span><span lang="zh-Hant">這個私有 Repository 保存 Android、全端、行動 E2E 自動化與 Agent 控制的完整延續。公開內容不包含雇主、客戶、產品、憑證與專有 Adapter 資訊。</span></p>
+            </aside>
           </div>
         </div>
       </section>
-    </main>
 
-    <footer class="stats" aria-label="Working model">
-      <div class="stats-grid">
-        <div class="stat anim delay-50" aria-label="14 day review cycle">
-          <span class="stat-icon" aria-hidden="true">&lt;</span>
-          <span class="stat-value" data-target="14" data-suffix="d" data-decimals="0">14d</span>
-          <span class="stat-label"><span lang="en">Review cycle</span><span lang="zh-Hant">成果驗收</span></span>
-        </div>
-        <div class="stat anim delay-58" aria-label="50 percent project kickoff">
-          <span class="stat-icon" aria-hidden="true">%</span>
-          <span class="stat-value" data-target="50" data-suffix="%" data-decimals="0">50%</span>
-          <span class="stat-label"><span lang="en">Project kickoff</span><span lang="zh-Hant">專案啟動款</span></span>
-        </div>
-        <div class="stat anim delay-66" aria-label="Binary pass or fix test result">
-          <span class="stat-icon" aria-hidden="true">*</span>
-          <span class="stat-value" data-target="1" data-prefix="0/" data-suffix="" data-decimals="0">0/1</span>
-          <span class="stat-label"><span lang="en">Pass or fix</span><span lang="zh-Hant">通過或修正</span></span>
-        </div>
-        <div class="stat anim delay-74" aria-label="6 capability areas">
-          <span class="stat-icon" aria-hidden="true">#</span>
-          <span class="stat-value" data-target="6" data-suffix="" data-decimals="0">6</span>
-          <span class="stat-label"><span lang="en">Capability areas</span><span lang="zh-Hant">能力領域</span></span>
-        </div>
-      </div>
-    </footer>
-  </div>
+      <section class="article-section" id="capabilities" data-index-section data-section-name-en="Capabilities" data-section-name-zh="能力" aria-labelledby="capabilities-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">04</span>
+            <p class="section-kicker"><span lang="en">Stack readiness</span><span lang="zh-Hant">技術完成度</span></p>
+            <h2 id="capabilities-title" tabindex="-1">
+              <span lang="en">Completion is expressed as evidence state.</span>
+              <span lang="zh-Hant">完成度以證據狀態呈現。</span>
+            </h2>
+          </header>
 
-  <div class="mobile-overlay" id="mobile-overlay" hidden>
-    <button class="overlay-dismiss" type="button" aria-label="Close navigation menu"></button>
-    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-      <a class="mobile-link is-active" href="#home" data-view-link="home" aria-current="page"><span lang="en">Home</span><span lang="zh-Hant">首頁</span></a>
-      <a class="mobile-link" href="#services" data-view-link="services"><span lang="en">Services</span><span lang="zh-Hant">服務</span></a>
-      <a class="mobile-link" href="#work" data-view-link="work"><span lang="en">Work</span><span lang="zh-Hant">作品</span></a>
-      <a class="mobile-link" href="#contact" data-view-link="contact"><span lang="en">Contact</span><span lang="zh-Hant">聯絡</span></a>
-      <div class="mobile-menu-actions">
-        <button class="mobile-language" id="mobile-language-toggle" type="button"><span class="language-button__en">切換繁中</span><span class="language-button__zh">Switch to English</span></button>
-        <a class="mobile-github" href="https://github.com/ed3c" rel="me noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span>GitHub</span></a>
-      </div>
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead">
+              <span lang="en">The site does not invent percentages. Each capability states whether the proof comes from production background, a public build, a private implementation, or the next proof still needed.</span>
+              <span lang="zh-Hant">網站不虛構完成百分比。每項能力都說明證據來自正式工作背景、公開實作、私有實作，或下一個仍需補足的證明。</span>
+            </p>
+
+            <div class="evidence-legend" aria-label="Evidence state legend">
+              <span><i></i><b><span lang="en">Production background</span><span lang="zh-Hant">正式工作背景</span></b></span>
+              <span><i></i><b><span lang="en">Public build</span><span lang="zh-Hant">公開實作</span></b></span>
+              <span><i></i><b><span lang="en">Private implementation</span><span lang="zh-Hant">私有實作</span></b></span>
+            </div>
+
+            <div class="capability-list" id="capability-list" aria-live="polite">
+              <p class="loading"><span lang="en">Loading capability evidence…</span><span lang="zh-Hant">正在載入能力證據…</span></p>
+            </div>
+
+            <div class="article-prose article-prose--single">
+              <p><span lang="en">This distinction matters because architecture diagrams and prototypes are not the same as production operation. The portfolio states the boundary so a hiring team or client can evaluate the current proof without guessing.</span><span lang="zh-Hant">這個區分很重要，因為架構圖與原型不等於正式環境運作。履歷會直接標示邊界，讓招聘團隊或客戶不用猜測目前證據的強度。</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="projects" data-index-section data-section-name-en="Work" data-section-name-zh="作品" aria-labelledby="projects-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">05</span>
+            <p class="section-kicker"><span lang="en">Repository evidence</span><span lang="zh-Hant">Repo 證據</span></p>
+            <h2 id="projects-title" tabindex="-1">
+              <span lang="en">Systems, not keyword lists.</span>
+              <span lang="zh-Hant">展示系統，不堆疊技能關鍵字。</span>
+            </h2>
+          </header>
+
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead"><span lang="en">Each project is presented as a problem, a system boundary, and an evidence state. Public work links to code. Private work shows only transferable capability.</span><span lang="zh-Hant">每個專案都以問題、系統邊界與證據狀態呈現。公開作品連到程式碼；私有作品只展示可轉移能力。</span></p>
+
+            <div class="project-controls" role="group" aria-label="Filter project evidence">
+              <button type="button" class="project-filter is-active" data-project-filter="all" aria-pressed="true"><span lang="en">All</span><span lang="zh-Hant">全部</span></button>
+              <button type="button" class="project-filter" data-project-filter="public" aria-pressed="false"><span lang="en">Public</span><span lang="zh-Hant">公開</span></button>
+              <button type="button" class="project-filter" data-project-filter="private" aria-pressed="false"><span lang="en">Private capability</span><span lang="zh-Hant">私有能力</span></button>
+            </div>
+
+            <div class="project-list" id="project-list" aria-live="polite">
+              <p class="loading"><span lang="en">Loading repository evidence…</span><span lang="zh-Hant">正在載入 Repository 證據…</span></p>
+            </div>
+
+            <aside class="disclosure-note">
+              <i class="fa-solid fa-eye-slash" aria-hidden="true"></i>
+              <p><strong><span lang="en">Disclosure boundary.</span><span lang="zh-Hant">揭露邊界。</span></strong> <span lang="en">The page does not expose client names, employer details, credentials, device identifiers, private repository links, vendor bindings, or paid-library inventory.</span><span lang="zh-Hant">頁面不公開客戶名稱、公司資訊、憑證、裝置識別碼、私有 Repo 連結、供應商綁定或付費 Library 清單。</span></p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="method" data-index-section data-section-name-en="Method" data-section-name-zh="方法" aria-labelledby="method-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">06</span>
+            <p class="section-kicker"><span lang="en">Loop engineering</span><span lang="zh-Hant">迴圈工程</span></p>
+            <h2 id="method-title" tabindex="-1">
+              <span lang="en">Turn model output into shipped evidence.</span>
+              <span lang="zh-Hant">把模型輸出轉成可交付證據。</span>
+            </h2>
+          </header>
+
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead"><span lang="en">An LLM can suggest a good answer. Software delivery needs a stronger rule: execute the result, inspect deterministic failures, repair the exact condition, and repeat until the agreed checks pass.</span><span lang="zh-Hant">LLM 可以提出好答案，但軟體交付需要更強的規則：執行結果、讀取確定性失敗、修正精確條件，再重跑到約定檢查通過。</span></p>
+
+            <div class="loop-comparison">
+              <article>
+                <span class="loop-label"><span lang="en">General evaluator pattern</span><span lang="zh-Hant">一般評估迴圈</span></span>
+                <h3>Generate → Evaluate → Feedback → Revise</h3>
+                <p><span lang="en">A generator produces a candidate. An evaluator reviews quality and sends feedback. This works well when quality can be described but cannot be fully checked by code.</span><span lang="zh-Hant">Generator 產生候選結果，Evaluator 評估品質並回傳意見。這適合品質可以描述，但無法完全用程式檢查的工作。</span></p>
+              </article>
+              <article class="loop-comparison__primary">
+                <span class="loop-label"><span lang="en">Delivery specialization</span><span lang="zh-Hant">軟體交付版本</span></span>
+                <h3>Spec → Change → Execute → Assert → Repair</h3>
+                <p><span lang="en">The evaluator is primarily a parser, test, type checker, schema, or policy gate. An LLM review can assist, but it cannot create release truth.</span><span lang="zh-Hant">Evaluator 主要是 Parser、Test、Type Checker、Schema 或 Policy Gate。LLM 評語可以協助，但不能建立 Release Truth。</span></p>
+              </article>
+            </div>
+
+            <div class="execution-loop" aria-label="Small execution loop">
+              <div><span>01</span><strong>SPEC</strong><small><span lang="en">Name one result</span><span lang="zh-Hant">定義一個成果</span></small></div>
+              <i aria-hidden="true">→</i>
+              <div><span>02</span><strong>CHANGE</strong><small><span lang="en">Edit the smallest slice</span><span lang="zh-Hant">修改最小範圍</span></small></div>
+              <i aria-hidden="true">→</i>
+              <div><span>03</span><strong>EXECUTE</strong><small><span lang="en">Run the real path</span><span lang="zh-Hant">執行真實路徑</span></small></div>
+              <i aria-hidden="true">→</i>
+              <div><span>04</span><strong>ASSERT</strong><small><span lang="en">Return exit 0 or a failure</span><span lang="zh-Hant">回傳通過或失敗</span></small></div>
+              <i aria-hidden="true">↺</i>
+              <div><span>05</span><strong>REPAIR</strong><small><span lang="en">Fix the exact condition</span><span lang="zh-Hant">修正精確條件</span></small></div>
+            </div>
+
+            <article class="method-article">
+              <div class="method-article__heading">
+                <span>STE100-inspired</span>
+                <h3><span lang="en">Controlled specifications for Agentic work</span><span lang="zh-Hant">用受控規格降低 Agentic 工作歧義</span></h3>
+              </div>
+              <div class="article-prose article-prose--single">
+                <p><span lang="en">The method borrows controlled-language principles: one action per step, explicit nouns, short procedural sentences, and machine-verifiable outputs. It is an engineering adaptation, not an official ASD-STE100 conformance claim.</span><span lang="zh-Hant">這套方法借用受控語言原則：每一步只有一個動作、明確寫出名詞、程序句保持短小，輸出必須能由機器驗證。這是工程應用，不是官方 ASD-STE100 合規聲明。</span></p>
+              </div>
+              <ol class="spec-steps">
+                <li><span>01</span><p><b><span lang="en">Define one measurable outcome.</span><span lang="zh-Hant">定義一個可衡量成果。</span></b><small><span lang="en">Name the observable result before choosing tools.</span><span lang="zh-Hant">先說清可觀察結果，再選工具。</span></small></p></li>
+                <li><span>02</span><p><b><span lang="en">Name exact inputs and outputs.</span><span lang="zh-Hant">寫清楚輸入與輸出。</span></b><small><span lang="en">Do not hide dependencies behind vague words.</span><span lang="zh-Hant">不要用模糊詞隱藏相依條件。</span></small></p></li>
+                <li><span>03</span><p><b><span lang="en">Split one action into each task.</span><span lang="zh-Hant">每個 Task 只放一個動作。</span></b><small><span lang="en">Keep branching logic visible.</span><span lang="zh-Hant">讓分支邏輯保持可見。</span></small></p></li>
+                <li><span>04</span><p><b><span lang="en">Execute the smallest reviewable change.</span><span lang="zh-Hant">執行最小可審查變更。</span></b><small><span lang="en">Reduce blast radius and review time.</span><span lang="zh-Hant">縮小影響範圍與審查時間。</span></small></p></li>
+                <li><span>05</span><p><b><span lang="en">Run deterministic assertions.</span><span lang="zh-Hant">執行確定性斷言。</span></b><small><span lang="en">Prefer tests, schemas, parsers, and policy checks.</span><span lang="zh-Hant">優先使用測試、Schema、Parser 與 Policy Check。</span></small></p></li>
+                <li><span>06</span><p><b><span lang="en">Repair the exact failed condition.</span><span lang="zh-Hant">修正精確失敗條件。</span></b><small><span lang="en">Use stderr and evidence instead of broad rewrites.</span><span lang="zh-Hant">依 stderr 與證據修正，不做大範圍重寫。</span></small></p></li>
+                <li><span>07</span><p><b><span lang="en">Publish the result and evidence.</span><span lang="zh-Hant">發布成果與證據。</span></b><small><span lang="en">Leave a path another engineer can replay.</span><span lang="zh-Hant">留下其他工程師可以重跑的路徑。</span></small></p></li>
+              </ol>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="architecture" data-index-section data-section-name-en="Architecture" data-section-name-zh="架構" aria-labelledby="architecture-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">07</span>
+            <p class="section-kicker"><span lang="en">Portfolio architecture</span><span lang="zh-Hant">履歷架構</span></p>
+            <h2 id="architecture-title" tabindex="-1">
+              <span lang="en">The résumé is itself an Agent-ready repository.</span>
+              <span lang="zh-Hant">這份履歷本身就是 Agent-ready Repository。</span>
+            </h2>
+          </header>
+
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead"><span lang="en">The public page, structured evidence, disclosure rules, assertion script, and deployment workflow are one system. The design can change without weakening the truth boundary.</span><span lang="zh-Hant">公開頁面、結構化證據、揭露規則、斷言腳本與部署 Workflow 是同一套系統。視覺可以改變，但真實性邊界不能變弱。</span></p>
+
+            <div class="architecture-flow" aria-label="Portfolio data flow">
+              <div><strong><span lang="en">Repository evidence</span><span lang="zh-Hant">Repo 證據</span></strong><small>public + private</small></div>
+              <i>↓</i>
+              <div><strong><span lang="en">Disclosure allowlist</span><span lang="zh-Hant">公開白名單</span></strong><small>no confidential inventory</small></div>
+              <i>↓</i>
+              <div><strong><span lang="en">Controlled specification</span><span lang="zh-Hant">受控規格</span></strong><small>one action · explicit nouns</small></div>
+              <i>↓</i>
+              <div><strong><span lang="en">Portfolio data and articles</span><span lang="zh-Hant">履歷資料與文章</span></strong><small>JSON + semantic HTML</small></div>
+              <i>↓</i>
+              <div><strong><span lang="en">Assertions and CI</span><span lang="zh-Hant">斷言與 CI</span></strong><small>fail closed</small></div>
+              <i>↓</i>
+              <div><strong>GitHub Pages</strong><small>reviewable public proof</small></div>
+            </div>
+
+            <div class="architecture-detail">
+              <pre class="directory-tree" aria-label="Repository directory structure"><code>skill-resume-site/
+├── index.html
+├── styles.css
+├── main.js
+├── assets/
+│   ├── logo.webp
+│   └── favicon.svg
+├── fonts/
+│   └── README.md
+├── data/
+│   └── portfolio.json
+├── docs/
+│   ├── architecture.md
+│   ├── disclosure-policy.md
+│   └── stack-plan.md
+├── .agents/skills/
+│   └── portfolio-evidence/
+│       ├── SKILL.md
+│       ├── scripts/assert-site.mjs
+│       └── references/evidence-contract.md
+├── .github/workflows/
+│   ├── ci.yml
+│   └── pages.yml
+├── AGENTS.md
+├── CONTEXT.md
+└── README.md</code></pre>
+
+              <div class="architecture-copy">
+                <article><span>01</span><div><h3><span lang="en">Human-facing article layer</span><span lang="zh-Hant">給人閱讀的文章層</span></h3><p><span lang="en">Semantic sections explain why the work exists, how it operates, and what proof is available.</span><span lang="zh-Hant">Semantic Sections 解釋工作為何存在、如何運作，以及有哪些證據。</span></p></div></article>
+                <article><span>02</span><div><h3><span lang="en">Machine-readable evidence layer</span><span lang="zh-Hant">給機器讀取的證據層</span></h3><p><span lang="en">Project visibility, URLs, capability states, and work terms remain structured in JSON.</span><span lang="zh-Hant">專案可見性、URL、能力狀態與合作條件維持在 JSON。</span></p></div></article>
+                <article><span>03</span><div><h3><span lang="en">Release truth layer</span><span lang="zh-Hant">發佈真實性層</span></h3><p><span lang="en">The assertion script rejects missing sections, private links, broken navigation, forbidden claims, or incomplete deployment artifacts.</span><span lang="zh-Hant">斷言腳本會拒絕缺少 Section、私有連結、失效導覽、不實宣稱或不完整部署 Artifact。</span></p></div></article>
+              </div>
+            </div>
+
+            <article class="stack-article">
+              <p class="section-kicker">Git Town · stacked PR MVP</p>
+              <div class="stack-line" aria-label="Stacked pull request plan"><span>main</span><i>→</i><span>portfolio/foundation</span><i>→</i><span>portfolio/evidence</span><i>→</i><span>portfolio/agentic-loop</span></div>
+              <p><span lang="en">Each branch owns one reviewable behavior. Dependent work is stacked. Independent work stays on sibling branches. This keeps Agentic implementation small enough to test, review, and reverse.</span><span lang="zh-Hant">每個 Branch 只負責一個可審查行為。相依工作使用 Stack，獨立工作維持 Sibling Branch。這讓 Agentic 實作保持可測試、可審查、可回復。</span></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="services" data-index-section data-section-name-en="Services" data-section-name-zh="服務" aria-labelledby="services-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">08</span>
+            <p class="section-kicker"><span lang="en">Services</span><span lang="zh-Hant">服務</span></p>
+            <h2 id="services-title" tabindex="-1">
+              <span lang="en">Bring me into the hard part.</span>
+              <span lang="zh-Hant">把最難的一段交給我。</span>
+            </h2>
+          </header>
+
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead"><span lang="en">The service boundary is intentionally narrow: one difficult outcome, one short delivery cycle, and evidence that the result works.</span><span lang="zh-Hant">服務範圍刻意保持清楚：一個困難成果、一個短交付週期，以及能證明結果有效的證據。</span></p>
+
+            <div class="service-list">
+              <article><span>01</span><div><h3>Agentic System Architecture</h3><p><span lang="en">State, tools, permissions, stop conditions, recovery, observability, and human authority.</span><span lang="zh-Hant">狀態、工具、權限、停止條件、恢復、可觀測性與人工權限。</span></p></div></article>
+              <article><span>02</span><div><h3>System Prompt &amp; SKILL.md</h3><p><span lang="en">Controlled instructions, progressive disclosure, executable scripts, assertions, and portable integration.</span><span lang="zh-Hant">受控指令、漸進式揭露、可執行腳本、斷言與可攜式整合。</span></p></div></article>
+              <article><span>03</span><div><h3>Remote FDE Integration</h3><p><span lang="en">Messy APIs, legacy boundaries, data normalization, live demos, and two-week production slices.</span><span lang="zh-Hant">混亂 API、Legacy 邊界、資料正規化、Live Demo 與兩週生產切片。</span></p></div></article>
+              <article><span>04</span><div><h3>Mobile Device Automation</h3><p><span lang="en">Android and iOS simulator or real-device control, diagnosis, bounded repair, and evidence.</span><span lang="zh-Hant">Android 與 iOS 模擬器或真機控制、診斷、受限修復與證據。</span></p></div></article>
+              <article><span>05</span><div><h3>Agent Evals &amp; Truth Verification</h3><p><span lang="en">Golden cases, mutation controls, deterministic verifiers, trace evidence, and regression gates.</span><span lang="zh-Hant">Golden Cases、Mutation Control、確定性 Verifier、Trace 證據與回歸 Gate。</span></p></div></article>
+              <article><span>06</span><div><h3>Full-Stack Agent Demo</h3><p><span lang="en">A clear web surface that proves the Agent can complete a real task, not only produce text.</span><span lang="zh-Hant">以清楚 Web 介面證明 Agent 能完成真實任務，而不只輸出文字。</span></p></div></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="engagement" data-index-section data-section-name-en="Engagement" data-section-name-zh="合作" aria-labelledby="engagement-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">09</span>
+            <p class="section-kicker"><span lang="en">Engagement model</span><span lang="zh-Hant">合作模式</span></p>
+            <h2 id="engagement-title" tabindex="-1">
+              <span lang="en">A remote studio contract built around accepted outcomes.</span>
+              <span lang="zh-Hant">以驗收成果為核心的遠端工作室合作。</span>
+            </h2>
+          </header>
+
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead"><span lang="en">The preferred model is fully remote and part-time first. The company funds half of the scoped slice at kickoff. Work is reviewed every two weeks against evidence agreed before implementation.</span><span lang="zh-Hant">優先模式是全遠端、先從兼職合作開始。公司在工作切片啟動時支付一半，兩週後依實作前約定的證據驗收成果。</span></p>
+
+            <div class="engagement-state" aria-label="Engagement state machine">
+              <div><span>01</span><strong>SCOPED</strong><small><span lang="en">One bounded result</span><span lang="zh-Hant">一個受控成果</span></small></div>
+              <i>→</i>
+              <div><span>02</span><strong>50% FUNDED</strong><small><span lang="en">Kickoff</span><span lang="zh-Hant">啟動</span></small></div>
+              <i>→</i>
+              <div><span>03</span><strong>EXECUTING</strong><small><span lang="en">Code + tests</span><span lang="zh-Hant">程式碼與測試</span></small></div>
+              <i>→</i>
+              <div><span>04</span><strong>DEMO + PR</strong><small><span lang="en">Review</span><span lang="zh-Hant">審查</span></small></div>
+              <i>→</i>
+              <div><span>05</span><strong>ACCEPTED</strong><small><span lang="en">Settle or repair</span><span lang="zh-Hant">結算或修正</span></small></div>
+            </div>
+
+            <div class="contract-grid">
+              <article><span class="contract-icon">R</span><h3><span lang="en">Work mode</span><span lang="zh-Hant">工作模式</span></h3><p><span lang="en">Fully remote preferred. Part-time or embedded-studio work comes first. Selective full-time roles remain open.</span><span lang="zh-Hant">優先全遠端。優先兼職或 Embedded Studio 合作，也保留選擇性的全職機會。</span></p></article>
+              <article><span class="contract-icon">14</span><h3><span lang="en">Review cadence</span><span lang="zh-Hant">驗收週期</span></h3><p><span lang="en">The first review occurs after two weeks. The review uses code, tests, a demo, and the agreed acceptance checks.</span><span lang="zh-Hant">第一輪在兩週後驗收，依程式碼、測試、Demo 與約定檢查判定。</span></p></article>
+              <article><span class="contract-icon">50</span><h3><span lang="en">Commercial terms</span><span lang="zh-Hant">商業條件</span></h3><p><span lang="en">Fifty percent funds kickoff. The remaining balance is settled after the result passes or after an agreed repair.</span><span lang="zh-Hant">啟動時支付 50%。結果通過，或完成約定修正後，結清尾款。</span></p></article>
+              <article><span class="contract-icon">✓</span><h3><span lang="en">Delivery receipt</span><span lang="zh-Hant">交付內容</span></h3><p><span lang="en">Each slice includes the spec, code, tests, demo, architecture note, open risks, and next decision.</span><span lang="zh-Hant">每個切片包含規格、程式碼、測試、Demo、架構說明、未解風險與下一個決策。</span></p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="article-section" id="trajectory" data-index-section data-section-name-en="Direction" data-section-name-zh="方向" aria-labelledby="trajectory-title">
+        <div class="article-layout">
+          <header class="section-rail reveal-on-scroll">
+            <span class="section-number">10</span>
+            <p class="section-kicker"><span lang="en">Role trajectory</span><span lang="zh-Hant">職涯方向</span></p>
+            <h2 id="trajectory-title" tabindex="-1">
+              <span lang="en">Current proof versus the next proof.</span>
+              <span lang="zh-Hant">目前證據與下一個證據。</span>
+            </h2>
+          </header>
+
+          <div class="article-body reveal-on-scroll">
+            <p class="article-lead"><span lang="en">The target is not a title without proof. Each direction lists the evidence already available and the public result that would make the next level credible.</span><span lang="zh-Hant">目標不是先取得頭銜，而是補足證據。每個方向都列出目前已有的能力，以及讓下一個職級更可信的公開成果。</span></p>
+
+            <div class="trajectory-list">
+              <article>
+                <header><span>01</span><h3>Agentic Architect</h3><b><span lang="en">Primary direction</span><span lang="zh-Hant">主要方向</span></b></header>
+                <div><p><strong><span lang="en">Current proof</span><span lang="zh-Hant">目前證據</span></strong><span lang="en">Skills, state machines, tool boundaries, evals, evidence, and multi-repository delivery systems.</span><span lang="zh-Hant">Skills、狀態機、工具邊界、Evals、證據與跨 Repo 交付系統。</span></p><p><strong><span lang="en">Next proof</span><span lang="zh-Hant">下一個證據</span></strong><span lang="en">A public end-to-end operator with live telemetry, service objectives, external usage, and documented failure recovery.</span><span lang="zh-Hant">一個公開端到端 Operator，具備 Live Telemetry、服務目標、外部使用與失敗恢復文件。</span></p></div>
+              </article>
+              <article>
+                <header><span>02</span><h3>Remote FDE</h3><b><span lang="en">Commercial entry path</span><span lang="zh-Hant">商業進入路徑</span></b></header>
+                <div><p><strong><span lang="en">Current proof</span><span lang="zh-Hant">目前證據</span></strong><span lang="en">Problem decomposition, mobile and legacy integration, device automation, documentation, and bounded delivery.</span><span lang="zh-Hant">問題拆解、行動與 Legacy 整合、裝置自動化、文件與受控交付。</span></p><p><strong><span lang="en">Next proof</span><span lang="zh-Hant">下一個證據</span></strong><span lang="en">Client-shaped case studies with before-and-after measures, acceptance records, and async handoff quality.</span><span lang="zh-Hant">更接近客戶情境的 Case Study，包含前後比較、驗收紀錄與非同步交接品質。</span></p></div>
+              </article>
+              <article>
+                <header><span>03</span><h3>AI Engineer</h3><b><span lang="en">Applied systems path</span><span lang="zh-Hant">應用系統路徑</span></b></header>
+                <div><p><strong><span lang="en">Current proof</span><span lang="zh-Hant">目前證據</span></strong><span lang="en">RAG experiments, Agent orchestration, evals, typed Python references, and post-training data pipelines.</span><span lang="zh-Hant">RAG 實驗、Agent Orchestration、Evals、型別化 Python 參考與後訓練資料流程。</span></p><p><strong><span lang="en">Next proof</span><span lang="zh-Hant">下一個證據</span></strong><span lang="en">A live inference service with measured latency, cost, quality, load behavior, and model fallback.</span><span lang="zh-Hant">一個 Live Inference Service，具備延遲、成本、品質、負載行為與模型降級的實測資料。</span></p></div>
+              </article>
+            </div>
+
+            <aside class="remote-note"><i class="fa-solid fa-globe" aria-hidden="true"></i><p><strong><span lang="en">Remote-first by design.</span><span lang="zh-Hant">以全遠端為設計前提。</span></strong> <span lang="en">The Remote FDE model focuses on work that can be delivered through code, documented decisions, remote demos, device automation, and evidence-based acceptance—not permanent client-site placement.</span><span lang="zh-Hant">Remote FDE 聚焦能透過程式碼、文件化決策、遠端 Demo、裝置自動化與證據驗收完成的工作，而不是長期駐點。</span></p></aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" data-index-section data-section-name-en="Contact" data-section-name-zh="聯絡" aria-labelledby="contact-title">
+        <div class="contact-inner reveal-on-scroll">
+          <div>
+            <span class="contact-kicker"><span lang="en">Start with one outcome</span><span lang="zh-Hant">先從一個成果開始</span></span>
+            <h2 id="contact-title" tabindex="-1"><span lang="en">Bring a repository, a broken workflow, or a device task.</span><span lang="zh-Hant">帶來一個 Repository、失效流程或裝置任務。</span></h2>
+            <p><span lang="en">The first response defines the smallest evidence-bearing slice, the acceptance checks, and the two-week delivery boundary.</span><span lang="zh-Hant">第一次回覆會定義最小可產生證據的工作切片、驗收檢查與兩週交付邊界。</span></p>
+          </div>
+          <div class="contact-actions">
+            <a class="primary-cta" href="https://github.com/ed3c/skill-resume-site/issues/new?template=project-inquiry.yml" rel="noopener noreferrer"><span lang="en">Open a project inquiry</span><span lang="zh-Hant">建立合作詢問</span><span aria-hidden="true">↗</span></a>
+            <a class="contact-link" href="https://github.com/ed3c" rel="me noopener noreferrer"><span lang="en">Review GitHub evidence</span><span lang="zh-Hant">查看 GitHub 證據</span></a>
+            <small><span lang="en">Do not post confidential information in a public issue.</span><span lang="zh-Hant">請勿在公開 Issue 張貼機密資訊。</span></small>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>Eeon · Agentic Engineering</strong>
+      <p><span lang="en">Built as executable evidence.</span><span lang="zh-Hant">以可執行證據建構。</span></p>
+    </div>
+    <nav aria-label="Reference links">
+      <a href="https://platform.claude.com/cookbook/patterns-agents-evaluator-optimizer" rel="noopener noreferrer">Evaluator loop</a>
+      <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" rel="noopener noreferrer">Agent Skills</a>
+      <a href="https://www.asd-ste100.org/" rel="noopener noreferrer">ASD-STE100</a>
+      <a href="https://www.git-town.com/stacked-changes" rel="noopener noreferrer">Git Town</a>
     </nav>
-  </div>
-
-  <noscript>
-    <div class="noscript-note">This portfolio needs JavaScript to switch views and load project evidence.</div>
-  </noscript>
+    <span>MIT · © <span id="current-year">2026</span> Eeon</span>
+  </footer>
 
   <script src="main.js" defer></script>
 </body>

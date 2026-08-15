@@ -13,24 +13,23 @@ Browser
 
 No framework and no build step are required.
 
-## View flow
+## Long-scroll content flow
 
 ```text
-Header navigation / URL hash
-            │
-            ▼
-      main.js router
-   ┌────────┼─────────┬─────────┐
-   ▼        ▼         ▼         ▼
- Home    Services    Work     Contact
-   │                   │
-   │                   └── fetch data/portfolio.json
-   │                              │
-   └── stats count-up             ▼
-                         public project rows
+Fixed cinematic hero
+         │
+         ▼
+Semantic article sections in index order
+         │
+         ├── static explanatory content
+         ├── capability evidence from portfolio.json
+         └── public/private project evidence from portfolio.json
+         │
+         ▼
+Contact and remote engagement action
 ```
 
-All views share one viewport. The background video, header, and stats remain in one composition. The center stage swaps between the home hero and an accessible panel.
+The top-right control opens a page index. Each item targets a section ID. `main.js` uses `scrollIntoView()` for navigation and `IntersectionObserver` for scrollspy, section reveal, and one-time statistic animation.
 
 ## Evidence flow
 
@@ -45,7 +44,7 @@ Public and private repository knowledge
                     │
           ┌─────────┴─────────┐
           ▼                   ▼
-    Browser renderer    Assertion script
+  Long-form renderer     Assertion script
           │                   │
           ▼                   ▼
       GitHub Pages      exit 0 / non-zero
@@ -55,13 +54,35 @@ The browser never receives a private repository URL. Private project records mus
 
 ## Interaction rules
 
-- Hash routing supports browser history.
-- Navigation updates `aria-current`.
-- Panels update `aria-hidden` and `inert` when supported.
-- The mobile menu traps focus while open.
-- Escape closes the menu or returns to Home.
-- Reduced motion pauses the video and removes movement-heavy transitions.
+- The page index is navigation, not a route switcher.
+- Anchor clicks scroll to semantic sections.
+- Scrollspy updates `aria-current` and the visible section label.
+- The index panel traps focus while open.
+- Escape and overlay click close the index.
+- Reduced motion removes movement-heavy transitions and pauses the video.
 - Data-saving mode pauses the video.
+- The language switch applies to static and dynamically rendered evidence.
+
+## Release flow
+
+```text
+Feature branch
+      │
+      ▼
+npm test
+      │
+      ▼
+Focused pull request
+      │
+      ▼
+Portfolio CI
+      │
+      ▼
+Merge to main
+      │
+      ▼
+GitHub Pages deployment
+```
 
 ## Security boundary
 

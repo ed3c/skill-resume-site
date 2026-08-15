@@ -1,32 +1,52 @@
 # Eeon — remote Agent engineering portfolio
 
-A single-viewport GitHub Pages portfolio for remote software work across Android, iOS, full-stack systems, device automation, Agent workflows, system prompts, and SKILL.md packages.
+A long-scroll GitHub Pages portfolio for remote software work across Android, iOS, full-stack systems, device automation, Agent workflows, system prompts, and executable SKILL.md packages.
 
-The visible layer uses static HTML, CSS, and vanilla JavaScript. The existing evidence architecture remains in place: structured project data, disclosure rules, an executable SKILL.md, and a deterministic release check.
+The first viewport keeps the cinematic video composition. The rest of the homepage restores the full evidence-rich résumé as a continuous article. A single page index opens from the top-right corner and scrolls to semantic section anchors.
 
 ## Live site
 
 `https://ed3c.github.io/skill-resume-site/`
 
-## What changed in the design refresh
+## Information architecture
 
-- Full-bleed video background with a restrained black-and-white interface.
-- Clear portfolio copy instead of dense internal terminology.
-- Desktop pill navigation and an accessible mobile sheet.
-- Four single-viewport views: Home, Services, Work, and Contact.
-- Public project evidence loaded from `data/portfolio.json`.
-- Truthful work-model metrics instead of invented customer or benchmark numbers.
-- Purposeful motion with reduced-motion and data-saving behavior.
+```text
+Hero
+  ↓
+Overview
+  ↓
+Why now
+  ↓
+Career journey
+  ↓
+Capability evidence
+  ↓
+Selected repositories
+  ↓
+Execution method
+  ↓
+Architecture and data flow
+  ↓
+Services
+  ↓
+Remote engagement contract
+  ↓
+Career direction
+  ↓
+Contact
+```
+
+The page index is navigation only. It does not replace content or route to separate center panels. Each item uses an in-page anchor and smooth scrolling. Scrollspy updates the active index item and current section label.
 
 ## File map
 
 ```text
 skill-resume-site/
-├── index.html                         # Semantic page and four in-viewport views
-├── styles.css                         # Visual system, responsive layout, motion
-├── main.js                            # View routing, menu, language, stats, project data
+├── index.html                         # Long-form semantic homepage
+├── styles.css                         # Cinematic hero and editorial article system
+├── main.js                            # Index, scrollspy, language, stats, evidence rendering
 ├── assets/
-│   ├── logo.webp                      # Public brand mark
+│   ├── logo.webp
 │   └── favicon.svg
 ├── fonts/
 │   └── README.md                      # Local fallback policy; no font binary
@@ -56,17 +76,16 @@ Open `http://localhost:4173`.
 npm test
 ```
 
-The check verifies required files, the exact video URL, CSS variables, JavaScript syntax, keyboard hooks, reduced-motion support, public/private URL boundaries, and forbidden unverified claims.
+The release gate verifies the long-scroll sections, index anchors, scrollspy hooks, exact background video, CSS variables, JavaScript syntax, keyboard behavior, reduced-motion support, public/private URL boundaries, and deployment artifact coverage.
 
-## Design decisions
+## Content policy
 
-The page keeps one strong composition rather than stacking generic marketing cards. Motion is used for entry, state, and feedback. Frequent controls stay fast. Buttons have press feedback. The mobile menu closes on Escape, overlay click, link click, and desktop resize.
-
-The three platform icons in the hero describe technical experience. They do not claim customer, employer, or sponsor relationships.
-
-## Disclosure boundary
-
-Public code links point only to `github.com/ed3c`. Private work appears as a capability description with `url: null`. The site does not disclose client names, employer details, credentials, device identifiers, vendor bindings, or paid library inventory.
+- Use plain language before specialist terms.
+- Explain the problem, method, evidence, and current limitation.
+- Do not invent customer, revenue, adoption, uptime, speed, or performance claims.
+- Public links point only to repositories owned by `ed3c`.
+- Private work appears only as capability evidence with `url: null`.
+- Do not expose company, client, credential, device identifier, vendor binding, or paid-library inventory.
 
 ## License
 
