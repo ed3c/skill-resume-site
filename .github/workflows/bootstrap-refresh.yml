@@ -1,0 +1,62 @@
+name: Bootstrap portfolio refresh
+
+on:
+  push:
+    branches:
+      - deploy/cinematic-portfolio-v2
+    paths:
+      - .bootstrap/READY
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bootstrap-portfolio-refresh
+  cancel-in-progress: false
+
+jobs:
+  apply-refresh:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout refresh branch
+        uses: actions/checkout@v4
+        with:
+          ref: deploy/cinematic-portfolio-v2
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Rebuild verified source archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .bootstrap/part-* > /tmp/site-refresh.tar.gz.b64
+          echo "fd0936e2608567e6a1da0e357d93df4f68a477757a11a84164eeadb32ec730cf  /tmp/site-refresh.tar.gz.b64" | sha256sum -c -
+          base64 --decode /tmp/site-refresh.tar.gz.b64 > /tmp/site-refresh.tar.gz
+          echo "63dcaac62e2156be5fd681bc94552402253c09ed82ae218cc9363d08953294db  /tmp/site-refresh.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/site-refresh.tar.gz -C .
+
+      - name: Remove obsolete and bootstrap files
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f assets/app.js assets/styles.css
+          rm -rf .bootstrap
+          rm -f .github/workflows/bootstrap-refresh.yml
+
+      - name: Run deterministic portfolio checks
+        run: npm run check
+
+      - name: Commit verified refresh
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: deploy cinematic remote Agent portfolio"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
