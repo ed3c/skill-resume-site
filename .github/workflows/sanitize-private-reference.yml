@@ -1,0 +1,62 @@
+name: Sanitize private evidence block
+
+on:
+  push:
+    branches: [content/agent-architect-evidence]
+    paths:
+      - .github/workflows/sanitize-private-reference.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: content/agent-architect-evidence
+          fetch-depth: 0
+
+      - name: Replace the legacy private evidence block
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path("index.html")
+          text = path.read_text()
+          replacement = '''            <aside class="private-lab">
+              <div>
+                <span class="private-lab__label"><i class="fa-solid fa-lock" aria-hidden="true"></i><span lang="en">Private implementation evidence</span><span lang="zh-Hant">私有實作證據</span></span>
+                <h3><code>agent-shield-monorepo</code> · Agent Delivery Lab</h3>
+              </div>
+              <p><span lang="en">This private implementation carries state-machine control, receipt-derived status, stacked-delivery checks, origin verification, and bounded Agent consumer canaries. The public résumé does not expose its repository URL, credentials, private adapters, vendor bindings, employer data, or client data.</span><span lang="zh-Hant">這項私有實作包含狀態機控制、由 Receipt 推導的狀態、Stacked Delivery 檢查、Origin Verification 與有邊界的 Agent Consumer Canary。公開履歷不揭露私有 Repository URL、憑證、私有 Adapter、Vendor Binding、雇主或客戶資料。</span></p>
+            </aside>'''
+          updated, count = re.subn(r'            <aside class="private-lab">.*?            </aside>', replacement, text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit(f"expected exactly one private-lab block, replaced {count}")
+          path.write_text(updated)
+          PY
+
+      - name: Verify the retired identity is absent
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          text = Path("index.html").read_text()
+          forbidden = re.compile("ix" + "-agy" + "-private", re.I)
+          if forbidden.search(text):
+              raise SystemExit("legacy private identity still present")
+          PY
+
+      - name: Commit sanitized homepage
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: remove legacy private repository identity"
+          git push origin HEAD:content/agent-architect-evidence
