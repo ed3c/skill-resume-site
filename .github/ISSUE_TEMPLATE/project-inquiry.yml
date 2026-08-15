@@ -1,5 +1,5 @@
 name: Project inquiry
-about: Propose a remote Agent, AI, mobile automation, or delivery engagement.
+description: Propose a remote Agent, AI, mobile automation, or delivery engagement.
 title: "[Project inquiry] "
 body:
   - type: markdown
