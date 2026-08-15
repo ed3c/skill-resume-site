@@ -1,10 +1,10 @@
 {
   "name": "skill-resume-site",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
   "description": "A dependency-free, evidence-backed long-scroll portfolio for remote Agent engineering.",
   "scripts": {
-    "check": "node .agents/skills/portfolio-evidence/scripts/assert-site.mjs",
+    "check": "node .agents/skills/portfolio-evidence/scripts/assert-site.mjs && node scripts/check-agent-evidence.mjs",
     "test": "npm run check",
     "serve": "python3 -m http.server 4173"
   },
