@@ -14,6 +14,8 @@ const requiredFiles = [
   "fonts/README.md",
   "README.md",
   "docs/architecture.md",
+  "CONTEXT.md",
+  "AGENTS.md",
 ];
 
 const errors = [];
@@ -48,13 +50,48 @@ const requiredHtml = [
   "BubbledotICG-FinePos",
   "font-awesome/6.5.2",
   "aria-expanded=\"false\"",
-  "data-view-panel=\"work\"",
-  "data-view-link=\"contact\"",
+  "id=\"site-index\"",
+  "data-index-link",
+  "data-index-section",
   "Skip to the main content",
+  "Drop-in remote engineering for the difficult part.",
+  "Turn model output into shipped evidence.",
+  "The résumé is itself an Agent-ready repository.",
 ];
 
 for (const fragment of requiredHtml) {
   if (!html.includes(fragment)) errors.push(`index.html must include: ${fragment}`);
+}
+
+const requiredSectionIds = [
+  "overview",
+  "why-now",
+  "career",
+  "capabilities",
+  "projects",
+  "method",
+  "architecture",
+  "services",
+  "engagement",
+  "trajectory",
+  "contact",
+];
+
+for (const id of requiredSectionIds) {
+  if (!html.includes(`id=\"${id}\"`)) errors.push(`index.html must include section #${id}`);
+  if (id !== "contact" && !html.includes(`href=\"#${id}\"`)) errors.push(`Page index must link to #${id}`);
+}
+
+if ((html.match(/data-index-section/g) || []).length < requiredSectionIds.length) {
+  errors.push("Every long-form content section must participate in scrollspy");
+}
+
+if ((html.match(/class=\"article-lead\"/g) || []).length < 9) {
+  errors.push("Long-form page must include article explanations for the major sections");
+}
+
+for (const obsolete of ["data-view-panel", "data-view-link", "main.js router", "four routed center views"]) {
+  if (html.includes(obsolete)) errors.push(`Old single-viewport router fragment must be removed: ${obsolete}`);
 }
 
 const requiredVariables = {
@@ -70,32 +107,41 @@ const requiredVariables = {
   "--trust-text": "#c4c2c3",
 };
 
+const compactCss = css.replace(/\s+/g, " ");
 for (const [name, value] of Object.entries(requiredVariables)) {
-  const compactCss = css.replace(/\s+/g, " ");
   if (!compactCss.includes(`${name}: ${value}`)) errors.push(`styles.css must keep ${name}: ${value}`);
 }
 
 for (const fragment of [
   "height: 100dvh",
+  "scroll-behavior: smooth",
+  "scroll-margin-top",
   "@media (prefers-reduced-motion: reduce)",
   "cubic-bezier(0.23, 1, 0.32, 1)",
-  ".menu-button[aria-expanded=\"true\"]",
+  ".index-button[aria-expanded=\"true\"]",
   "font-variant-numeric: tabular-nums",
+  ".article-layout",
+  ".section-rail",
 ]) {
   if (!css.includes(fragment)) errors.push(`styles.css must include: ${fragment}`);
 }
 
 for (const fragment of [
   "IntersectionObserver",
+  "scrollIntoView",
   "480 + index * 90",
   "1500 + index * 80",
   "Math.pow(1 - progress, 3)",
   "event.key === \"Escape\"",
   "window.innerWidth > 720",
   "data/portfolio.json",
+  "data-index-section",
+  "data-index-link",
+  "aria-current",
 ]) {
   if (!js.includes(fragment)) errors.push(`main.js must include: ${fragment}`);
 }
+
 const requiredArtifactFiles = ["index.html", "styles.css", "main.js", "404.html"];
 const requiredArtifactDirectories = ["assets", "fonts", "data", "docs"];
 for (const [name, workflow] of [["pages.yml", pagesWorkflow], ["ci.yml", ciWorkflow]]) {
@@ -106,7 +152,6 @@ for (const [name, workflow] of [["pages.yml", pagesWorkflow], ["ci.yml", ciWorkf
     if (!workflow.includes(directory)) errors.push(`${name} must publish ${directory}/`);
   }
 }
-
 
 const forbiddenClaims = [
   /Trusted by 2000\+ Enterprises/i,
@@ -130,7 +175,7 @@ try {
 }
 
 if (data) {
-  if (!Array.isArray(data.projects) || data.projects.length < 6) errors.push("portfolio.json needs at least six projects");
+  if (!Array.isArray(data.projects) || data.projects.length < 8) errors.push("portfolio.json needs at least eight projects");
   if (!Array.isArray(data.capabilities) || data.capabilities.length !== 6) errors.push("portfolio.json must expose six capability areas");
 
   const ids = new Set();
@@ -166,14 +211,12 @@ if (!html.includes("Content-Security-Policy")) errors.push("index.html must keep
 if (!html.includes("media-src https://d8j0ntlcm91z4.cloudfront.net")) errors.push("CSP must allow only the requested CloudFront host for video");
 if (html.includes("fonts/GeistPixel-Circle.woff2")) errors.push("The font binary is not bundled; CSS must use the local() fallback described in fonts/README.md");
 
-for (const [name, workflow] of [["pages.yml", pagesWorkflow], ["ci.yml", ciWorkflow]]) {
-  for (const artifact of ["styles.css", "main.js", "fonts"]) {
-    if (!workflow.includes(artifact)) errors.push(`${name} must publish ${artifact}`);
-  }
-}
+if (!html.includes("href=\"#why-now\" data-index-link")) errors.push("The page index must use in-page anchors instead of routed views");
+if (!html.includes("href=\"#architecture\" data-index-link")) errors.push("Architecture must be reachable from the page index");
 
 if (!errors.length) {
-  notes.push("Static architecture: pass");
+  notes.push("Long-scroll content architecture: pass");
+  notes.push("Index anchors and scrollspy hooks: pass");
   notes.push("Truth and disclosure gate: pass");
   notes.push("Keyboard and reduced-motion hooks: pass");
   notes.push("JavaScript syntax: pass");

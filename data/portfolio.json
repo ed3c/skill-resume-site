@@ -1,5 +1,5 @@
 {
-  "version": "2.0",
+  "version": "3.0",
   "updated": "2026-08-15",
   "identity": {
     "name": "Eeon",
@@ -25,10 +25,7 @@
   "capabilities": [
     {
       "id": "mobile-systems",
-      "name": {
-        "en": "Mobile systems",
-        "zh-Hant": "行動系統"
-      },
+      "name": { "en": "Mobile systems", "zh-Hant": "行動系統" },
       "evidence": "production-background",
       "summary": {
         "en": "Android lifecycle, networking, WebRTC, release work, and production debugging.",
@@ -37,10 +34,7 @@
     },
     {
       "id": "full-stack",
-      "name": {
-        "en": "Full-stack delivery",
-        "zh-Hant": "全端交付"
-      },
+      "name": { "en": "Full-stack delivery", "zh-Hant": "全端交付" },
       "evidence": "public-builds",
       "summary": {
         "en": "Typed APIs, web interfaces, data stores, CI, and small reviewable pull requests.",
@@ -49,10 +43,7 @@
     },
     {
       "id": "device-automation",
-      "name": {
-        "en": "Device automation",
-        "zh-Hant": "裝置自動化"
-      },
+      "name": { "en": "Device automation", "zh-Hant": "裝置自動化" },
       "evidence": "private-implementation",
       "summary": {
         "en": "Repeatable Android and iOS actions and checks on simulators or real devices.",
@@ -61,10 +52,7 @@
     },
     {
       "id": "agent-systems",
-      "name": {
-        "en": "Agent systems",
-        "zh-Hant": "Agent 系統"
-      },
+      "name": { "en": "Agent systems", "zh-Hant": "Agent 系統" },
       "evidence": "public-builds",
       "summary": {
         "en": "State, tools, retries, human approval, limits, and failure recovery.",
@@ -73,10 +61,7 @@
     },
     {
       "id": "skills-prompts",
-      "name": {
-        "en": "System prompts and Skills",
-        "zh-Hant": "系統提示詞與 Skills"
-      },
+      "name": { "en": "System prompts and Skills", "zh-Hant": "系統提示詞與 Skills" },
       "evidence": "public-builds",
       "summary": {
         "en": "Reusable SKILL.md packages with code execution and assertions.",
@@ -85,10 +70,7 @@
     },
     {
       "id": "verification",
-      "name": {
-        "en": "Verification",
-        "zh-Hant": "結果驗證"
-      },
+      "name": { "en": "Verification", "zh-Hant": "結果驗證" },
       "evidence": "public-builds",
       "summary": {
         "en": "Tests, schemas, evidence records, and fail-closed delivery gates.",
@@ -103,14 +85,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/Skill.md-native",
-      "evidence": {
-        "en": "Public build",
-        "zh-Hant": "公開實作"
-      },
-      "area": {
-        "en": "Agent Skills",
-        "zh-Hant": "Agent Skills"
-      },
+      "evidence": { "en": "Public build", "zh-Hant": "公開實作" },
+      "area": { "en": "Agent Skills", "zh-Hant": "Agent Skills" },
       "summary": {
         "en": "Checks whether a SKILL.md package can run, validate, and report results across agent tools.",
         "zh-Hant": "檢查 SKILL.md 套件能否在不同 Agent 工具中執行、驗證並回報結果。"
@@ -122,14 +98,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/agent-skills-repo",
-      "evidence": {
-        "en": "Public prototype",
-        "zh-Hant": "公開原型"
-      },
-      "area": {
-        "en": "Skill evaluation",
-        "zh-Hant": "Skill 評估"
-      },
+      "evidence": { "en": "Public prototype", "zh-Hant": "公開原型" },
+      "area": { "en": "Skill evaluation", "zh-Hant": "Skill 評估" },
       "summary": {
         "en": "Evaluates reusable agent skills with explicit tasks, expected outcomes, and checks.",
         "zh-Hant": "用明確任務、預期結果與檢查方式評估可重用 Agent Skills。"
@@ -141,14 +111,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/openwiki-source-anchoring",
-      "evidence": {
-        "en": "Public experiment",
-        "zh-Hant": "公開實驗"
-      },
-      "area": {
-        "en": "Code documentation",
-        "zh-Hant": "程式文件"
-      },
+      "evidence": { "en": "Public experiment", "zh-Hant": "公開實驗" },
+      "area": { "en": "Code documentation", "zh-Hant": "程式文件" },
       "summary": {
         "en": "Tests whether generated project documents stay tied to source code and traceable evidence.",
         "zh-Hant": "測試自動產生的專案文件是否能連回原始碼與可追溯證據。"
@@ -160,14 +124,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/truth-verify-loop",
-      "evidence": {
-        "en": "Public prototype",
-        "zh-Hant": "公開原型"
-      },
-      "area": {
-        "en": "Research verification",
-        "zh-Hant": "研究驗證"
-      },
+      "evidence": { "en": "Public prototype", "zh-Hant": "公開原型" },
+      "area": { "en": "Research verification", "zh-Hant": "研究驗證" },
       "summary": {
         "en": "Turns research claims into a repeatable search, check, and evidence flow.",
         "zh-Hant": "把研究主張轉成可重複的搜尋、檢查與證據流程。"
@@ -179,14 +137,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/blackbox-auto-research",
-      "evidence": {
-        "en": "Public research build",
-        "zh-Hant": "公開研究實作"
-      },
-      "area": {
-        "en": "System experiments",
-        "zh-Hant": "系統實驗"
-      },
+      "evidence": { "en": "Public research build", "zh-Hant": "公開研究實作" },
+      "area": { "en": "System experiments", "zh-Hant": "系統實驗" },
       "summary": {
         "en": "Builds repeatable experiments for systems that can only be observed from the outside.",
         "zh-Hant": "為只能從外部觀察的系統建立可重複實驗。"
@@ -198,14 +150,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/XT-Aegis",
-      "evidence": {
-        "en": "Public build",
-        "zh-Hant": "公開實作"
-      },
-      "area": {
-        "en": "Agent safety",
-        "zh-Hant": "Agent 安全"
-      },
+      "evidence": { "en": "Public build", "zh-Hant": "公開實作" },
+      "area": { "en": "Agent safety", "zh-Hant": "Agent 安全" },
       "summary": {
         "en": "Defines practical limits for tools, prompts, permissions, and agent actions.",
         "zh-Hant": "為工具、提示詞、權限與 Agent 行為定義實際限制。"
@@ -217,14 +163,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/post-training-rsi-pipeline",
-      "evidence": {
-        "en": "Deterministic reference",
-        "zh-Hant": "可重複參考實作"
-      },
-      "area": {
-        "en": "Post-training data",
-        "zh-Hant": "後訓練資料"
-      },
+      "evidence": { "en": "Deterministic reference", "zh-Hant": "可重複參考實作" },
+      "area": { "en": "Post-training data", "zh-Hant": "後訓練資料" },
       "summary": {
         "en": "Reference pipeline for admitting, tracing, reviewing, and rolling back post-training data.",
         "zh-Hant": "後訓練資料的准入、追蹤、審查與回滾參考流程。"
@@ -236,14 +176,8 @@
       "visibility": "public",
       "featured": true,
       "url": "https://github.com/ed3c/llm_arbitrage_system",
-      "evidence": {
-        "en": "Public prototype",
-        "zh-Hant": "公開原型"
-      },
-      "area": {
-        "en": "Model routing",
-        "zh-Hant": "模型路由"
-      },
+      "evidence": { "en": "Public prototype", "zh-Hant": "公開原型" },
+      "area": { "en": "Model routing", "zh-Hant": "模型路由" },
       "summary": {
         "en": "Routes model work by task needs, cost, and quality limits.",
         "zh-Hant": "依任務需求、成本與品質限制分配模型工作。"
@@ -255,14 +189,8 @@
       "visibility": "private",
       "featured": false,
       "url": null,
-      "evidence": {
-        "en": "Private implementation",
-        "zh-Hant": "私有實作"
-      },
-      "area": {
-        "en": "Android and iOS automation",
-        "zh-Hant": "Android 與 iOS 自動化"
-      },
+      "evidence": { "en": "Private implementation", "zh-Hant": "私有實作" },
+      "area": { "en": "Android and iOS automation", "zh-Hant": "Android 與 iOS 自動化" },
       "summary": {
         "en": "A private integration lab for device control, full-stack delivery, and agent-assisted testing.",
         "zh-Hant": "用於裝置控制、全端交付與 Agent 輔助測試的私有整合實驗。"
@@ -274,14 +202,8 @@
       "visibility": "private",
       "featured": false,
       "url": null,
-      "evidence": {
-        "en": "Private implementation",
-        "zh-Hant": "私有實作"
-      },
-      "area": {
-        "en": "Cross-repository delivery",
-        "zh-Hant": "跨 Repo 交付"
-      },
+      "evidence": { "en": "Private implementation", "zh-Hant": "私有實作" },
+      "area": { "en": "Cross-repository delivery", "zh-Hant": "跨 Repo 交付" },
       "summary": {
         "en": "A private system for bounded tasks, stacked pull requests, checks, and evidence handoff.",
         "zh-Hant": "用於範圍控制、Stacked PR、檢查與證據交接的私有系統。"
@@ -289,12 +211,7 @@
     }
   ],
   "disclosure": {
-    "public": [
-      "Capability summaries",
-      "Public repository links",
-      "Evidence status",
-      "Delivery terms"
-    ],
+    "public": ["Capability summaries", "Public repository links", "Evidence status", "Delivery terms"],
     "private": [
       "Client and company names",
       "Credentials and device identifiers",

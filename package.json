@@ -1,8 +1,8 @@
 {
   "name": "skill-resume-site",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "A dependency-free, evidence-backed remote Agent portfolio for GitHub Pages.",
+  "description": "A dependency-free, evidence-backed long-scroll portfolio for remote Agent engineering.",
   "scripts": {
     "check": "node .agents/skills/portfolio-evidence/scripts/assert-site.mjs",
     "test": "npm run check",

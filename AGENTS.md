@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Maintain a clear, truthful, single-viewport portfolio without breaking the evidence and disclosure gates.
+Maintain a clear, truthful, long-scroll portfolio without breaking the evidence and disclosure gates.
 
 ## Read first
 
@@ -13,9 +13,9 @@ Maintain a clear, truthful, single-viewport portfolio without breaking the evide
 
 ## Presentation files
 
-- `index.html`: semantic content, views, external resource allowlist.
-- `styles.css`: layout, visual system, responsive behavior, motion.
-- `main.js`: hash routing, mobile menu, language switch, stats, project rendering.
+- `index.html`: semantic article sections, page index, external resource allowlist.
+- `styles.css`: cinematic hero, editorial layout, responsive behavior, motion.
+- `main.js`: in-page navigation, scrollspy, index panel, language switch, stats, evidence rendering.
 - `assets/logo.webp`: brand mark.
 
 ## Evidence files
@@ -26,7 +26,10 @@ Maintain a clear, truthful, single-viewport portfolio without breaking the evide
 
 ## Hard rules
 
-- Do not add fake customer, revenue, uptime, speed, or adoption numbers.
+- Keep all major résumé categories on the homepage.
+- Do not replace sections with routed center panels.
+- The top-right control must remain a page index that scrolls to section anchors.
+- Do not add fake customer, revenue, uptime, speed, adoption, or performance numbers.
 - Do not link private repositories.
 - Do not expose client, employer, credential, device, or vendor details.
 - Keep the exact approved background-video URL unless the owner changes it.
