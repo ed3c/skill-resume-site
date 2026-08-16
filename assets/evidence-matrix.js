@@ -142,8 +142,8 @@
           <article>
             <span class="evidence-source"><span lang="en">PRIVATE IMPLEMENTATION</span><span lang="zh-Hant">私有實作</span></span>
             <h3>agent-shield-monorepo</h3>
-            <p><span lang="en">Private evidence for state-machine control, receipt-derived status, Git Town delivery checks, origin-verification contracts, and bounded Claude/Codex consumer canaries. Public copy deliberately omits private adapters, credentials, and internal bindings.</span><span lang="zh-Hant">私有實作證據包含狀態機控制、由 Receipt 推導狀態、Git Town 交付檢查、Origin Verification Contract，以及有邊界的 Claude／Codex Consumer Canary。公開履歷刻意不揭露私有 Adapter、Credential 與內部 Binding。</span></p>
-            <span class="private-evidence"><span lang="en">Private repository link withheld from the public résumé.</span><span lang="zh-Hant">公開履歷不提供私有 Repository 連結。</span></span>
+            <p><span lang="en">State-machine control, receipt-derived status, Git Town delivery checks, origin-verification contracts, and bounded Claude/Codex consumer canaries stay in the local Forgejo lane. The public GitHub portfolio carries only the approved evidence summary.</span><span lang="zh-Hant">狀態機控制、由 Receipt 推導狀態、Git Town 交付檢查、Origin Verification Contract，以及有邊界的 Claude／Codex Consumer Canary 留在本地 Forgejo 線；公開 GitHub 履歷只承載核准的證據摘要。</span></p>
+            <span class="private-evidence"><span lang="en">Local Forgejo lane · public evidence summary only.</span><span lang="zh-Hant">本地 Forgejo 線 · 僅呈現公開證據摘要。</span></span>
           </article>
           <article>
             <span class="evidence-source"><span lang="en">PUBLIC IMPLEMENTATION</span><span lang="zh-Hant">公開實作</span></span>
