@@ -237,8 +237,8 @@
       "evidence": { "en": "Private implementation", "zh-Hant": "私有實作" },
       "area": { "en": "Android and iOS automation", "zh-Hant": "Android 與 iOS 自動化" },
       "summary": {
-        "en": "Private implementation evidence for repeatable device control, integration, and Agent-assisted testing. Employer, client, and internal product details are not published.",
-        "zh-Hant": "私有實作證據涵蓋可重複裝置控制、整合與 Agent 輔助測試；不公開雇主、客戶與內部產品資訊。"
+        "en": "Implementation details for repeatable device control, integration, and Agent-assisted testing stay in the local Forgejo lane. The public portfolio uses only a capability summary.",
+        "zh-Hant": "可重複裝置控制、整合與 Agent 輔助測試的實作細節留在本地 Forgejo 線；公開履歷只使用能力摘要。"
       }
     },
     {
@@ -250,8 +250,8 @@
       "evidence": { "en": "Private implementation", "zh-Hant": "私有實作" },
       "area": { "en": "Agent delivery control plane", "zh-Hant": "Agent 交付控制平面" },
       "summary": {
-        "en": "Private evidence for state-machine control, receipt-derived status, stacked delivery checks, origin verification, and bounded Agent consumer canaries. Private adapters and bindings stay undisclosed.",
-        "zh-Hant": "私有證據包含狀態機控制、Receipt-derived Status、Stacked Delivery 檢查、Origin Verification 與有邊界的 Agent Consumer Canary；私有 Adapter 與 Binding 不公開。"
+        "en": "State-machine control, receipt-derived status, stacked delivery checks, origin verification, and bounded Agent consumer canaries stay in the local Forgejo lane. The public portfolio uses only an evidence summary.",
+        "zh-Hant": "狀態機控制、Receipt-derived Status、Stacked Delivery 檢查、Origin Verification 與有邊界的 Agent Consumer Canary 留在本地 Forgejo 線；公開履歷只使用證據摘要。"
       }
     }
   ],
