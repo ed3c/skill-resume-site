@@ -2,6 +2,7 @@
   "name": "skill-resume-site",
   "version": "3.1.0",
   "private": true,
+  "license": "Apache-2.0",
   "description": "A dependency-free, evidence-backed long-scroll portfolio for remote Agent engineering.",
   "scripts": {
     "check": "node .agents/skills/portfolio-evidence/scripts/assert-site.mjs && node scripts/check-agent-evidence.mjs",
